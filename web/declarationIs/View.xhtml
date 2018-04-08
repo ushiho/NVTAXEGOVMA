@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeclarationIsViewDlg" widgetVar="DeclarationIsViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDeclarationIsTitle}">
+            <h:form id="DeclarationIsViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{declarationIsController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_id}"/>
+                        <h:outputText value="#{declarationIsController.selected.id}" title="#{bundle.ViewDeclarationIsTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_dateDeclaration}"/>
+                        <h:outputText value="#{declarationIsController.selected.dateDeclaration}" title="#{bundle.ViewDeclarationIsTitle_dateDeclaration}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_montantIs}"/>
+                        <h:outputText value="#{declarationIsController.selected.montantIs}" title="#{bundle.ViewDeclarationIsTitle_montantIs}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_etat}"/>
+                        <h:outputText value="#{declarationIsController.selected.etat}" title="#{bundle.ViewDeclarationIsTitle_etat}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_societe}"/>
+                        <h:outputText value="#{declarationIsController.selected.societe}" title="#{bundle.ViewDeclarationIsTitle_societe}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_tauxIs}"/>
+                        <h:outputText value="#{declarationIsController.selected.tauxIs}" title="#{bundle.ViewDeclarationIsTitle_tauxIs}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_resultatComptable}"/>
+                        <h:outputText value="#{declarationIsController.selected.resultatComptable}" title="#{bundle.ViewDeclarationIsTitle_resultatComptable}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_resultatFiscal}"/>
+                        <h:outputText value="#{declarationIsController.selected.resultatFiscal}" title="#{bundle.ViewDeclarationIsTitle_resultatFiscal}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_chiffreAffaire}"/>
+                        <h:outputText value="#{declarationIsController.selected.chiffreAffaire}" title="#{bundle.ViewDeclarationIsTitle_chiffreAffaire}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIsLabel_nbAccomptePaye}"/>
+                        <h:outputText value="#{declarationIsController.selected.nbAccomptePaye}" title="#{bundle.ViewDeclarationIsTitle_nbAccomptePaye}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DeclarationIsViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

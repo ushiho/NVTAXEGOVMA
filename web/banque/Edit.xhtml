@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BanqueEditDlg" widgetVar="BanqueEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditBanqueTitle}">
+            <h:form id="BanqueEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{banqueController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditBanqueLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{banqueController.selected.nom}" title="#{bundle.EditBanqueTitle_nom}" />
+                        <p:outputLabel value="#{bundle.EditBanqueLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{banqueController.selected.id}" title="#{bundle.EditBanqueTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{banqueController.update}" value="#{bundle.Save}" update="display,:BanqueListForm:datalist,:growl" oncomplete="handleSubmit(args, 'BanqueEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BanqueEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

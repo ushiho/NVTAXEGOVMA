@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ExerciceISEditDlg" widgetVar="ExerciceISEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditExerciceISTitle}">
+            <h:form id="ExerciceISEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{exerciceISController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{exerciceISController.selected.id}" title="#{bundle.EditExerciceISTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_dateDebut}" for="dateDebut" />
+                        <p:calendar id="dateDebut" pattern="MM/dd/yyyy" value="#{exerciceISController.selected.dateDebut}" title="#{bundle.EditExerciceISTitle_dateDebut}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_dateFin}" for="dateFin" />
+                        <p:calendar id="dateFin" pattern="MM/dd/yyyy" value="#{exerciceISController.selected.dateFin}" title="#{bundle.EditExerciceISTitle_dateFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{exerciceISController.selected.societe}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_declarationIs}" for="declarationIs" />
+                        <p:selectOneMenu id="declarationIs" value="#{exerciceISController.selected.declarationIs}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{declarationIsController.itemsAvailableSelectOne}"
+                                           var="declarationIsItem"
+                                           itemValue="#{declarationIsItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_nFacture}" for="nFacture" />
+                        <p:inputText id="nFacture" value="#{exerciceISController.selected.nFacture}" title="#{bundle.EditExerciceISTitle_nFacture}" />
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_produits}" for="produits" />
+                        <p:inputText id="produits" value="#{exerciceISController.selected.produits}" title="#{bundle.EditExerciceISTitle_produits}" />
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_charges}" for="charges" />
+                        <p:inputText id="charges" value="#{exerciceISController.selected.charges}" title="#{bundle.EditExerciceISTitle_charges}" />
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_deductibles}" for="deductibles" />
+                        <p:inputText id="deductibles" value="#{exerciceISController.selected.deductibles}" title="#{bundle.EditExerciceISTitle_deductibles}" />
+                        <p:outputLabel value="#{bundle.EditExerciceISLabel_nonDeductibles}" for="nonDeductibles" />
+                        <p:inputText id="nonDeductibles" value="#{exerciceISController.selected.nonDeductibles}" title="#{bundle.EditExerciceISTitle_nonDeductibles}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{exerciceISController.update}" value="#{bundle.Save}" update="display,:ExerciceISListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ExerciceISEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ExerciceISEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

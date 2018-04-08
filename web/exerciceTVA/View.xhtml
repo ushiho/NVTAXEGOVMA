@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ExerciceTVAViewDlg" widgetVar="ExerciceTVAViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewExerciceTVATitle}">
+            <h:form id="ExerciceTVAViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{exerciceTVAController.selected != null}">
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_id}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.id}" title="#{bundle.ViewExerciceTVATitle_id}"/>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_montant}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.montant}" title="#{bundle.ViewExerciceTVATitle_montant}"/>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_categorieTVA}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.categorieTVA}" title="#{bundle.ViewExerciceTVATitle_categorieTVA}"/>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_dateDebut}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.dateDebut}" title="#{bundle.ViewExerciceTVATitle_dateDebut}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_dateFin}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.dateFin}" title="#{bundle.ViewExerciceTVATitle_dateFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_nFacture}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.nFacture}" title="#{bundle.ViewExerciceTVATitle_nFacture}"/>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_societe}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.societe}" title="#{bundle.ViewExerciceTVATitle_societe}"/>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_declarationTva}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.declarationTva}" title="#{bundle.ViewExerciceTVATitle_declarationTva}"/>
+                        <h:outputText value="#{bundle.ViewExerciceTVALabel_type}"/>
+                        <h:outputText value="#{exerciceTVAController.selected.type}" title="#{bundle.ViewExerciceTVATitle_type}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ExerciceTVAViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaiementISEditDlg" widgetVar="PaiementISEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPaiementISTitle}">
+            <h:form id="PaiementISEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paiementISController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{paiementISController.selected.id}" title="#{bundle.EditPaiementISTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_mtTotal}" for="mtTotal" />
+                        <p:inputText id="mtTotal" value="#{paiementISController.selected.mtTotal}" title="#{bundle.EditPaiementISTitle_mtTotal}" />
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_datePaiement}" for="datePaiement" />
+                        <p:calendar id="datePaiement" pattern="MM/dd/yyyy" value="#{paiementISController.selected.datePaiement}" title="#{bundle.EditPaiementISTitle_datePaiement}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_accompteVerse}" for="accompteVerse" />
+                        <p:inputText id="accompteVerse" value="#{paiementISController.selected.accompteVerse}" title="#{bundle.EditPaiementISTitle_accompteVerse}" />
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_declarationIs}" for="declarationIs" />
+                        <p:selectOneMenu id="declarationIs" value="#{paiementISController.selected.declarationIs}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{declarationIsController.itemsAvailableSelectOne}"
+                                           var="declarationIsItem"
+                                           itemValue="#{declarationIsItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_dateDernierDelai}" for="dateDernierDelai" />
+                        <p:calendar id="dateDernierDelai" pattern="MM/dd/yyyy" value="#{paiementISController.selected.dateDernierDelai}" title="#{bundle.EditPaiementISTitle_dateDernierDelai}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_mtBase}" for="mtBase" />
+                        <p:inputText id="mtBase" value="#{paiementISController.selected.mtBase}" title="#{bundle.EditPaiementISTitle_mtBase}" />
+                        <p:outputLabel value="#{bundle.EditPaiementISLabel_mtRetard}" for="mtRetard" />
+                        <p:inputText id="mtRetard" value="#{paiementISController.selected.mtRetard}" title="#{bundle.EditPaiementISTitle_mtRetard}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paiementISController.update}" value="#{bundle.Save}" update="display,:PaiementISListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PaiementISEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PaiementISEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

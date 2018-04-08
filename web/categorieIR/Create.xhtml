@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CategorieIRCreateDlg" widgetVar="CategorieIRCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCategorieIRTitle}">
+            <h:form id="CategorieIRCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categorieIRController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCategorieIRLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{categorieIRController.selected.id}" title="#{bundle.CreateCategorieIRTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateCategorieIRLabel_salaireMini}" for="salaireMini" />
+                        <p:inputText id="salaireMini" value="#{categorieIRController.selected.salaireMini}" title="#{bundle.CreateCategorieIRTitle_salaireMini}" />
+                        <p:outputLabel value="#{bundle.CreateCategorieIRLabel_salaireMaxi}" for="salaireMaxi" />
+                        <p:inputText id="salaireMaxi" value="#{categorieIRController.selected.salaireMaxi}" title="#{bundle.CreateCategorieIRTitle_salaireMaxi}" />
+                        <p:outputLabel value="#{bundle.CreateCategorieIRLabel_taux}" for="taux" />
+                        <p:inputText id="taux" value="#{categorieIRController.selected.taux}" title="#{bundle.CreateCategorieIRTitle_taux}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categorieIRController.create}" value="#{bundle.Save}" update="display,:CategorieIRListForm:datalist,:growl" oncomplete="handleSubmit(args,'CategorieIRCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CategorieIRCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

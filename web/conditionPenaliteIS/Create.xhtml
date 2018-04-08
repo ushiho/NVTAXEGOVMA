@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConditionPenaliteISCreateDlg" widgetVar="ConditionPenaliteISCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateConditionPenaliteISTitle}">
+            <h:form id="ConditionPenaliteISCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{conditionPenaliteISController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateConditionPenaliteISLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{conditionPenaliteISController.selected.id}" title="#{bundle.CreateConditionPenaliteISTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateConditionPenaliteISLabel_jrLimite}" for="jrLimite" />
+                        <p:inputText id="jrLimite" value="#{conditionPenaliteISController.selected.jrLimite}" title="#{bundle.CreateConditionPenaliteISTitle_jrLimite}" />
+                        <p:outputLabel value="#{bundle.CreateConditionPenaliteISLabel_moisLimite}" for="moisLimite" />
+                        <p:inputText id="moisLimite" value="#{conditionPenaliteISController.selected.moisLimite}" title="#{bundle.CreateConditionPenaliteISTitle_moisLimite}" />
+                        <p:outputLabel value="#{bundle.CreateConditionPenaliteISLabel_taux}" for="taux" />
+                        <p:inputText id="taux" value="#{conditionPenaliteISController.selected.taux}" title="#{bundle.CreateConditionPenaliteISTitle_taux}" />
+                        <p:outputLabel value="#{bundle.CreateConditionPenaliteISLabel_type}" for="type" />
+                        <p:inputText id="type" value="#{conditionPenaliteISController.selected.type}" title="#{bundle.CreateConditionPenaliteISTitle_type}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{conditionPenaliteISController.create}" value="#{bundle.Save}" update="display,:ConditionPenaliteISListForm:datalist,:growl" oncomplete="handleSubmit(args,'ConditionPenaliteISCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ConditionPenaliteISCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

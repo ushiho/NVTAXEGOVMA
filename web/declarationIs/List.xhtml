@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDeclarationIsTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="DeclarationIsListForm">
+                <p:panel header="#{bundle.ListDeclarationIsTitle}">
+                    <p:dataTable id="datalist" value="#{declarationIsController.items}" var="item"
+                                 selectionMode="single" selection="#{declarationIsController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_dateDeclaration}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dateDeclaration}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_montantIs}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantIs}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_etat}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.etat}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_societe}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.societe}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_tauxIs}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tauxIs}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_resultatComptable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.resultatComptable}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_resultatFiscal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.resultatFiscal}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_chiffreAffaire}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.chiffreAffaire}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDeclarationIsTitle_nbAccomptePaye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nbAccomptePaye}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{declarationIsController.prepareCreate}" update=":DeclarationIsCreateForm" oncomplete="PF('DeclarationIsCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DeclarationIsViewForm" oncomplete="PF('DeclarationIsViewDialog').show()" disabled="#{empty declarationIsController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DeclarationIsEditForm" oncomplete="PF('DeclarationIsEditDialog').show()" disabled="#{empty declarationIsController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{declarationIsController.destroy}" update=":growl,datalist" disabled="#{empty declarationIsController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

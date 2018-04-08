@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CategorieTVAEditDlg" widgetVar="CategorieTVAEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCategorieTVATitle}">
+            <h:form id="CategorieTVAEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categorieTVAController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCategorieTVALabel_taux}" for="taux" />
+                        <p:inputText id="taux" value="#{categorieTVAController.selected.taux}" title="#{bundle.EditCategorieTVATitle_taux}" />
+                        <p:outputLabel value="#{bundle.EditCategorieTVALabel_num}" for="num" />
+                        <p:inputText id="num" value="#{categorieTVAController.selected.num}" title="#{bundle.EditCategorieTVATitle_num}" />
+                        <p:outputLabel value="#{bundle.EditCategorieTVALabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{categorieTVAController.selected.nom}" title="#{bundle.EditCategorieTVATitle_nom}" />
+                        <p:outputLabel value="#{bundle.EditCategorieTVALabel_id}" for="id" />
+                        <p:inputText id="id" value="#{categorieTVAController.selected.id}" title="#{bundle.EditCategorieTVATitle_id}" />
+                        <p:outputLabel value="#{bundle.EditCategorieTVALabel_dateAppli}" for="dateAppli" />
+                        <p:calendar id="dateAppli" pattern="MM/dd/yyyy" value="#{categorieTVAController.selected.dateAppli}" title="#{bundle.EditCategorieTVATitle_dateAppli}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categorieTVAController.update}" value="#{bundle.Save}" update="display,:CategorieTVAListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CategorieTVAEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CategorieTVAEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

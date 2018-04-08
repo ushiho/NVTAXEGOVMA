@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DernierDelaiISCreateDlg" widgetVar="DernierDelaiISCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDernierDelaiISTitle}">
+            <h:form id="DernierDelaiISCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{dernierDelaiISController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiISLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{dernierDelaiISController.selected.id}" title="#{bundle.CreateDernierDelaiISTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiISLabel_mois}" for="mois" />
+                        <p:inputText id="mois" value="#{dernierDelaiISController.selected.mois}" title="#{bundle.CreateDernierDelaiISTitle_mois}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiISLabel_jour}" for="jour" />
+                        <p:inputText id="jour" value="#{dernierDelaiISController.selected.jour}" title="#{bundle.CreateDernierDelaiISTitle_jour}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiISLabel_accompteAverse}" for="accompteAverse" />
+                        <p:inputText id="accompteAverse" value="#{dernierDelaiISController.selected.accompteAverse}" title="#{bundle.CreateDernierDelaiISTitle_accompteAverse}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiISLabel_type}" for="type" />
+                        <p:inputText id="type" value="#{dernierDelaiISController.selected.type}" title="#{bundle.CreateDernierDelaiISTitle_type}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiISLabel_dateAppDeCetLoi}" for="dateAppDeCetLoi" />
+                        <p:calendar id="dateAppDeCetLoi" pattern="MM/dd/yyyy" value="#{dernierDelaiISController.selected.dateAppDeCetLoi}" title="#{bundle.EditDernierDelaiISTitle_dateAppDeCetLoi}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{dernierDelaiISController.create}" value="#{bundle.Save}" update="display,:DernierDelaiISListForm:datalist,:growl" oncomplete="handleSubmit(args,'DernierDelaiISCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DernierDelaiISCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

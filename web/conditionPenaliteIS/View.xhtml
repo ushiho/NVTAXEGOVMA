@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConditionPenaliteISViewDlg" widgetVar="ConditionPenaliteISViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewConditionPenaliteISTitle}">
+            <h:form id="ConditionPenaliteISViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{conditionPenaliteISController.selected != null}">
+                        <h:outputText value="#{bundle.ViewConditionPenaliteISLabel_id}"/>
+                        <h:outputText value="#{conditionPenaliteISController.selected.id}" title="#{bundle.ViewConditionPenaliteISTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewConditionPenaliteISLabel_jrLimite}"/>
+                        <h:outputText value="#{conditionPenaliteISController.selected.jrLimite}" title="#{bundle.ViewConditionPenaliteISTitle_jrLimite}"/>
+                        <h:outputText value="#{bundle.ViewConditionPenaliteISLabel_moisLimite}"/>
+                        <h:outputText value="#{conditionPenaliteISController.selected.moisLimite}" title="#{bundle.ViewConditionPenaliteISTitle_moisLimite}"/>
+                        <h:outputText value="#{bundle.ViewConditionPenaliteISLabel_taux}"/>
+                        <h:outputText value="#{conditionPenaliteISController.selected.taux}" title="#{bundle.ViewConditionPenaliteISTitle_taux}"/>
+                        <h:outputText value="#{bundle.ViewConditionPenaliteISLabel_type}"/>
+                        <h:outputText value="#{conditionPenaliteISController.selected.type}" title="#{bundle.ViewConditionPenaliteISTitle_type}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ConditionPenaliteISViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

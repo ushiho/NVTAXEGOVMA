@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaiementTVAViewDlg" widgetVar="PaiementTVAViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPaiementTVATitle}">
+            <h:form id="PaiementTVAViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paiementTVAController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_id}"/>
+                        <h:outputText value="#{paiementTVAController.selected.id}" title="#{bundle.ViewPaiementTVATitle_id}"/>
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_dateDernierPaiement}"/>
+                        <h:outputText value="#{paiementTVAController.selected.dateDernierPaiement}" title="#{bundle.ViewPaiementTVATitle_dateDernierPaiement}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_datePaiment}"/>
+                        <h:outputText value="#{paiementTVAController.selected.datePaiment}" title="#{bundle.ViewPaiementTVATitle_datePaiment}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_mtBase}"/>
+                        <h:outputText value="#{paiementTVAController.selected.mtBase}" title="#{bundle.ViewPaiementTVATitle_mtBase}"/>
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_mtTotal}"/>
+                        <h:outputText value="#{paiementTVAController.selected.mtTotal}" title="#{bundle.ViewPaiementTVATitle_mtTotal}"/>
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_mtRetartd}"/>
+                        <h:outputText value="#{paiementTVAController.selected.mtRetartd}" title="#{bundle.ViewPaiementTVATitle_mtRetartd}"/>
+                        <h:outputText value="#{bundle.ViewPaiementTVALabel_declarationTva}"/>
+                        <h:outputText value="#{paiementTVAController.selected.declarationTva}" title="#{bundle.ViewPaiementTVATitle_declarationTva}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PaiementTVAViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

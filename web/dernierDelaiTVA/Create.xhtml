@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DernierDelaiTVACreateDlg" widgetVar="DernierDelaiTVACreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDernierDelaiTVATitle}">
+            <h:form id="DernierDelaiTVACreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{dernierDelaiTVAController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiTVALabel_id}" for="id" />
+                        <p:inputText id="id" value="#{dernierDelaiTVAController.selected.id}" title="#{bundle.CreateDernierDelaiTVATitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiTVALabel_jour}" for="jour" />
+                        <p:inputText id="jour" value="#{dernierDelaiTVAController.selected.jour}" title="#{bundle.CreateDernierDelaiTVATitle_jour}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiTVALabel_type}" for="type" />
+                        <p:inputText id="type" value="#{dernierDelaiTVAController.selected.type}" title="#{bundle.CreateDernierDelaiTVATitle_type}" />
+                        <p:outputLabel value="#{bundle.CreateDernierDelaiTVALabel_dateAppDeCetLoi}" for="dateAppDeCetLoi" />
+                        <p:calendar id="dateAppDeCetLoi" pattern="MM/dd/yyyy" value="#{dernierDelaiTVAController.selected.dateAppDeCetLoi}" title="#{bundle.EditDernierDelaiTVATitle_dateAppDeCetLoi}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{dernierDelaiTVAController.create}" value="#{bundle.Save}" update="display,:DernierDelaiTVAListForm:datalist,:growl" oncomplete="handleSubmit(args,'DernierDelaiTVACreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DernierDelaiTVACreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

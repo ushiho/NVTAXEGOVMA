@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeAdhesionEditDlg" widgetVar="DemandeAdhesionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDemandeAdhesionTitle}">
+            <h:form id="DemandeAdhesionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeAdhesionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDemandeAdhesionLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{demandeAdhesionController.selected.id}" title="#{bundle.EditDemandeAdhesionTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditDemandeAdhesionLabel_contribuable}" for="contribuable" />
+                        <p:selectOneMenu id="contribuable" value="#{demandeAdhesionController.selected.contribuable}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="contribuableItem"
+                                           itemValue="#{contribuableItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDemandeAdhesionLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{demandeAdhesionController.selected.societe}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDemandeAdhesionLabel_dateEnvoyer}" for="dateEnvoyer" />
+                        <p:calendar id="dateEnvoyer" pattern="MM/dd/yyyy" value="#{demandeAdhesionController.selected.dateEnvoyer}" title="#{bundle.EditDemandeAdhesionTitle_dateEnvoyer}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditDemandeAdhesionLabel_etat}" for="etat" />
+                        <p:inputText id="etat" value="#{demandeAdhesionController.selected.etat}" title="#{bundle.EditDemandeAdhesionTitle_etat}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{demandeAdhesionController.update}" value="#{bundle.Save}" update="display,:DemandeAdhesionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DemandeAdhesionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DemandeAdhesionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

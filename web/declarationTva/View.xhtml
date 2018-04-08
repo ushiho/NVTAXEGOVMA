@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeclarationTvaViewDlg" widgetVar="DeclarationTvaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDeclarationTvaTitle}">
+            <h:form id="DeclarationTvaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{declarationTvaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_dateDeclaration}"/>
+                        <h:outputText value="#{declarationTvaController.selected.dateDeclaration}" title="#{bundle.ViewDeclarationTvaTitle_dateDeclaration}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_utilisateur}"/>
+                        <h:outputText value="#{declarationTvaController.selected.utilisateur}" title="#{bundle.ViewDeclarationTvaTitle_utilisateur}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_id}"/>
+                        <h:outputText value="#{declarationTvaController.selected.id}" title="#{bundle.ViewDeclarationTvaTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_societe}"/>
+                        <h:outputText value="#{declarationTvaController.selected.societe}" title="#{bundle.ViewDeclarationTvaTitle_societe}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_etat}"/>
+                        <h:outputText value="#{declarationTvaController.selected.etat}" title="#{bundle.ViewDeclarationTvaTitle_etat}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_exerciceTVAVente}"/>
+                        <h:outputText value="#{declarationTvaController.selected.exerciceTVAVente}" title="#{bundle.ViewDeclarationTvaTitle_exerciceTVAVente}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_tvaDue}"/>
+                        <h:outputText value="#{declarationTvaController.selected.tvaDue}" title="#{bundle.ViewDeclarationTvaTitle_tvaDue}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_taxeDeductible}"/>
+                        <h:outputText value="#{declarationTvaController.selected.taxeDeductible}" title="#{bundle.ViewDeclarationTvaTitle_taxeDeductible}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_taxeAverser}"/>
+                        <h:outputText value="#{declarationTvaController.selected.taxeAverser}" title="#{bundle.ViewDeclarationTvaTitle_taxeAverser}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_creditAreporter}"/>
+                        <h:outputText value="#{declarationTvaController.selected.creditAreporter}" title="#{bundle.ViewDeclarationTvaTitle_creditAreporter}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_regime}"/>
+                        <h:outputText value="#{declarationTvaController.selected.regime}" title="#{bundle.ViewDeclarationTvaTitle_regime}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_exerciceTVAAchat}"/>
+                        <h:outputText value="#{declarationTvaController.selected.exerciceTVAAchat}" title="#{bundle.ViewDeclarationTvaTitle_exerciceTVAAchat}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationTvaLabel_paiementTVA}"/>
+                        <h:outputText value="#{declarationTvaController.selected.paiementTVA}" title="#{bundle.ViewDeclarationTvaTitle_paiementTVA}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DeclarationTvaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

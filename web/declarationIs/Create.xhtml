@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeclarationIsCreateDlg" widgetVar="DeclarationIsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDeclarationIsTitle}">
+            <h:form id="DeclarationIsCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{declarationIsController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{declarationIsController.selected.id}" title="#{bundle.CreateDeclarationIsTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_dateDeclaration}" for="dateDeclaration" />
+                        <p:calendar id="dateDeclaration" pattern="MM/dd/yyyy" value="#{declarationIsController.selected.dateDeclaration}" title="#{bundle.EditDeclarationIsTitle_dateDeclaration}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_montantIs}" for="montantIs" />
+                        <p:inputText id="montantIs" value="#{declarationIsController.selected.montantIs}" title="#{bundle.CreateDeclarationIsTitle_montantIs}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_etat}" for="etat" />
+                        <p:inputText id="etat" value="#{declarationIsController.selected.etat}" title="#{bundle.CreateDeclarationIsTitle_etat}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{declarationIsController.selected.societe}" >
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_tauxIs}" for="tauxIs" />
+                        <p:inputText id="tauxIs" value="#{declarationIsController.selected.tauxIs}" title="#{bundle.CreateDeclarationIsTitle_tauxIs}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_resultatComptable}" for="resultatComptable" />
+                        <p:inputText id="resultatComptable" value="#{declarationIsController.selected.resultatComptable}" title="#{bundle.CreateDeclarationIsTitle_resultatComptable}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_resultatFiscal}" for="resultatFiscal" />
+                        <p:inputText id="resultatFiscal" value="#{declarationIsController.selected.resultatFiscal}" title="#{bundle.CreateDeclarationIsTitle_resultatFiscal}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_chiffreAffaire}" for="chiffreAffaire" />
+                        <p:inputText id="chiffreAffaire" value="#{declarationIsController.selected.chiffreAffaire}" title="#{bundle.CreateDeclarationIsTitle_chiffreAffaire}" />
+                        <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_nbAccomptePaye}" for="nbAccomptePaye" />
+                        <p:inputText id="nbAccomptePaye" value="#{declarationIsController.selected.nbAccomptePaye}" title="#{bundle.CreateDeclarationIsTitle_nbAccomptePaye}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{declarationIsController.create}" value="#{bundle.Save}" update="display,:DeclarationIsListForm:datalist,:growl" oncomplete="handleSubmit(args,'DeclarationIsCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DeclarationIsCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

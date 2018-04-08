@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DgiEditDlg" widgetVar="DgiEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDgiTitle}">
+            <h:form id="DgiEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{dgiController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDgiLabel_login}" for="login" />
+                        <p:inputText id="login" value="#{dgiController.selected.login}" title="#{bundle.EditDgiTitle_login}" />
+                        <p:outputLabel value="#{bundle.EditDgiLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{dgiController.selected.password}" title="#{bundle.EditDgiTitle_password}" />
+                        <p:outputLabel value="#{bundle.EditDgiLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{dgiController.selected.id}" title="#{bundle.EditDgiTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditDgiLabel_compteBanquaire}" for="compteBanquaire" />
+                        <p:selectOneMenu id="compteBanquaire" value="#{dgiController.selected.compteBanquaire}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{compteBanquaireController.itemsAvailableSelectOne}"
+                                           var="compteBanquaireItem"
+                                           itemValue="#{compteBanquaireItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDgiLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{dgiController.selected.societe}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{dgiController.update}" value="#{bundle.Save}" update="display,:DgiListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DgiEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DgiEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

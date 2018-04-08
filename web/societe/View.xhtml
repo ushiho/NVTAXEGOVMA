@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SocieteViewDlg" widgetVar="SocieteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSocieteTitle}">
+            <h:form id="SocieteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{societeController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSocieteLabel_id}"/>
+                        <h:outputText value="#{societeController.selected.id}" title="#{bundle.ViewSocieteTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_idFiscal}"/>
+                        <h:outputText value="#{societeController.selected.idFiscal}" title="#{bundle.ViewSocieteTitle_idFiscal}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_raisonSociale}"/>
+                        <h:outputText value="#{societeController.selected.raisonSociale}" title="#{bundle.ViewSocieteTitle_raisonSociale}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_numTele}"/>
+                        <h:outputText value="#{societeController.selected.numTele}" title="#{bundle.ViewSocieteTitle_numTele}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_numFix}"/>
+                        <h:outputText value="#{societeController.selected.numFix}" title="#{bundle.ViewSocieteTitle_numFix}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_email}"/>
+                        <h:outputText value="#{societeController.selected.email}" title="#{bundle.ViewSocieteTitle_email}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_dateCreation}"/>
+                        <h:outputText value="#{societeController.selected.dateCreation}" title="#{bundle.ViewSocieteTitle_dateCreation}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_deficitIS}"/>
+                        <h:outputText value="#{societeController.selected.deficitIS}" title="#{bundle.ViewSocieteTitle_deficitIS}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_password}"/>
+                        <h:outputText value="#{societeController.selected.password}" title="#{bundle.ViewSocieteTitle_password}"/>
+                        <h:outputText value="#{bundle.ViewSocieteLabel_deficitTVA}"/>
+                        <h:outputText value="#{societeController.selected.deficitTVA}" title="#{bundle.ViewSocieteTitle_deficitTVA}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SocieteViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompteBanquaireEditDlg" widgetVar="CompteBanquaireEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCompteBanquaireTitle}">
+            <h:form id="CompteBanquaireEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{compteBanquaireController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCompteBanquaireLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{compteBanquaireController.selected.id}" title="#{bundle.EditCompteBanquaireTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditCompteBanquaireLabel_banque}" for="banque" />
+                        <p:selectOneMenu id="banque" value="#{compteBanquaireController.selected.banque}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{banqueController.itemsAvailableSelectOne}"
+                                           var="banqueItem"
+                                           itemValue="#{banqueItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCompteBanquaireLabel_solde}" for="solde" />
+                        <p:inputText id="solde" value="#{compteBanquaireController.selected.solde}" title="#{bundle.EditCompteBanquaireTitle_solde}" />
+                        <p:outputLabel value="#{bundle.EditCompteBanquaireLabel_rib}" for="rib" />
+                        <p:inputText id="rib" value="#{compteBanquaireController.selected.rib}" title="#{bundle.EditCompteBanquaireTitle_rib}" />
+                        <p:outputLabel value="#{bundle.EditCompteBanquaireLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{compteBanquaireController.selected.societe}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{compteBanquaireController.update}" value="#{bundle.Save}" update="display,:CompteBanquaireListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CompteBanquaireEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CompteBanquaireEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

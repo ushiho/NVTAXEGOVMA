@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PenaliteEditDlg" widgetVar="PenaliteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPenaliteTitle}">
+            <h:form id="PenaliteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{penaliteController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPenaliteLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{penaliteController.selected.id}" title="#{bundle.EditPenaliteTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditPenaliteLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{penaliteController.selected.societe}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPenaliteLabel_dateDernierDeclaration}" for="dateDernierDeclaration" />
+                        <p:calendar id="dateDernierDeclaration" pattern="MM/dd/yyyy" value="#{penaliteController.selected.dateDernierDeclaration}" title="#{bundle.EditPenaliteTitle_dateDernierDeclaration}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPenaliteLabel_montantPenalite}" for="montantPenalite" />
+                        <p:inputText id="montantPenalite" value="#{penaliteController.selected.montantPenalite}" title="#{bundle.EditPenaliteTitle_montantPenalite}" />
+                        <p:outputLabel value="#{bundle.EditPenaliteLabel_taux}" for="taux" />
+                        <p:inputText id="taux" value="#{penaliteController.selected.taux}" title="#{bundle.EditPenaliteTitle_taux}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{penaliteController.update}" value="#{bundle.Save}" update="display,:PenaliteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PenaliteEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PenaliteEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaiementTVAEditDlg" widgetVar="PaiementTVAEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPaiementTVATitle}">
+            <h:form id="PaiementTVAEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paiementTVAController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_id}" for="id" />
+                        <p:inputText id="id" value="#{paiementTVAController.selected.id}" title="#{bundle.EditPaiementTVATitle_id}" />
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_dateDernierPaiement}" for="dateDernierPaiement" />
+                        <p:calendar id="dateDernierPaiement" pattern="MM/dd/yyyy" value="#{paiementTVAController.selected.dateDernierPaiement}" title="#{bundle.EditPaiementTVATitle_dateDernierPaiement}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_datePaiment}" for="datePaiment" />
+                        <p:calendar id="datePaiment" pattern="MM/dd/yyyy" value="#{paiementTVAController.selected.datePaiment}" title="#{bundle.EditPaiementTVATitle_datePaiment}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_mtBase}" for="mtBase" />
+                        <p:inputText id="mtBase" value="#{paiementTVAController.selected.mtBase}" title="#{bundle.EditPaiementTVATitle_mtBase}" />
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_mtTotal}" for="mtTotal" />
+                        <p:inputText id="mtTotal" value="#{paiementTVAController.selected.mtTotal}" title="#{bundle.EditPaiementTVATitle_mtTotal}" />
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_mtRetartd}" for="mtRetartd" />
+                        <p:inputText id="mtRetartd" value="#{paiementTVAController.selected.mtRetartd}" title="#{bundle.EditPaiementTVATitle_mtRetartd}" />
+                        <p:outputLabel value="#{bundle.EditPaiementTVALabel_declarationTva}" for="declarationTva" />
+                        <p:selectOneMenu id="declarationTva" value="#{paiementTVAController.selected.declarationTva}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{declarationTvaController.itemsAvailableSelectOne}"
+                                           var="declarationTvaItem"
+                                           itemValue="#{declarationTvaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paiementTVAController.update}" value="#{bundle.Save}" update="display,:PaiementTVAListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PaiementTVAEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PaiementTVAEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TaxeIrEmployeEditDlg" widgetVar="TaxeIrEmployeEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTaxeIrEmployeTitle}">
+            <h:form id="TaxeIrEmployeEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{taxeIrEmployeController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTaxeIrEmployeLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{taxeIrEmployeController.selected.id}" title="#{bundle.EditTaxeIrEmployeTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditTaxeIrEmployeLabel_declarationIr}" for="declarationIr" />
+                        <p:selectOneMenu id="declarationIr" value="#{taxeIrEmployeController.selected.declarationIr}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{declarationIrController.itemsAvailableSelectOne}"
+                                           var="declarationIrItem"
+                                           itemValue="#{declarationIrItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditTaxeIrEmployeLabel_employe}" for="employe" />
+                        <p:selectOneMenu id="employe" value="#{taxeIrEmployeController.selected.employe}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="employeItem"
+                                           itemValue="#{employeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditTaxeIrEmployeLabel_categorieIR}" for="categorieIR" />
+                        <p:selectOneMenu id="categorieIR" value="#{taxeIrEmployeController.selected.categorieIR}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{categorieIRController.itemsAvailableSelectOne}"
+                                           var="categorieIRItem"
+                                           itemValue="#{categorieIRItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditTaxeIrEmployeLabel_montantIr}" for="montantIr" />
+                        <p:inputText id="montantIr" value="#{taxeIrEmployeController.selected.montantIr}" title="#{bundle.EditTaxeIrEmployeTitle_montantIr}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{taxeIrEmployeController.update}" value="#{bundle.Save}" update="display,:TaxeIrEmployeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TaxeIrEmployeEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TaxeIrEmployeEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

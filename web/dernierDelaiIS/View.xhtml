@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DernierDelaiISViewDlg" widgetVar="DernierDelaiISViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDernierDelaiISTitle}">
+            <h:form id="DernierDelaiISViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{dernierDelaiISController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDernierDelaiISLabel_id}"/>
+                        <h:outputText value="#{dernierDelaiISController.selected.id}" title="#{bundle.ViewDernierDelaiISTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDernierDelaiISLabel_mois}"/>
+                        <h:outputText value="#{dernierDelaiISController.selected.mois}" title="#{bundle.ViewDernierDelaiISTitle_mois}"/>
+                        <h:outputText value="#{bundle.ViewDernierDelaiISLabel_jour}"/>
+                        <h:outputText value="#{dernierDelaiISController.selected.jour}" title="#{bundle.ViewDernierDelaiISTitle_jour}"/>
+                        <h:outputText value="#{bundle.ViewDernierDelaiISLabel_accompteAverse}"/>
+                        <h:outputText value="#{dernierDelaiISController.selected.accompteAverse}" title="#{bundle.ViewDernierDelaiISTitle_accompteAverse}"/>
+                        <h:outputText value="#{bundle.ViewDernierDelaiISLabel_type}"/>
+                        <h:outputText value="#{dernierDelaiISController.selected.type}" title="#{bundle.ViewDernierDelaiISTitle_type}"/>
+                        <h:outputText value="#{bundle.ViewDernierDelaiISLabel_dateAppDeCetLoi}"/>
+                        <h:outputText value="#{dernierDelaiISController.selected.dateAppDeCetLoi}" title="#{bundle.ViewDernierDelaiISTitle_dateAppDeCetLoi}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DernierDelaiISViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

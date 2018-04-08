@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CategorieISEditDlg" widgetVar="CategorieISEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCategorieISTitle}">
+            <h:form id="CategorieISEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categorieISController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCategorieISLabel_taux}" for="taux" />
+                        <p:inputText id="taux" value="#{categorieISController.selected.taux}" title="#{bundle.EditCategorieISTitle_taux}" />
+                        <p:outputLabel value="#{bundle.EditCategorieISLabel_benificeMin}" for="benificeMin" />
+                        <p:inputText id="benificeMin" value="#{categorieISController.selected.benificeMin}" title="#{bundle.EditCategorieISTitle_benificeMin}" />
+                        <p:outputLabel value="#{bundle.EditCategorieISLabel_benificeMax}" for="benificeMax" />
+                        <p:inputText id="benificeMax" value="#{categorieISController.selected.benificeMax}" title="#{bundle.EditCategorieISTitle_benificeMax}" />
+                        <p:outputLabel value="#{bundle.EditCategorieISLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{categorieISController.selected.id}" title="#{bundle.EditCategorieISTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditCategorieISLabel_dateApp}" for="dateApp" />
+                        <p:calendar id="dateApp" pattern="MM/dd/yyyy" value="#{categorieISController.selected.dateApp}" title="#{bundle.EditCategorieISTitle_dateApp}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categorieISController.update}" value="#{bundle.Save}" update="display,:CategorieISListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CategorieISEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CategorieISEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

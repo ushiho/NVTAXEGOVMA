@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeclarationIrViewDlg" widgetVar="DeclarationIrViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDeclarationIrTitle}">
+            <h:form id="DeclarationIrViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{declarationIrController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDeclarationIrLabel_id}"/>
+                        <h:outputText value="#{declarationIrController.selected.id}" title="#{bundle.ViewDeclarationIrTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIrLabel_societe}"/>
+                        <h:outputText value="#{declarationIrController.selected.societe}" title="#{bundle.ViewDeclarationIrTitle_societe}"/>
+                        <h:outputText value="#{bundle.ViewDeclarationIrLabel_dateDeclaration}"/>
+                        <h:outputText value="#{declarationIrController.selected.dateDeclaration}" title="#{bundle.ViewDeclarationIrTitle_dateDeclaration}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDeclarationIrLabel_montantIr}"/>
+                        <h:outputText value="#{declarationIrController.selected.montantIr}" title="#{bundle.ViewDeclarationIrTitle_montantIr}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DeclarationIrViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
