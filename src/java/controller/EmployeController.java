@@ -27,7 +27,7 @@ public class EmployeController implements Serializable {
     private EmployeFacade ejbFacade;
     private List<Employe> items = null;
     private Employe selected;
-    private boolean show ;
+    private boolean show;
 
     public EmployeController() {
     }
@@ -190,11 +190,32 @@ public class EmployeController implements Serializable {
             return "profile";
         }
     }
-   
-   public void hideDetail(){
-       setShow(false);
-   }
-   public void showDetail(){
-       setShow(true);
-   }
+
+    public void hideDetail() {
+        setShow(false);
+    }
+
+    public void showDetail() {
+        setShow(true);
+    }
+
+//    public String loginProject() {
+//        boolean result = LoginDAO.login(uname, password);
+//        if (result) {
+//
+//            // get Http Session and store username
+//            HttpSession session = Util.getSession();
+//            session.setAttribute("username", uname);
+//            return "index";
+//        } else {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                    "Invalid Login!",
+//                    "Please Try Again!"));
+//
+//            // invalidate session, and redirect to other pages
+//            //message = "Invalid Login. Please Try Again!";
+//            return "login";
+//        }
+//    }
+
 }

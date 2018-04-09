@@ -28,7 +28,7 @@
 
     </h:head>
     <h:body>
-        <nav class="navbar navbar-expand-md fixed-top navbar-transparent">
+        <nav class="navbar navbar-expand-md fixed-top navbar-transparent" color-on-scroll="100">
             <div class="container">
                 <div class="navbar-translate">
                     <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,24 +92,26 @@
                                     <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">
                                         <i class="fa fa-twitter"></i>
                                     </a>
-                                    <h:form class="register-card">
+                                    <h:form class="register-card" id="panel">
                                         <label>Login</label>
                                         <div class="input-group form-group-no-border">
                                             <span class="input-group-addon">
                                                 <i class="nc-icon nc-user-run"></i>
                                             </span>
-                                            <p:inputText id="login" class="form-control" placeholder="login" type="text" value="#{employeController.selected.login}" title="Login" />
-                                        
+                                            <p:inputText required="true" id="login" class="form-control" placeholder="login" type="text" value="#{employeController.selected.login}" title="Login" />
+
                                         </div>
                                         <label>Mot de passe</label>
                                         <div class="input-group form-group-no-border">
                                             <span class="input-group-addon">
                                                 <i class="nc-icon nc-key-25"></i>
                                             </span>
-                                            <p:inputText id="motDePasse" class="form-control" placeholder="Password" type="password" value="#{employeController.selected.motDePasse}" title="MotDePasse" />
+                                            <p:password feedback="false" required="true" id="motDePasse" class="form-control" placeholder="mot de passe" value="#{employeController.selected.motDePasse}" title="mot de passe" />
                                         </div>
-                                        <p:commandButton action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round"></p:commandButton>
+
+
                                     </h:form>
+                                    <p:commandButton action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"></p:commandButton>
                                     <div class="forgot">
                                         <a href="#" class="btn btn-link ">Mot de passe oubliée?</a>
                                     </div>
