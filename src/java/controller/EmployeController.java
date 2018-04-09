@@ -28,6 +28,7 @@ public class EmployeController implements Serializable {
     private List<Employe> items = null;
     private Employe selected;
     private boolean show;
+    private String msg;
 
     public EmployeController() {
     }
@@ -67,6 +68,14 @@ public class EmployeController implements Serializable {
 
     private EmployeFacade getFacade() {
         return ejbFacade;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Employe prepareCreate() {
@@ -185,9 +194,9 @@ public class EmployeController implements Serializable {
     public String seConnecter() {
         int res = getFacade().seConnecter(selected);
         if (res < 0) {
-            return "test";
+            return null;
         } else {
-            return "profile";
+            return "profile.xhtml";
         }
     }
 

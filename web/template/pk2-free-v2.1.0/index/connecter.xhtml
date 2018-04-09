@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/png" href="../assets/img/favicon.ico"></link>
@@ -46,30 +47,7 @@
                         <li class="nav-item">
                             <a href="../documentation/tutorial-components.html" target="_blank" class="nav-link"><i class="nc-icon nc-book-bookmark"></i>  Documentation</a>
                         </li>
-                        <!--<li class="nav-item">
-        <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
-            <i class="fa fa-twitter"></i>
-            <p class="d-lg-none">Twitter</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
-            <i class="fa fa-facebook-square"></i>
-            <p class="d-lg-none">Facebook</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
-            <i class="fa fa-instagram"></i>
-            <p class="d-lg-none">Instagram</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" rel="tooltip" title="Star on GitHub" data-placement="bottom" href="https://www.github.com/CreativeTimOfficial" target="_blank">
-            <i class="fa fa-github"></i>
-            <p class="d-lg-none">GitHub</p>
-        </a>
-    </li>-->
+
                     </ul>
                 </div>
             </div>
@@ -81,37 +59,47 @@
                     <div class="row">
                         <div class="col-lg-4 ml-auto mr-auto">
                             <div class="card card-register">
-                                <h3 class="title">Bienvenue</h3>
+                                <h3 class="title">Bienvenue </h3>
                                 <div class="social-line text-center">
-                                    <a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">
-                                        <i class="fa fa-facebook-square"></i>
-                                    </a>
-                                    <a href="#pablo" class="btn btn-neutral btn-google btn-just-icon">
-                                        <i class="fa fa-google-plus"></i>
-                                    </a>
-                                    <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                    <h:form class="register-card" id="panel">
-                                        <label>Login</label>
+                                    <h:form  id="panel">
+                                        <p:outputLabel for="login" value="Login " />
+
                                         <div class="input-group form-group-no-border">
                                             <span class="input-group-addon">
                                                 <i class="nc-icon nc-user-run"></i>
                                             </span>
                                             <p:inputText required="true" id="login" class="form-control" placeholder="login" type="text" value="#{employeController.selected.login}" title="Login" />
-
+                                            <!--<p:ajax update="" event="keyup" />-->
                                         </div>
-                                        <label>Mot de passe</label>
+                                        <p:message for="login" display="tooltip" />
+
+                                        <p:outputLabel for="motDePasse" value="Mot de passe"/>
                                         <div class="input-group form-group-no-border">
                                             <span class="input-group-addon">
                                                 <i class="nc-icon nc-key-25"></i>
                                             </span>
                                             <p:password feedback="false" required="true" id="motDePasse" class="form-control" placeholder="mot de passe" value="#{employeController.selected.motDePasse}" title="mot de passe" />
                                         </div>
-
-
+                                        <p:message for="motDePasse" display="tooltip"/>
                                     </h:form>
-                                    <p:commandButton action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"></p:commandButton>
+                                    <p:commandButton id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"></p:commandButton>
+
+                                    <p:blockUI block="panel" trigger="loginButton" >
+                                        <p:graphicImage value="../images/minRolling.gif" />
+                                    </p:blockUI>
+                                    <div >
+                                        <p:ajaxStatus style="display:block;  margin-top:.5em;">
+
+                                            <f:facet name="start">
+                                                <h:outputText value="Attendez ..." />
+
+                                            </f:facet>
+                                            <f:facet name="complete">
+
+                                                <h:outputText value="mot de passe ou login est incorrect" />
+                                            </f:facet>
+                                        </p:ajaxStatus>
+                                    </div>	
                                     <div class="forgot">
                                         <a href="#" class="btn btn-link ">Mot de passe oubliée?</a>
                                     </div>
