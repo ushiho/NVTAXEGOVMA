@@ -3,6 +3,7 @@ package controller;
 import bean.Employe;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import java.io.IOException;
 import service.EmployeFacade;
 
 import java.io.Serializable;
@@ -18,6 +19,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.http.HttpSession;
+import util.SessionUtil;
+import util.VerifyRecaptchaUtil;
 
 @Named("employeController")
 @SessionScoped
@@ -191,12 +195,22 @@ public class EmployeController implements Serializable {
 
     }
 
-    public String seConnecter() {
+    public String seConnecter() throws IOException {
         int res = getFacade().seConnecter(selected);
-        if (res < 0) {
+        boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
+        if (res < 0 || recaptcha == false) {
+//            HttpSession session = SessionUtil.getSession();
+//            session.setAttribute("username", selected.getId());
             return null;
+
         } else {
-            return "profile.xhtml";
+//            SessionUtil.setAttribute("user", selected);
+//            try {
+//                SessionUtil.redirect("profile");
+//            } catch (IOException ex) {
+//                Logger.getLogger(EmployeController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            return "profile";
         }
     }
 
@@ -207,24 +221,5 @@ public class EmployeController implements Serializable {
     public void showDetail() {
         setShow(true);
     }
-
-//    public String loginProject() {
-//        boolean result = LoginDAO.login(uname, password);
-//        if (result) {
-//
-//            // get Http Session and store username
-//            HttpSession session = Util.getSession();
-//            session.setAttribute("username", uname);
-//            return "index";
-//        } else {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-//                    "Invalid Login!",
-//                    "Please Try Again!"));
-//
-//            // invalidate session, and redirect to other pages
-//            //message = "Invalid Login. Please Try Again!";
-//            return "login";
-//        }
-//    }
 
 }

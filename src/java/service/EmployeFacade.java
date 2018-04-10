@@ -63,31 +63,33 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     public int seConnecter(Employe utilisateur) {
-        if(testUtilisateur(utilisateur))return -3;
-        System.out.println(utilisateur);
+        if (testUtilisateur(utilisateur)) {
+            return -3;
+        }
         Employe existe = findByLogin(utilisateur.getLogin());
-        System.out.println(existe);
         if (existe == null) {
-            System.out.println("-1");
             return -1;
         } else if (!passUtil.testTwoPasswords(utilisateur.getMotDePasse(), existe.getMotDePasse())) {
-            System.out.println("-2");
             return -2;
         } else {
-            System.out.println(" b1 todo b1");
+            //utilisateur = clone(existe);
             return 1;
         }
     }
 
+//    public Employe clone(Employe employe){
+//        Employe clone = (Employe) employe.clone();
+//    }
+    
     private boolean testUtilisateur(Employe utilisateur) {
-        return utilisateur==null;
+        return utilisateur == null;
     }
 
     public int save(Employe utilisateur) {
         if (utilisateur == null) {
             return -1;
         }
-      utilisateur.setMotDePasse(HashageUtil.sha256(utilisateur.getMotDePasse()));
+        utilisateur.setMotDePasse(HashageUtil.sha256(utilisateur.getMotDePasse()));
         create(utilisateur);
         return 1;
     }

@@ -2,25 +2,36 @@ package util;
 
 import bean.Employe;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class SessionUtil {
 
     private static final SessionUtil instance = new SessionUtil();
+    private static List<Employe> users = new ArrayList();
 
     private SessionUtil() {
     }
 
     public static void registerUser(Employe user) {
-        //clone user before
         setAttribute("user", user);
+        if(!isConnected(user)){
+            users.add(user);
+        } else {
+        }
     }
 
-    public static Employe getConnectedUser() {
-        return (Employe) getAttribute("user");
-    }
+//    public static Employe getConnectedUser(String cle) {
+//        return (Employe) getAttribute(cle);
+//    }
 
+    private static boolean isConnected(Employe user){
+        return users.stream().anyMatch((existe) -> (existe.getLogin().equals(user.getLogin())));
+    }
+    
     public static void setAttribute(String cle, Object valeur) {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (fc != null && fc.getExternalContext() != null) {
@@ -59,5 +70,26 @@ public class SessionUtil {
     public static HttpSession getSession() {
         return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
     }
+
+    // Ajoute des methodes par hamza lotfi
+    public static HttpServletRequest getRequest() {
+        return (HttpServletRequest) FacesContext.
+                getCurrentInstance().
+                getExternalContext().getRequest();
+    }
+//
+//    public static String getUserName() {
+//        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+//        return session.getAttribute("username").toString();
+//    }
+//
+//    public static String getUserId() {
+//        HttpSession session = getSession();
+//        if (session != null) {
+//            return (String) session.getAttribute("userid");
+//        } else {
+//            return null;
+//        }
+//    }
 
 }

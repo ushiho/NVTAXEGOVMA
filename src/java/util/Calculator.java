@@ -106,11 +106,16 @@ public class Calculator {
 //        System.out.println(calculate("3+(2*5/3)"));
 //        double afterCalcultae = System.currentTimeMillis();
 //        System.out.println("calclate timing " + (afterCalcultae - beforeCalcultae));
-        String expression = "1+5<7";// or 1+5 o howa y7seb lik
+        String expression = "1+5>7";// or 1+5 o howa y7seb lik
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine jsEngine = manager.getEngineByName("JavaScript"); //BE CAREFUL about the engine name. 
         Object result = jsEngine.eval(expression); //Returns a java.lang.Boolean for the expression "1<3"
         System.out.println("ha exp " + expression + " o ha res " + result);
+        int i = 0;
+        while(i>=0){
+            System.out.println(i);
+            i ++ ;
+        }
     }
 
     public static List<String> extracteService(String expression) {
