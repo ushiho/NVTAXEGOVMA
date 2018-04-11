@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailUtil extends Object {
 
-    public int sendEmail(Email email, Employe employe) {
+    public static int sendEmail(Email email, Employe employe) {
 
         try {
 
@@ -32,7 +32,7 @@ public class EmailUtil extends Object {
         }
     }
 
-    private Message setMessage(Session mailSession, Email email, Employe employe) throws MessagingException {
+    private static Message setMessage(Session mailSession, Email email, Employe employe) throws MessagingException {
         Message msg = new MimeMessage(mailSession);
         //--[ Set the FROM, TO, DATE and SUBJECT fields
         msg.setFrom(new InternetAddress(email.getEmail()));
@@ -44,7 +44,7 @@ public class EmailUtil extends Object {
         return msg;
     }
 
-    private Session setSession(Properties props, Email email) {
+    private static Session setSession(Properties props, Email email) {
         Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -54,7 +54,7 @@ public class EmailUtil extends Object {
         return mailSession;
     }
 
-    private Properties setProps() {
+    private static Properties setProps() {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); // for gmail use smtp.gmail.com
         props.put("mail.smtp.auth", "true");

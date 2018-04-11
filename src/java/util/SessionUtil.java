@@ -1,9 +1,12 @@
 package util;
 
 import bean.Employe;
+import controller.EmployeController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,9 +26,6 @@ public class SessionUtil {
         }
     }
 
-//    public static Employe getConnectedUser(String cle) {
-//        return (Employe) getAttribute(cle);
-//    }
     private static boolean isConnected(Employe user) {
         return users.stream().anyMatch((existe) -> (existe.getLogin().equals(user.getLogin())));
     }
@@ -58,9 +58,9 @@ public class SessionUtil {
     }
 
     public static void redirect(String pagePath) throws IOException {
-//        if (!pagePath.endsWith(".xhtml")) {
-//            pagePath += ".xhtml";
-//        }
+          if (!pagePath.endsWith(".xhtml")) {
+            pagePath += ".xhtml";
+        }
         FacesContext.getCurrentInstance().getExternalContext().redirect(pagePath);
 
     }
@@ -69,25 +69,19 @@ public class SessionUtil {
         return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
     }
 
-    // Ajoute des methodes par hamza lotfi
+    // Ajoute des methodes par hamza lotfi \\
+    ///////*|*\\\\\\\\
     public static HttpServletRequest getRequest() {
         return (HttpServletRequest) FacesContext.
                 getCurrentInstance().
                 getExternalContext().getRequest();
     }
-//
-//    public static String getUserName() {
-//        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-//        return session.getAttribute("username").toString();
-//    }
-//
-//    public static String getUserId() {
-//        HttpSession session = getSession();
-//        if (session != null) {
-//            return (String) session.getAttribute("userid");
-//        } else {
-//            return null;
-//        }
-//    }
 
+    public static void redirectToPage(String page) {
+        try {
+            SessionUtil.redirect(page);
+        } catch (IOException ex) {
+            Logger.getLogger(EmployeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

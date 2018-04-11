@@ -1,10 +1,9 @@
 package controller;
 
-import bean.Employe;
+import bean.Notification;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
-import java.io.IOException;
-import service.EmployeFacade;
+import service.NotificationFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,48 +18,24 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.HttpSession;
-import util.SessionUtil;
-import util.VerifyRecaptchaUtil;
 
-@Named("employeController")
+@Named("notificationController")
 @SessionScoped
-public class EmployeController implements Serializable {
+public class NotificationController implements Serializable {
 
     @EJB
-    private EmployeFacade ejbFacade;
-    private List<Employe> items = null;
-    private Employe selected;
-    private boolean show;
-    private String msg;
+    private service.NotificationFacade ejbFacade;
+    private List<Notification> items = null;
+    private Notification selected;
 
-    public EmployeController() {
+    public NotificationController() {
     }
 
-    public EmployeFacade getEjbFacade() {
-        return ejbFacade;
-    }
-
-    public void setEjbFacade(EmployeFacade ejbFacade) {
-        this.ejbFacade = ejbFacade;
-    }
-
-    public boolean isShow() {
-        return show;
-    }
-
-    public void setShow(boolean show) {
-        this.show = show;
-    }
-
-    public Employe getSelected() {
-        if (selected == null) {
-            selected = new Employe();
-        }
+    public Notification getSelected() {
         return selected;
     }
 
-    public void setSelected(Employe selected) {
+    public void setSelected(Notification selected) {
         this.selected = selected;
     }
 
@@ -70,44 +45,36 @@ public class EmployeController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private EmployeFacade getFacade() {
+    private NotificationFacade getFacade() {
         return ejbFacade;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Employe prepareCreate() {
-        selected = new Employe();
+    public Notification prepareCreate() {
+        selected = new Notification();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("EmployeCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotificationCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("EmployeUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NotificationUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("EmployeDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotificationDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Employe> getItems() {
+    public List<Notification> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -118,8 +85,8 @@ public class EmployeController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction == PersistAction.CREATE) {
-                    getFacade().save(selected);
+                if (persistAction != PersistAction.DELETE) {
+                    getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
@@ -142,29 +109,29 @@ public class EmployeController implements Serializable {
         }
     }
 
-    public Employe getEmploye(java.lang.Long id) {
+    public Notification getNotification(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Employe> getItemsAvailableSelectMany() {
+    public List<Notification> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Employe> getItemsAvailableSelectOne() {
+    public List<Notification> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Employe.class)
-    public static class EmployeControllerConverter implements Converter {
+    @FacesConverter(forClass = Notification.class)
+    public static class NotificationControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            EmployeController controller = (EmployeController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "employeController");
-            return controller.getEmploye(getKey(value));
+            NotificationController controller = (NotificationController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "notificationController");
+            return controller.getNotification(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -184,42 +151,15 @@ public class EmployeController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Employe) {
-                Employe o = (Employe) object;
+            if (object instanceof Notification) {
+                Notification o = (Notification) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Employe.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Notification.class.getName()});
                 return null;
             }
         }
 
     }
 
-    public void seConnecter() throws IOException {
-        int res = getFacade().seConnecter(selected);
-        boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
-        System.out.println(res + "ha recaptcha : " + recaptcha);
-        if (res > 0) {
-            SessionUtil.redirectToPage("profile.xhtml");
-        }
-    }
-
-    
-
-    public void hideDetail() {
-        setShow(false);
-    }
-
-    public void showDetail() {
-        setShow(true);
-    }
-
-    public Employe getConnected() {
-        return ejbFacade.getConnectedUser();
-    }
-
-    public void deconnecter() {
-        ejbFacade.logout();
-        SessionUtil.redirectToPage("login.xhtml");
-    }
 }

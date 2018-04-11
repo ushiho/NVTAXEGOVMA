@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 import util.PassUtil;
 import util.HashageUtil;
 import util.SessionUtil;
@@ -206,8 +207,12 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     public Employe getConnectedUser() {
-        Employe connected = clone((Employe) SessionUtil.getAttribute("user"));
+        Employe connected = (Employe) SessionUtil.getAttribute("user");
         return connected;
     }
 
+    public void logout() {
+        HttpSession session = SessionUtil.getSession();
+        session.invalidate();
+    }
 }

@@ -69,7 +69,7 @@
                             <a href="../documentation/tutorial-components.html" target="_blank" class="nav-link"><i class="nc-icon nc-bell-55"></i>  Notification</a>
                         </li>
                         <li class="nav-item">
-                            <a href="../documentation/tutorial-components.html" target="_blank" class="nav-link"><i class="nc-icon nc-lock-circle-open"></i>  Déconnexion</a>
+                            <p:commandLink action="#{employeController.deconnecter()}" target="_blank" class="nav-link"><i class="nc-icon nc-lock-circle-open"></i>Déconnexion</p:commandLink>
                         </li>
 
                     </ul>
@@ -86,7 +86,17 @@
             <div class="main">
                 <div class="section profile-content">
                     <div class="container">
+
                         <div class="owner">
+                            <div class="avatar"></div>
+                            <div class="name">
+                                <h4 class="title">
+                                    <p:outputLabel value="#{employeController.connected.preNom} #{employeController.connected.nom}"/>
+                                    <br /></h4>
+                                <h6 class="description">
+                                    <p:outputLabel value="#{employeController.connected.profession}"/>
+                                </h6>
+                            </div>
                         </div>
                         <div class="row tim-row">
                             <div class="col-lg-3 col-md-6">
@@ -181,7 +191,6 @@
                                 </div>
                             </div>
                             <div class="col-lg-8 col-md-12">
-                                <h3 class="text-center">IDENTITÉ D'UTILISATEUR</h3>
                                 <div class="space-top">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -203,7 +212,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group has-success">
-                                                <p:outputLabel value="#{employeController.connected.nom}" class="form-control form-control-success"/>
+                                                <p:outputLabel value="#{employeController.connected.preNom} #{employeController.connected.nom}" class="form-control form-control-success"/>
                                             </div>
                                         </div>
                                     </div>
