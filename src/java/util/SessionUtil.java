@@ -18,20 +18,18 @@ public class SessionUtil {
 
     public static void registerUser(Employe user) {
         setAttribute("user", user);
-        if(!isConnected(user)){
+        if (!isConnected(user)) {
             users.add(user);
-        } else {
         }
     }
 
 //    public static Employe getConnectedUser(String cle) {
 //        return (Employe) getAttribute(cle);
 //    }
-
-    private static boolean isConnected(Employe user){
+    private static boolean isConnected(Employe user) {
         return users.stream().anyMatch((existe) -> (existe.getLogin().equals(user.getLogin())));
     }
-    
+
     public static void setAttribute(String cle, Object valeur) {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (fc != null && fc.getExternalContext() != null) {

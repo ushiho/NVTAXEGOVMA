@@ -1,0 +1,192 @@
+**********services**********
+    public Client clone(Client client ){
+        Client cloneclient =new Client ();
+        cloneclient.setId(client.getId());
+        cloneclient.setAdresse(client.getAdresse());
+        cloneclient.setAgence(client.getAgence());
+        cloneclient.setCin(client.getCin());
+        cloneclient.setNom(client.getNom());
+        cloneclient.setPrenom(client.getPrenom());
+        cloneclient.setTel(client.getTel());
+        cloneclient.setType(client.getType());
+        cloneclient.setRue(client.getRue());
+        cloneclient.setNumCompteur(client.getNumCompteur());
+        return cloneclient;
+    }
+
+
+    public void addItems(List<Client> clients){
+        for (Client client : clients) {
+            create(client);
+            
+        }
+        
+    }
+
+********view *************
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <h:form id="formid">
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <p:panelGrid columns="2">
+                
+                    <p:outputLabel value="Tel:" for="tel" />
+                    <p:inputText id="tel" value="#{clientController.selected.tel}" title="Tel" />
+                    <p:outputLabel value="NumCompteur:" for="numCompteur" />
+                    <p:inputText id="numCompteur" value="#{clientController.selected.numCompteur}" title="NumCompteur" />
+                    <p:outputLabel value="Rue:" for="rue" />
+                    <p:selectOneMenu id="rue" value="#{clientController.selected.rue}" >
+                        
+                          <f:selectItems value="#{rueController.itemsAvailableSelectOne}"
+                                           var="rueItem"
+                                           itemValue="#{rueItem}" itemLabel="#{rueItem.nom}"/>
+                    
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Type:" for="type" />
+                    <p:inputText id="type" value="#{clientController.selected.type}" title="Type" />
+                    <p:outputLabel value="Cin:" for="cin" />
+                    <p:inputText id="cin" value="#{clientController.selected.cin}" title="Cin" />
+                    <p:outputLabel value="Agence:" for="agence" />
+                    <p:selectOneMenu id="agence" value="#{clientController.selected.agence}" >
+                          <f:selectItems value="#{agenceController.itemsAvailableSelectOne}"
+                                           var="agenceItem"
+                                           itemValue="#{agenceItem}" itemLabel="#{agenceItem.nom}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="numContrat:" for="id" />
+                    <p:inputText id="id" value="#{clientController.selected.id}" title="Id" />
+                    <p:outputLabel value="Nom:" for="nom" />
+                    <p:inputText id="nom" value="#{clientController.selected.nom}" title="Nom" />
+                    <p:outputLabel value="Prenom:" for="prenom" />
+                    <p:inputText id="prenom" value="#{clientController.selected.prenom}" title="Prenom" />
+                    <p:outputLabel value="Adresse:" for="adresse" />
+                    <p:inputText id="adresse" value="#{clientController.selected.adresse}" title="Adresse" />
+                    <p:commandButton action="#{clientController.addView()}" value="ajouter" update=":formid:tab"></p:commandButton>
+            </p:panelGrid>
+          
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{clientController.clientItems}" var="item" id="tab" >
+               
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Tel"/>
+                        </f:facet>
+                        <h:outputText value="#{item.tel}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="NumCompteur"/>
+                        </f:facet>
+                        <h:outputText value="#{item.numCompteur}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Rue"/>
+                        </f:facet>
+                        <h:outputText value="#{item.rue}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Type"/>
+                        </f:facet>
+                        <h:outputText value="#{item.type}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Cin"/>
+                        </f:facet>
+                        <h:outputText value="#{item.cin}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Agence"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agence}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nom"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Prenom"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prenom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Adresse"/>
+                        </f:facet>
+                        <h:outputText value="#{item.adresse}"/>
+                    </p:column>
+                        <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Action"/>
+                        </f:facet>
+                            <p:commandButton value="delete"></p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:commandButton action="#{clientController.addBd()}" value="valider"></p:commandButton>
+
+        </f:view>
+
+    </h:body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+********controller********
+
+
+    private List<Client> clientItems = new ArrayList<>(); //(getter & setter)
+
+
+
+    public void addView() {
+        Client cloneClient = ejbFacade.clone(selected);
+        clientItems.add(cloneClient);
+        setSelected(null);
+        
+    }
+    
+
+    public void addBd() {
+        ejbFacade.addItems(clientItems);
+    }
+
+
+
+
+

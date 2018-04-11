@@ -11,7 +11,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <script src='https://www.google.com/recaptcha/api.js'></script>
-        <title>Paper Kit 2 by Creative Tim</title>
+        <title>se Connecter</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -60,33 +60,52 @@
                     <div class="row">
                         <div class="col-lg-4 ml-auto mr-auto">
                             <div class="card card-register">
-                                <h3 class="title">Bienvenue </h3>
+                                <h3 class="title text-center"><span class="note">Bienvenue</span> </h3>
+                                <p:spacer></p:spacer>
                                 <div class="social-line text-center">
                                     <h:form  id="panel">
-                                        <p:outputLabel for="login" value="Login " />
-
-                                        <div class="input-group form-group-no-border">
-                                            <span class="input-group-addon">
-                                                <i class="nc-icon nc-user-run"></i>
-                                            </span>
-                                            <p:inputText required="true" id="login" class="form-control" placeholder="login" type="text" value="#{employeController.selected.login}" title="Login" />
-                                            <!--<p:ajax update="" event="keyup" />-->
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <p:outputLabel for="login" value="Login" />                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="form-group has-success">
+                                                    <div class="input-group form-group-no-border">
+                                                        <span class="input-group-addon">
+                                                            <i class="nc-icon nc-user-run"></i>
+                                                        </span>
+                                                        <p:inputText required="true" id="login" class="form-control" placeholder="login" type="text" value="#{employeController.selected.login}" title="Login" />
+                                                        <!--<p:ajax update="" event="keyup" />-->
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <p:message for="login" display="tooltip" />
-
-                                        <p:outputLabel for="motDePasse" value="Mot de passe"/>
-                                        <div class="input-group form-group-no-border">
-                                            <span class="input-group-addon">
-                                                <i class="nc-icon nc-key-25"></i>
-                                            </span>
-                                            <p:password feedback="false" required="true" id="motDePasse" class="form-control" placeholder="mot de passe" value="#{employeController.selected.motDePasse}" title="mot de passe" />
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <p:outputLabel for="motDePasse" value="Password" />                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="form-group has-success">
+                                                    <div class="input-group form-group-no-border">
+                                                        <span class="input-group-addon">
+                                                            <i class="nc-icon nc-key-25"></i>
+                                                        </span>
+                                                        <p:password  required="true" id="motDePasse" class="form-control" placeholder="mot de passe" value="#{employeController.selected.motDePasse}" />
+                                                    </div> 
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p:message for="motDePasse" display="tooltip"/>
-                                        <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
 
+                                        <p:message for="motDePasse" display="tooltip"/>
+                                        <p:spacer></p:spacer>
+                                        <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
+                                        <p:spacer></p:spacer>
                                     </h:form>
                                     <p:commandButton id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"  ajax="true"></p:commandButton>
-                                    <div >
+                                    <div>
                                         <p:ajaxStatus style="display:block;  margin-top:.5em;">
 
                                             <f:facet name="start">
@@ -100,7 +119,7 @@
                                         </p:ajaxStatus>
                                     </div>
                                     <p:blockUI block="panel" trigger="loginButton" >
-                                        <p:graphicImage value="../images/minRolling.gif" />
+                                        <p:graphicImage value="../images/rolling.gif" />
                                     </p:blockUI>
                                     <div class="forgot">
                                         <a href="#" class="btn btn-link ">Mot de passe oubliée?</a>

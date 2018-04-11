@@ -195,22 +195,16 @@ public class EmployeController implements Serializable {
 
     }
 
-    public String seConnecter() throws IOException {
+    public void seConnecter() throws IOException {
         int res = getFacade().seConnecter(selected);
         boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
-        if (res < 0 || recaptcha == false) {
-//            HttpSession session = SessionUtil.getSession();
-//            session.setAttribute("username", selected.getId());
-            return null;
-
-        } else {
-//            SessionUtil.setAttribute("user", selected);
-//            try {
-//                SessionUtil.redirect("profile");
-//            } catch (IOException ex) {
-//                Logger.getLogger(EmployeController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-            return "profile";
+        System.out.println(res+"ha recaptcha : "+recaptcha);
+        if (res > 0 ) {
+            try {
+                SessionUtil.redirect("profile.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(EmployeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -220,6 +214,10 @@ public class EmployeController implements Serializable {
 
     public void showDetail() {
         setShow(true);
+    }
+
+    public Employe getConnected() {
+        return ejbFacade.getConnectedUser();
     }
 
 }

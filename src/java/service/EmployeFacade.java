@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import util.PassUtil;
 import util.HashageUtil;
+import util.SessionUtil;
 
 /**
  *
@@ -64,23 +65,23 @@ public class EmployeFacade extends AbstractFacade<Employe> {
 
     public int seConnecter(Employe utilisateur) {
         if (testUtilisateur(utilisateur)) {
+            System.out.println("-3");
             return -3;
         }
         Employe existe = findByLogin(utilisateur.getLogin());
         if (existe == null) {
+            System.out.println("-1");
             return -1;
         } else if (!passUtil.testTwoPasswords(utilisateur.getMotDePasse(), existe.getMotDePasse())) {
+            System.out.println("-2");
             return -2;
         } else {
-            //utilisateur = clone(existe);
+            System.out.println("1");
+            SessionUtil.registerUser(clone(existe));
             return 1;
         }
     }
 
-//    public Employe clone(Employe employe){
-//        Employe clone = (Employe) employe.clone();
-//    }
-    
     private boolean testUtilisateur(Employe utilisateur) {
         return utilisateur == null;
     }
@@ -89,6 +90,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         if (utilisateur == null) {
             return -1;
         }
+        System.out.println(utilisateur);
         utilisateur.setMotDePasse(HashageUtil.sha256(utilisateur.getMotDePasse()));
         create(utilisateur);
         return 1;
@@ -123,13 +125,26 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     public int modify(Employe nvUtilisateur, Employe anUtilisateur) {
-        if (nvUtilisateur == null || find(anUtilisateur.getId()) == null) {
+        if (testUtilisateur(anUtilisateur) || testUtilisateur(find(anUtilisateur.getId()))) {
             return -1;
         }
-        anUtilisateur = new Employe(nvUtilisateur.getNom(), nvUtilisateur.getPreNom(), nvUtilisateur.getCIN(),
-                nvUtilisateur.getNumTele(), nvUtilisateur.getEmail(), nvUtilisateur.getProfession());
+        setParamToModify(nvUtilisateur, anUtilisateur);
         edit(anUtilisateur);
         return 1;
+    }
+
+    public void setParamToModify(Employe nvUtilisateur, Employe anUtilisateur) {
+        anUtilisateur.setCIN(nvUtilisateur.getCIN());
+        anUtilisateur.setDroitFiscale(nvUtilisateur.getDroitFiscale());
+        anUtilisateur.setEmail(nvUtilisateur.getEmail());
+        anUtilisateur.setLogin(nvUtilisateur.getLogin());
+        anUtilisateur.setMotDePasse(nvUtilisateur.getMotDePasse());
+        anUtilisateur.setNom(nvUtilisateur.getNom());
+        anUtilisateur.setNumTele(nvUtilisateur.getNumTele());
+        anUtilisateur.setPreNom(nvUtilisateur.getPreNom());
+        anUtilisateur.setProfession(nvUtilisateur.getProfession());
+        anUtilisateur.setSociete(nvUtilisateur.getSociete());
+
     }
 
     public int resetPassword(Employe utilisateur) {
@@ -156,13 +171,13 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         String droit;
         switch (num) {
             case 0:
-                droit = "redacteur";
+                droit = "Redacteur";
                 break;
             case 1:
-                droit = "responsable de validation";
+                droit = "Responsable de Validation";
                 break;
             case 2:
-                droit = "responsable de paiement";
+                droit = "Responsable de Paiement";
                 break;
             default:
                 droit = null;
@@ -180,6 +195,19 @@ public class EmployeFacade extends AbstractFacade<Employe> {
             return em.createQuery("DELETE FROM Employe u WHERE u.societe.id ='" + societe.getId() + "'").executeUpdate();
         }
         return -1;
+    }
+
+    //clone the user
+    public Employe clone(Employe user) {
+        Employe clone = new Employe(user.getId(), user.getNom(), user.getPreNom(), user.getCIN(),
+                user.getNumTele(), user.getEmail(), user.getProfession(), user.getLogin(), null, user.getDroitFiscale());
+        clone.setSociete(user.getSociete());
+        return clone;
+    }
+
+    public Employe getConnectedUser() {
+        Employe connected = clone((Employe) SessionUtil.getAttribute("user"));
+        return connected;
     }
 
 }

@@ -6,11 +6,14 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -36,6 +39,8 @@ public class Employe implements Serializable {
     private String login;
     private String motDePasse;
     private int droitFiscale;//1 , 2 , 3 , 0= tt les droits
+    @OneToMany(mappedBy = "emeteur")
+    private List<Notification> notifications;
 
     public Employe() {
     }
@@ -44,13 +49,17 @@ public class Employe implements Serializable {
         this.id = id;
     }
 
-    public Employe(String nom, String preNom, String CIN, String numTele, String email, String profession) {
+    public Employe(Long id, String nom, String preNom, String CIN, String numTele, String email, String profession, String login, String motDePasse, int droitFiscale) {
+        this.id = id;
         this.nom = nom;
         this.preNom = preNom;
         this.CIN = CIN;
         this.numTele = numTele;
         this.email = email;
         this.profession = profession;
+        this.login = login;
+        this.motDePasse = motDePasse;
+        this.droitFiscale = droitFiscale;
     }
 
     public String getNom() {
@@ -142,6 +151,17 @@ public class Employe implements Serializable {
 
     public void setDroitFiscale(int droitFiscale) {
         this.droitFiscale = droitFiscale;
+    }
+
+    public List<Notification> getNotifications() {
+        if (notifications == null) {
+            notifications = new ArrayList();
+        }
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     @Override
