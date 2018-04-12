@@ -39,6 +39,8 @@ public class Employe implements Serializable {
     private String login;
     private String motDePasse;
     private int droitFiscale;//1 , 2 , 3 , 0= tt les droits
+    private String reponse;
+    private int questionChoisi;
     @OneToMany(mappedBy = "emeteur")
     private List<Notification> notifications;
 
@@ -162,6 +164,22 @@ public class Employe implements Serializable {
 
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
+    }
+
+    public String getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
+
+    public int getQuestionChoisi() {
+        return questionChoisi;
+    }
+
+    public void setQuestionChoisi(int questionChoisi) {
+        this.questionChoisi = questionChoisi;
     }
 
     @Override

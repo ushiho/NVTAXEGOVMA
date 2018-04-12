@@ -30,6 +30,10 @@
                                            var="societeItem"
                                            itemValue="#{societeItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="PasswordEmail:" for="passwordEmail" />
+                        <p:inputText id="passwordEmail" value="#{dgiController.selected.passwordEmail}" title="PasswordEmail" />
+                        <p:outputLabel value="Email:" for="email" />
+                        <p:inputText id="email" value="#{dgiController.selected.email}" title="Email" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{dgiController.create}" value="#{bundle.Save}" update="display,:DgiListForm:datalist,:growl" oncomplete="handleSubmit(args,'DgiCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DgiCreateDialog.hide()"/>
@@ -38,4 +42,5 @@
         </p:dialog>
 
     </ui:composition>
+
 </html>

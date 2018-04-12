@@ -29,6 +29,8 @@ public class Dgi implements Serializable {
     private Long id;
     private String login;
     private String password;
+    private String passwordEmail;
+    private String email;
     @OneToOne
     private CompteBanquaire compteBanquaire;
     @ManyToOne
@@ -43,10 +45,12 @@ public class Dgi implements Serializable {
         this.id = id;
     }
 
-    public Dgi(Long id, String login, String password) {
+    public Dgi(Long id, String login, String password, String passwordEmail, String email) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.passwordEmail = passwordEmail;
+        this.email = email;
     }
 
     public String getLogin() {
@@ -104,6 +108,22 @@ public class Dgi implements Serializable {
 
     public void setEmails(List<Email> emails) {
         this.emails = emails;
+    }
+
+    public String getPasswordEmail() {
+        return passwordEmail;
+    }
+
+    public void setPasswordEmail(String passwordEmail) {
+        this.passwordEmail = passwordEmail;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

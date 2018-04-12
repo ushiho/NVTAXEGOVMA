@@ -79,7 +79,7 @@ public class DemandeAdhesionFacade extends AbstractFacade<DemandeAdhesion> {
     private Societe setSocieteParams(DemandeAdhesion demandeAdhesion) throws NumberFormatException {
         Societe societe = demandeAdhesion.getSociete();
         societe.setIdFiscal(new Long(passUtil.generate(12, 1)));
-        societe.setPassword(passUtil.generatePassAndHash(6, 4));
+        societe.setPassword(passUtil.generatePass(6, 4));
         return societe;
     }
 

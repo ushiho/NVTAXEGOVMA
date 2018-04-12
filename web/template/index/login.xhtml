@@ -104,17 +104,17 @@
                                         <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
                                         <p:spacer></p:spacer>
                                     </h:form>
-                                    <p:commandButton id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"  ajax="true"></p:commandButton>
+                                    <p:commandLink id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"  ajax="true"></p:commandLink>
                                     <div>
                                         <p:ajaxStatus style="display:block;  margin-top:.5em;">
 
                                             <f:facet name="start">
-                                                <h:outputText value="Attendez ..." />
+                                                <h6><h:outputText class="text-info" value="Attendez ..." /></h6>
 
                                             </f:facet>
                                             <f:facet name="complete">
 
-                                                <h:outputText value="mot de passe ou login est incorrect" />
+                                                <h6><h:outputText class="text-danger" value="mot de passe ou login est incorrect" /></h6>
                                             </f:facet>
                                         </p:ajaxStatus>
                                     </div>

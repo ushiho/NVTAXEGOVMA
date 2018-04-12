@@ -249,6 +249,81 @@
                                             </div>
                                         </h:panelGroup>
                                     </h:form>
+                                    
+                                    <f:view>
+
+
+                                        <h:form id="declarationis">
+                                            <h1><h:outputText value="List"/></h1>
+                                            <p:dataTable value="#{exerciceISController.items}" var="item">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Id"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.id}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="DateDebut"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.dateDebut}">
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="DateFin"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.dateFin}">
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Societe"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.societe}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="DeclarationIs"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.declarationIs}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="nFacture"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.nFacture}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Produits"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.produits}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Charges"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.charges}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Deductibles"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.deductibles}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="NonDeductibles"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.nonDeductibles}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </f:view>
+
 
                                 </div>
                                 <br />

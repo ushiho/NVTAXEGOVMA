@@ -14,10 +14,6 @@
                     <p:panelGrid columns="2" rendered="#{emailController.selected != null}">
                         <p:outputLabel value="#{bundle.EditEmailLabel_id}" for="id" />
                         <p:inputText id="id" value="#{emailController.selected.id}" title="#{bundle.EditEmailTitle_id}" />
-                        <p:outputLabel value="#{bundle.EditEmailLabel_email}" for="email" />
-                        <p:inputText id="email" value="#{emailController.selected.email}" title="#{bundle.EditEmailTitle_email}" />
-                        <p:outputLabel value="#{bundle.EditEmailLabel_password}" for="password" />
-                        <p:inputText id="password" value="#{emailController.selected.password}" title="#{bundle.EditEmailTitle_password}" />
                         <p:outputLabel value="#{bundle.EditEmailLabel_subject}" for="subject" />
                         <p:inputText id="subject" value="#{emailController.selected.subject}" title="#{bundle.EditEmailTitle_subject}" />
                         <p:outputLabel value="#{bundle.EditEmailLabel_contenu}" for="contenu" />

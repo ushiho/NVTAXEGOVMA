@@ -21,24 +21,19 @@ public class PassUtil {
     public PassUtil() {
     }
 
-    public String passToSh1(String pass) {
-        System.out.println("lhashage :"+HashageUtil.sha256(pass));
-        System.out.println("pssd : "+HashageUtil.sha256(pass));
+    public static String passToSh1(String pass) {
         return HashageUtil.sha256(pass);
     }
 
-    public boolean testTwoPasswords(String pass1, String pass2) {
-        System.out.println("pass1 : "+passToSh1(pass1));
-        System.out.println("pass2 : "+pass2);
+    public static boolean testTwoPasswords(String pass1, String pass2) {
         return passToSh1(pass1).equals(pass2);
     }
 
-    public String generatePassAndHash(int len, int dic) {
-        String result = generate(len, dic);
-        return passToSh1(result);
+    public static String generatePass(int len, int dic) {
+        return generate(len, dic);
     }
 
-    public String generate(int len, int dic) {
+    public static String generate(int len, int dic) {
         String result = "";
         String decimal = dicimales(dic);
         for (int i = 0; i < len; i++) {
@@ -48,7 +43,7 @@ public class PassUtil {
         return result;
     }
 
-    public String dicimales(int dic) {
+    public static String dicimales(int dic) {
         switch (dic) {
             case 1:
                 return NUMERIC;

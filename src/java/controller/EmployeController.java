@@ -199,7 +199,7 @@ public class EmployeController implements Serializable {
         int res = getFacade().seConnecter(selected);
         boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
         System.out.println(res + "ha recaptcha : " + recaptcha);
-        if (res > 0) {
+        if (res > 0 ) {
             SessionUtil.redirectToPage("profile.xhtml");
         }
     }
@@ -222,4 +222,9 @@ public class EmployeController implements Serializable {
         ejbFacade.logout();
         SessionUtil.redirectToPage("login.xhtml");
     }
+    
+    public void resetPass(){
+        ejbFacade.resetPassword(selected);
+    }
+   
 }

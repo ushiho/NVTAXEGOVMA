@@ -25,9 +25,8 @@ import util.SessionUtil;
 @Stateless
 public class EmployeFacade extends AbstractFacade<Employe> {
 
-    private final PassUtil passUtil = new PassUtil();
-    private final EmailUtil emailUtil = new EmailUtil();
 
+    private final EmailUtil emailUtil = new EmailUtil();
     @PersistenceContext(unitName = "TaxeGOVMAPU")
     private EntityManager em;
 
@@ -58,7 +57,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         Societe societe = societeFacade.find(contribuable.getLogin());
         if (societe == null) {
             return -1;
-        } else if (!passUtil.testTwoPasswords(contribuable.getMotDePasse(), societe.getPassword())) {
+        } else if (!PassUtil.testTwoPasswords(contribuable.getMotDePasse(), societe.getPassword())) {
             return -2;
         }
         return 1;
@@ -73,7 +72,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         if (existe == null) {
             System.out.println("-1");
             return -1;
-        } else if (!passUtil.testTwoPasswords(utilisateur.getMotDePasse(), existe.getMotDePasse())) {
+        } else if (!PassUtil.testTwoPasswords(utilisateur.getMotDePasse(), existe.getMotDePasse())) {
             System.out.println("-2");
             return -2;
         } else {
@@ -112,10 +111,10 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     private void setPassAndLogin(Employe utilisateur) {
-        String login = passUtil.generate(12, 1);
-        String pass = passUtil.generatePassAndHash(6, 4);
+        String login = PassUtil.generate(12, 1);
+        String pass = PassUtil.generatePass(6, 4);
         while (findByLogin(login) != null) {
-            login = passUtil.generatePassAndHash(12, 1);
+            login = PassUtil.generatePass(12, 1);
         }
         utilisateur.setMotDePasse(pass);
         utilisateur.setLogin(login);
@@ -149,13 +148,16 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     public int resetPassword(Employe utilisateur) {
-        if (find(utilisateur.getId()) == null) {
+        if (testUtilisateur(utilisateur) || findByLogin(utilisateur.getLogin()) == null) {
             return -1;
         }
-        utilisateur.setMotDePasse(passUtil.generatePassAndHash(6, 4));
-        Email email = emailFacade.creerMsgGenererPass(utilisateur.getLogin(), utilisateur.getMotDePasse(), 3);
+        String psswd = PassUtil.generatePass(6, 4) ;
+        System.out.println(psswd);
+        System.out.println(utilisateur.getEmail());
+        utilisateur.setMotDePasse(HashageUtil.sha256(psswd));
+        Email email = emailFacade.creerMsgGenererPass(utilisateur.getLogin(), psswd, 3);
         if (emailUtil.sendEmail(email, utilisateur) < 0) {
-            return -1;
+            return -2;
         }
         return 1;
     }
@@ -215,4 +217,6 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         HttpSession session = SessionUtil.getSession();
         session.invalidate();
     }
+    
+    
 }

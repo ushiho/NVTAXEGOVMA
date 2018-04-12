@@ -14,10 +14,6 @@
                     <p:panelGrid columns="2" rendered="#{emailController.selected != null}">
                         <h:outputText value="#{bundle.ViewEmailLabel_id}"/>
                         <h:outputText value="#{emailController.selected.id}" title="#{bundle.ViewEmailTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewEmailLabel_email}"/>
-                        <h:outputText value="#{emailController.selected.email}" title="#{bundle.ViewEmailTitle_email}"/>
-                        <h:outputText value="#{bundle.ViewEmailLabel_password}"/>
-                        <h:outputText value="#{emailController.selected.password}" title="#{bundle.ViewEmailTitle_password}"/>
                         <h:outputText value="#{bundle.ViewEmailLabel_subject}"/>
                         <h:outputText value="#{emailController.selected.subject}" title="#{bundle.ViewEmailTitle_subject}"/>
                         <h:outputText value="#{bundle.ViewEmailLabel_contenu}"/>

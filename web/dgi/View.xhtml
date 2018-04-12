@@ -12,6 +12,8 @@
             <h:form id="DgiViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dgiController.selected != null}">
+                        <h:outputText value="#{bundle.ListEmailTitle_email}"/>
+                        <h:outputText value="#{bundle.ListEmailTitle_password}"/>
                         <h:outputText value="#{bundle.ViewDgiLabel_login}"/>
                         <h:outputText value="#{dgiController.selected.login}" title="#{bundle.ViewDgiTitle_login}"/>
                         <h:outputText value="#{bundle.ViewDgiLabel_password}"/>
