@@ -60,7 +60,8 @@
                     <div class="row">
                         <div class="col-lg-4 ml-auto mr-auto">
                             <div class="card card-register">
-                                <h3 class="title text-center"><span class="note">Bienvenue</span> </h3>
+                                
+                                <h5 class="title text-center"><span class="note">INFORMATION D'INSCRIPTION</span> </h5>
                                 <p:spacer></p:spacer>
                                 <div class="social-line text-center">
                                     <h:form  id="panel">
@@ -101,10 +102,11 @@
 
                                         <p:message for="motDePasse" display="tooltip"/>
                                         <p:spacer></p:spacer>
-                                        <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
+                                        <!--<div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>-->
                                         <p:spacer></p:spacer>
                                     </h:form>
-                                    <p:commandLink id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block btn-round" update="panel"  ajax="true"></p:commandLink>
+                                    <p:commandLink id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block " update="panel"  ajax="true">
+                                    </p:commandLink>
                                     <div>
                                         <p:ajaxStatus style="display:block;  margin-top:.5em;">
 
@@ -122,7 +124,7 @@
                                         <p:graphicImage value="../images/rolling.gif" />
                                     </p:blockUI>
                                     <div class="forgot">
-                                        <a href="#" class="btn btn-link ">Mot de passe oubliée?</a>
+                                        <a href="resetPassword.xhtml" class="note" ><h6>MOT DE PASSE OUBLIÉ ?</h6></a>
                                     </div>
                                 </div>  
                             </div>

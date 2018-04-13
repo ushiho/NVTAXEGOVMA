@@ -25,8 +25,6 @@ import util.SessionUtil;
 @Stateless
 public class EmployeFacade extends AbstractFacade<Employe> {
 
-
-    private final EmailUtil emailUtil = new EmailUtil();
     @PersistenceContext(unitName = "TaxeGOVMAPU")
     private EntityManager em;
 
@@ -102,7 +100,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         }
         setPassAndLogin(utilisateur);
         Email email = emailFacade.creerMsgGenererPass(utilisateur.getLogin(), utilisateur.getMotDePasse(), 1);
-        if (emailUtil.sendEmail(email, utilisateur) < 0) {
+        if (EmailUtil.sendEmail(email, utilisateur) < 0) {
             return -2;
         }
         create(utilisateur);
@@ -148,18 +146,31 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     public int resetPassword(Employe utilisateur) {
-        if (testUtilisateur(utilisateur) || findByLogin(utilisateur.getLogin()) == null) {
+        Employe existe = findByLogin(utilisateur.getLogin());
+        if (testUtilisateur(utilisateur) || testUtilisateur(existe)) {
             return -1;
-        }
-        String psswd = PassUtil.generatePass(6, 4) ;
-        System.out.println(psswd);
-        System.out.println(utilisateur.getEmail());
-        utilisateur.setMotDePasse(HashageUtil.sha256(psswd));
-        Email email = emailFacade.creerMsgGenererPass(utilisateur.getLogin(), psswd, 3);
-        if (emailUtil.sendEmail(email, utilisateur) < 0) {
+        } else if (verifyQuestion(existe, utilisateur.getQuestionChoisi(), utilisateur.getReponse()) < 0) {
+            System.out.println("-2");
             return -2;
         }
+        String psswd = PassUtil.generatePass(6, 4);
+        if (EmailUtil.sendEmail(emailFacade.creerMsgGenererPass(utilisateur.getLogin(), psswd, 3), utilisateur) < 0) {
+            System.out.println("-3");
+            return -3;
+        }
+        existe.setMotDePasse(HashageUtil.sha256(psswd));
+        edit(existe);
         return 1;
+    }
+
+    private int verifyQuestion(Employe employe, int question, String reponse) {
+        if (employe.getQuestionChoisi() != question) {
+            return -1;
+        } else if (!employe.getReponse().equals(reponse)) {
+            return -2;
+        } else {
+            return 1;
+        }
     }
 
     public int deleteFromSimplSer(Employe contribuable, Employe utilisateur) {
@@ -217,6 +228,5 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         HttpSession session = SessionUtil.getSession();
         session.invalidate();
     }
-    
-    
+
 }

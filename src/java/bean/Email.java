@@ -39,6 +39,12 @@ public class Email implements Serializable {
         this.contenu = contenu;
     }
 
+    public Email(String subject, String contenu, int type) {
+        this.subject = subject;
+        this.contenu = contenu;
+        this.type = type;
+    }
+
     public Email() {
     }
 
@@ -53,8 +59,6 @@ public class Email implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    
 
     public String getSubject() {
         return subject;

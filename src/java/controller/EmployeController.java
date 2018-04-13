@@ -19,7 +19,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.HttpSession;
 import util.SessionUtil;
 import util.VerifyRecaptchaUtil;
 
@@ -32,7 +31,7 @@ public class EmployeController implements Serializable {
     private List<Employe> items = null;
     private Employe selected;
     private boolean show;
-    private String msg;
+    private String path;
 
     public EmployeController() {
     }
@@ -64,6 +63,14 @@ public class EmployeController implements Serializable {
         this.selected = selected;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -72,14 +79,6 @@ public class EmployeController implements Serializable {
 
     private EmployeFacade getFacade() {
         return ejbFacade;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     public Employe prepareCreate() {
@@ -199,12 +198,10 @@ public class EmployeController implements Serializable {
         int res = getFacade().seConnecter(selected);
         boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
         System.out.println(res + "ha recaptcha : " + recaptcha);
-        if (res > 0 ) {
+        if (res > 0) {
             SessionUtil.redirectToPage("profile.xhtml");
         }
     }
-
-    
 
     public void hideDetail() {
         setShow(false);
@@ -222,9 +219,8 @@ public class EmployeController implements Serializable {
         ejbFacade.logout();
         SessionUtil.redirectToPage("login.xhtml");
     }
-    
-    public void resetPass(){
+
+    public void resetPass() {
         ejbFacade.resetPassword(selected);
     }
-   
 }

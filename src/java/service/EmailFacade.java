@@ -30,9 +30,9 @@ public class EmailFacade extends AbstractFacade<Email> {
     }
 
     public Email creerMsgGenererPass(String login, String pass, int type) {
-        Email email = findByType(type);
+        Email email = clone(findByType(type));
         email.setContenu(email.getContenu()
-                + ", Votre login :'" + login + "' , mot de passe : '" + pass + "'");
+                + " Votre login :'" + login + "' et mot de passe : '" + pass + "'");
         return email;
     }
 
@@ -52,5 +52,11 @@ public class EmailFacade extends AbstractFacade<Email> {
 
     public Email findByType(int type) {
         return getUniqueResult("SELECT e FROM Email e WHERE e.type = '" + type + "'");
+    }
+    
+    public Email clone(Email email){
+        Email clone = new Email(email.getSubject(), email.getContenu(), email.getType());
+        clone.setDgi(email.getDgi());
+        return clone;
     }
 }
