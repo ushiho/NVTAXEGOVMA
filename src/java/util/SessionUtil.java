@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class SessionUtil {
 
     private static final SessionUtil instance = new SessionUtil();
-    private static List<Employe> users = new ArrayList();
+    private static final List<Employe> users = new ArrayList();
 
     private SessionUtil() {
     }
@@ -30,6 +30,7 @@ public class SessionUtil {
         return users.stream().anyMatch((existe) -> (existe.getLogin().equals(user.getLogin())));
     }
 
+    
     public static void setAttribute(String cle, Object valeur) {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (fc != null && fc.getExternalContext() != null) {
@@ -58,7 +59,7 @@ public class SessionUtil {
     }
 
     public static void redirect(String pagePath) throws IOException {
-          if (!pagePath.endsWith(".xhtml")) {
+        if (!pagePath.endsWith(".xhtml")) {
             pagePath += ".xhtml";
         }
         FacesContext.getCurrentInstance().getExternalContext().redirect(pagePath);
@@ -84,4 +85,5 @@ public class SessionUtil {
             Logger.getLogger(EmployeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

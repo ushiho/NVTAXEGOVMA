@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.CompteBanquaireFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.event.SelectEvent;
 
 @Named("compteBanquaireController")
 @SessionScoped
@@ -25,18 +28,29 @@ public class CompteBanquaireController implements Serializable {
 
     @EJB
     private service.CompteBanquaireFacade ejbFacade;
-    private List<CompteBanquaire> items = null;
+    private List<CompteBanquaire> items;
     private CompteBanquaire selected;
 
     public CompteBanquaireController() {
     }
 
     public CompteBanquaire getSelected() {
+        if (selected == null) {
+            selected = new CompteBanquaire();
+        }
         return selected;
     }
 
     public void setSelected(CompteBanquaire selected) {
         this.selected = selected;
+    }
+
+    public CompteBanquaireFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(CompteBanquaireFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
     }
 
     protected void setEmbeddableKeys() {
@@ -76,7 +90,7 @@ public class CompteBanquaireController implements Serializable {
 
     public List<CompteBanquaire> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = new ArrayList();
         }
         return items;
     }
@@ -159,6 +173,25 @@ public class CompteBanquaireController implements Serializable {
                 return null;
             }
         }
+
+    }
+
+    public void addToList() {
+        if (!items.contains(selected)) {
+            items.add(ejbFacade.clone(selected));
+            System.out.println("cet elem n existe pas ds liste");
+        }
+        System.out.println("elem existe ds liste");
+        selected = null;
+    }
+
+    public void removeFromList() {
+        System.out.println("ha row : " + selected);
+        items.remove(selected);
+        selected = null;
+    }
+
+    public void editElementFromlist() {
 
     }
 

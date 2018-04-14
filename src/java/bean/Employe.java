@@ -30,6 +30,7 @@ public class Employe implements Serializable {
     private String preNom;
     private String CIN;
     private String numTele;
+    private String numPortable;
     private String email;
     private String profession;
 
@@ -180,6 +181,14 @@ public class Employe implements Serializable {
 
     public void setQuestionChoisi(int questionChoisi) {
         this.questionChoisi = questionChoisi;
+    }
+
+    public String getNumPortable() {
+        return numPortable;
+    }
+
+    public void setNumPortable(String numPortable) {
+        this.numPortable = numPortable;
     }
 
     @Override

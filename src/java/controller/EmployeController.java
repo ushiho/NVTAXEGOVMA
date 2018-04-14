@@ -15,10 +15,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.context.RequestContext;
+import util.FieldValidatorUtil;
 import util.SessionUtil;
 import util.VerifyRecaptchaUtil;
 
@@ -31,7 +34,8 @@ public class EmployeController implements Serializable {
     private List<Employe> items = null;
     private Employe selected;
     private boolean show;
-    private String path;
+    private String codeSent;
+    private String confirmer;
 
     public EmployeController() {
     }
@@ -63,12 +67,20 @@ public class EmployeController implements Serializable {
         this.selected = selected;
     }
 
-    public String getPath() {
-        return path;
+    public String getCodeSent() {
+        return codeSent;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setCodeSent(String codeSent) {
+        this.codeSent = codeSent;
+    }
+
+    public String getConfirmer() {
+        return confirmer;
+    }
+
+    public void setConfirmer(String confirmer) {
+        this.confirmer = confirmer;
     }
 
     protected void setEmbeddableKeys() {
@@ -211,10 +223,14 @@ public class EmployeController implements Serializable {
         setShow(true);
     }
 
-    public Employe getConnected() {
-        return ejbFacade.getConnectedUser();
+    public Employe connectedUser() {
+        return ejbFacade.getConnectedUser("user");
     }
-
+    
+    public void userData() {
+        selected = ejbFacade.getConnectedUser("data");
+    }
+    
     public void deconnecter() {
         ejbFacade.logout();
         SessionUtil.redirectToPage("login.xhtml");
@@ -222,5 +238,48 @@ public class EmployeController implements Serializable {
 
     public void resetPass() {
         ejbFacade.resetPassword(selected);
+    }
+
+    public void isEmail() {
+        System.out.println("inside the methode");
+        System.out.println(selected.getEmail());
+        System.out.println(confirmer);
+        System.out.println(selected.getNom());
+        if (!FieldValidatorUtil.isEmail("mmmm")) {
+            showMsg("Entrer un email valid");
+        }
+
+    }
+
+    public void showMsg(String msg) {
+        RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur", "" + msg + ""));
+    }
+
+    public void sendCodeToVirefyEmail() {
+        if(ejbFacade.sendCodeToVirefyEmail(selected)<0){
+            showMsg("email est incorrect !");
+        }else{
+            SessionUtil.redirectToPage("adhesionE2");
+        }
+    }
+    
+    public void verifyCodeSent(){
+        if(!selected.getMotDePasse().equals(codeSent)){
+            showMsg("Code est incorrect !");
+        }else{
+            SessionUtil.redirectToPage("adhesionE3");
+        }
+    }
+    
+    public void testTwoPassword(){
+        if(!selected.getMotDePasse().equals(confirmer)){
+            showMsg("les deux mots de passe sont pas egaux !");
+        }else{
+            SessionUtil.redirectToPage("adhesionE4");
+        }
+    }
+    
+    public void test(){
+        
     }
 }

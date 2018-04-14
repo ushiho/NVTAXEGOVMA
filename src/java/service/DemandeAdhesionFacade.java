@@ -68,7 +68,7 @@ public class DemandeAdhesionFacade extends AbstractFacade<DemandeAdhesion> {
     private int creerSocietAndSenEmail(DemandeAdhesion demandeAdhesion) {
         Societe societe = setSocieteParams(demandeAdhesion);
         Employe contribuable = demandeAdhesion.getContribuable();
-        Email email = emailFacade.creerMsgGenererPass("" + societe.getIdFiscal(), societe.getPassword(), 1);
+        Email email = emailFacade.generatePassword("" + societe.getIdFiscal(), societe.getPassword(), 1);
         if (emailUtil.sendEmail(email, contribuable) > 1) {
             societeFacade.create(societe);
             return 1;

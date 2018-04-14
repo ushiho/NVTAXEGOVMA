@@ -7,6 +7,7 @@ package service;
 
 import bean.CompteBanquaire;
 import bean.Societe;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -70,5 +71,13 @@ public class CompteBanquaireFacade extends AbstractFacade<CompteBanquaire> {
             return 1;
         }
     }
-
+    
+    public CompteBanquaire clone(CompteBanquaire compteBanquaire){
+        CompteBanquaire clone = new CompteBanquaire(compteBanquaire.getId(), compteBanquaire.getSolde(), compteBanquaire.getRib());
+        clone.setBanque(compteBanquaire.getBanque());
+        clone.setSociete(compteBanquaire.getSociete());
+        return clone;
+    }
+    
+    
 }

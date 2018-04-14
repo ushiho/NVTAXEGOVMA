@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -40,6 +39,12 @@ public class CompteBanquaire implements Serializable {
     }
 
     public CompteBanquaire(Double solde, String rib) {
+        this.solde = solde;
+        this.rib = rib;
+    }
+
+    public CompteBanquaire(Long id, Double solde, String rib) {
+        this.id = id;
         this.solde = solde;
         this.rib = rib;
     }

@@ -13,34 +13,33 @@ package util;
  */
 public class FieldValidatorUtil
 {
-	private String regExNumber = "\\d*";
-	private String regExFloat = "[-+]?[0-9]*\\.?[0-9]+";
-	private String regExAlphabet = "\\D\\w*";
-	private String regExDate = "^\\d{1,2}[-/.]\\d{1,2}[-/.]\\d{1,4}$";
-	private String regExEmail = "^(.+)@(.+)$";
-	private String regExPhone = "^([0-9\\(\\)\\/\\+ \\-]*)$";
-	private String regExSentence = "[^A-Za-z0-9-\\s.,]";
-	private String regExSimplePassword = ".{8,}"; 
-	private String regExPassword = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[\\W]).*$"; // or alternate "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+	private static final String regExNumber = "\\d*";
+	private static final String regExFloat = "[-+]?[0-9]*\\.?[0-9]+";
+	private static final String regExAlphabet = "\\D\\w*";
+	private static final String regExDate = "^\\d{1,2}[-/.]\\d{1,2}[-/.]\\d{1,4}$";
+	private static final String regExEmail = "^(.+)@(.+)$";
+	private static final String regExPhone = "^([0-9\\(\\)\\/\\+ \\-]*)$";
+	private static final String regExSentence = "[^A-Za-z0-9-\\s.,]";
+	private static final String regExSimplePassword = ".{8,}"; 
+	private static final String regExPassword = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[\\W]).*$"; // or alternate "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
 	
-	private String regExPattern;
+	private static String regExPattern;
 	
 	/**
 	 * Initializes this FieldValidator object without any custom pattern.
 	 */
 	public FieldValidatorUtil()
 	{
-		regExPattern = null;
 	}
 	
 	/**
 	 * Initializes this FieldValidator object with custom pattern.
 	 * @param pattern
 	 */
-	public FieldValidatorUtil(String pattern)
-	{
-		regExPattern = pattern;
-	}
+//	public FieldValidatorUtil(String pattern)
+//	{
+//		regExPattern = pattern;
+//	}
 	
 	/**
 	 * Checks whether given String key matches with defined custom pattern.
@@ -48,20 +47,20 @@ public class FieldValidatorUtil
 	 * @return boolean representing successful match with pattern.
 	 * @throws UndefinedPatternException
 	 */
-	public boolean isPattern(String key) throws UndefinedPatternException
-	{
-		if(regExPattern!=null)
-			return key.matches(regExPattern);
-		else
-			throw new UndefinedPatternException("Custom Pattern Not Defined");
-	}
+//	public boolean isPattern(String key) throws UndefinedPatternException
+//	{
+//		if(regExPattern!=null)
+//			return key.matches(regExPattern);
+//		else
+//			throw new UndefinedPatternException("Custom Pattern Not Defined");
+//	}
 	
 	/**
 	 * Checks whether given String key is a valid number.
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isNumber(String key)
+	public static boolean isNumber(String key)
 	{
 		return key.matches(regExNumber);
 	}
@@ -71,7 +70,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isFloat(String key)
+	public static boolean isFloat(String key)
 	{
 		return key.matches(regExFloat);
 	}
@@ -81,7 +80,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isAlphabet(String key)
+	public static boolean isAlphabet(String key)
 	{
 		return key.matches(regExAlphabet);
 	}
@@ -92,7 +91,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isDate(String key)
+	public static boolean isDate(String key)
 	{
 		return key.matches(regExDate);
 	}
@@ -103,7 +102,7 @@ public class FieldValidatorUtil
 	 * @param formatpattern String Regular Expression for Custom Date format.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isDate(String key, String formatpattern)
+	public static boolean isDate(String key, String formatpattern)
 	{
 		return key.matches(formatpattern);
 	}
@@ -113,7 +112,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isEmail(String key)
+	public static boolean isEmail(String key)
 	{
 		return key.matches(regExEmail);
 	}
@@ -124,7 +123,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isPhone(String key)
+	public static boolean isPhone(String key)
 	{
 		return key.matches(regExPhone);
 	}
@@ -135,7 +134,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isSimplePassword(String key)
+	public static boolean isSimplePassword(String key)
 	{
 		return key.matches(regExSimplePassword);
 	}
@@ -146,7 +145,7 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isPassword(String key)
+	public static boolean isPassword(String key)
 	{
 		return key.matches(regExPassword);
 	}
@@ -157,10 +156,15 @@ public class FieldValidatorUtil
 	 * @param key String to be checked.
 	 * @return boolean representing successful match.
 	 */
-	public boolean isSentence(String key)
+	public static boolean isSentence(String key)
 	{
 		return key.matches(regExSentence);
 	}
+        
+        public static void main(String[] args) {
+            System.out.println("email : ");
+            System.out.println(isEmail("lo@.c"));
+    }
 }
 
 /**
@@ -171,12 +175,12 @@ public class FieldValidatorUtil
  
  Custom Exception, thrown when pattern is not defined and isPattern() (from FieldValidatorUtil class) is used.
  */
-class UndefinedPatternException extends Exception
-{
-	private static final long serialVersionUID = 1L;
-	
-	public UndefinedPatternException(String message)
-	{
-		super(message);
-	}
-}
+//class UndefinedPatternException extends Exception
+//{
+//	private static final long serialVersionUID = 1L;
+//	
+//	public UndefinedPatternException(String message)
+//	{
+//		super(message);
+//	}
+//}

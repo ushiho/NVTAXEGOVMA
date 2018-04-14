@@ -81,7 +81,7 @@ public class Banque implements Serializable {
 
     @Override
     public String toString() {
-        return "Banque{" + "id=" + id + ", nom=" + nom + '}';
+        return nom ;
     }
 
 }

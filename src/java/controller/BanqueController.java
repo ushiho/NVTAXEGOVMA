@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.BanqueFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -32,6 +33,9 @@ public class BanqueController implements Serializable {
     }
 
     public Banque getSelected() {
+        if(selected==null){
+            selected = new Banque();
+        }
         return selected;
     }
 
@@ -162,4 +166,11 @@ public class BanqueController implements Serializable {
 
     }
 
+//    public List banquesNoms(){
+//        List<String> noms = new ArrayList();
+//        getItemsAvailableSelectMany().forEach((banque) -> 
+//        { noms.add(banque.getNom());});
+//        
+//    }
+   
 }

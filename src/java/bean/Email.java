@@ -31,7 +31,8 @@ public class Email implements Serializable {
 //1:acceptation d'une demande adhesion
     //2: envoyer le code/login generer
     //3: restaurer le mot de passe
-    //4: autre... : fait attention au penalite vous avez une telle penaite etc 00
+    //4 : envoyer code de verification
+    //5: autre... : fait attention au penalite vous avez une telle penaite etc 00
 
     public Email(Long id, String subject, String contenu) {
         this.id = id;

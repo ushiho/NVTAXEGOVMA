@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="icon" type="image/png" href="../assets/img/favicon.ico"></link>
+        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <title>S'Adhérer</title>
+
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <meta name="viewport" content="width=device-width" />
+
+        <!-- Bootstrap core CSS     -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../assets/css/paper-kit.css?v=2.1.0" rel="stylesheet"/>
+
+        <!--  CSS for Demo Purpose, don't include it in your project     -->
+        <link href="../assets/css/demo.css" rel="stylesheet" />
+
+        <!--     Fonts and icons     -->
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
+        <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
+    </h:head>
+    <h:body onload="#{employeController.userData()}">
+        <div class="section landing-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 ml-auto mr-auto">
+                        <div class="card-header col-md-12 ml-auto mr-auto" >
+                            <p:outputLabel><h6 class="text-center note">ADHÉSION EN LIGNE AUX SERVICES SIMPL</h6></p:outputLabel>
+                        </div>
+                        <h:form id="form" class="contact-form">
+                            <div class="card-just-text">
+                                <h4><span class="note">ETAPE 4 : CHOISIR UN MOT DE PASSE</span></h4>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p:outputLabel for="login"><label class="note">MOT DE PASSE</label></p:outputLabel>
+                                    <div  class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="nc-icon nc-key-25"></i>
+                                        </span>
+                                        <p:password id="login"  required="true" value="#{employeController.confirmer}" 
+                                                    class="form-control" placeholder="mot de passe choisi"></p:password>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p:outputLabel for="email"><label class="note">CONFIRMER LE MOT DE PASSE</label></p:outputLabel>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="nc-icon nc-key-25"></i>
+                                        </span>
+                                        <p:password id="email" required="true" value="#{employeController.selected.motDePasse}" class="form-control" 
+                                                    placeholder="retapez le mot de passe"></p:password>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0"><strong>NOTE :</strong> La question choisie et la réponse vont vouz aidez en cas 
+                                        d'oublie votre mot de passe ,bien choisi la question et <strong style="background-color: #99a302">enregistrer</strong> la réponse.</p>
+                                </blockquote>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p:outputLabel for="ques"><label class="note">CHOISIR UNE QUESTION</label></p:outputLabel>
+                                    <h:selectOneMenu style="width: 100%;" id="ques" required="true" value="#{employeController.selected.questionChoisi}">
+                                        <f:selectItem itemLabel="Choisir votre question" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemValue="1" itemLabel="Quel était le prénom de votre chef ?" />
+                                        <f:selectItem itemValue="2" itemLabel="Quel est votre premier numéro de téléphone ?" />
+                                        <f:selectItem itemValue="3" itemLabel="Quel est le nom de famille de votre grand-mère ?" />
+                                        <f:selectItem itemValue="3" itemLabel="Quel est le numéro de la plaque de votre voiture ?" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <p:outputLabel for="reponse"><label>RÉPONSE</label></p:outputLabel>
+
+                                    <p:inputTextarea id="reponse" required="true" class="form-control" rows="4" value="#{employeController.selected.reponse}"></p:inputTextarea>
+                                </div>
+                            </div>
+                            <p:separator />
+                            <div class="row">
+                                <div class="col-1 ml-auto mr-auto">
+                                    <p:commandLink id="backButton" action="Wallo" class="btn btn-light btn-fill" value="ABONDONNER">
+                                        <f:ajax render="form" execute="form"/>
+
+                                    </p:commandLink>
+                                </div>
+                                <div class="col-md-2 ml-auto mr-auto">
+                                    <p:commandLink id="nextButton" action="#{employeController.testTwoPassword()}" class="btn btn-light btn-fill" value="POURSUIVRE">
+                                        <f:ajax render="form" execute="form"/>
+
+                                    </p:commandLink>
+                                </div>
+
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

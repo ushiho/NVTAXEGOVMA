@@ -99,7 +99,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
             return -1;
         }
         setPassAndLogin(utilisateur);
-        Email email = emailFacade.creerMsgGenererPass(utilisateur.getLogin(), utilisateur.getMotDePasse(), 1);
+        Email email = emailFacade.generatePassword(utilisateur.getLogin(), utilisateur.getMotDePasse(), 1);
         if (EmailUtil.sendEmail(email, utilisateur) < 0) {
             return -2;
         }
@@ -154,7 +154,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
             return -2;
         }
         String psswd = PassUtil.generatePass(6, 4);
-        if (EmailUtil.sendEmail(emailFacade.creerMsgGenererPass(utilisateur.getLogin(), psswd, 3), utilisateur) < 0) {
+        if (EmailUtil.sendEmail(emailFacade.generatePassword(utilisateur.getLogin(), psswd, 3), utilisateur) < 0) {
             System.out.println("-3");
             return -3;
         }
@@ -219,8 +219,8 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         return clone;
     }
 
-    public Employe getConnectedUser() {
-        Employe connected = (Employe) SessionUtil.getAttribute("user");
+    public Employe getConnectedUser(String cle) {
+        Employe connected = (Employe) SessionUtil.getAttribute(cle);
         return connected;
     }
 
@@ -229,4 +229,16 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         session.invalidate();
     }
 
+    public int sendCodeToVirefyEmail(Employe employeToAdd){
+        String pass = PassUtil.generatePass(6, 1);
+        employeToAdd.setMotDePasse(pass);
+        if(EmailUtil.sendEmail(emailFacade.verifyEmail(pass, 4), employeToAdd)<0){
+            System.out.println("-1");
+            return -1;
+        }
+        SessionUtil.setAttribute("data", employeToAdd);
+        return 1;
+    }
+    
+    
 }

@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="icon" type="image/png" href="../assets/img/favicon.ico"></link>
+        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <title>S'Adhérer</title>
+
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <meta name="viewport" content="width=device-width" />
+
+        <!-- Bootstrap core CSS     -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../assets/css/paper-kit.css?v=2.1.0" rel="stylesheet"/>
+
+        <!--  CSS for Demo Purpose, don't include it in your project     -->
+        <link href="../assets/css/demo.css" rel="stylesheet" />
+
+        <!--     Fonts and icons     -->
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
+        <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
+    </h:head>
+    <h:body onload="#{employeController.userData()}">
+        <div class="section landing-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 ml-auto mr-auto">
+                        <div class="card-header col-md-12 ml-auto mr-auto" >
+                            <p:outputLabel><h6 class="text-center note">ADHÉSION EN LIGNE AUX SERVICES SIMPL</h6></p:outputLabel>
+                        </div>
+
+                        <h:form id="form" class="contact-form">
+                            <div class="card-just-text">
+                                <h5><span class="note">ETAPE 5 : MODE DE PAIEMENT</span></h5>
+                            </div>
+                            <p >Saisiez vos RIB(s) pour le prélèvement bancaire :</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p:outputLabel for="banque"><label class="note">BANQUE</label></p:outputLabel>
+                                    <!--null pointer  :> associer l user au societe-->
+                                    <div class="col-md-12">
+                                        <h:selectOneMenu style="width: 100%;height: 80%;" required="true" id="banque" value="#{compteBanquaireController.selected.banque}" >
+                                            <f:selectItem itemLabel="Choisir votre banque" itemValue="" noSelectionOption="true" />
+
+                                            <f:selectItems value="#{banqueController.getItemsAvailableSelectMany()}"
+                                                           var="banqueteItem"
+                                                           itemValue="#{banqueItem}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p:outputLabel for="rib"><label class="note">RIB</label></p:outputLabel>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="nc-icon nc-caps-small"></i>
+                                        </span>
+                                        <p:inputText id="rib" required="true" value="#{compteBanquaireController.selected.rib}" class="form-control" 
+                                                     placeholder="Entrez le RIB"></p:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                            <p:commandLink update=":form save :datalist" actionListener="#{compteBanquaireController.addToList()}" id="save" value="Ajouter un RIB" class="btn btn-outline-danger btn-sm">
+                            </p:commandLink>
+                        </h:form>
+
+                        <p:separator />
+                        <div class="row" >
+                            <h:form id="datalist">
+                                <!--hna rah zayda list b element
+                                //////////////////////////////////////-->
+                                <p:dataTable  value="#{compteBanquaireController.items}" var="item"
+                                              class="table table-sm table-dark table-hover table-bordered"
+                                              selectionMode="single" rowKey="#{item.rib}"
+                                              selection="#{compteBanquaireController.selected}"
+                                              >
+
+                                    <p:ajax event="rowSelect" listener="#{compteBanquaireController.selected}" update="buttons :form"/>
+                                    <p:ajax event="rowUnselect" update="buttons"/>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="BANQUE"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.banque.nom}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="RIB"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rib}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="ETAT"/>
+                                        </f:facet>
+                                        <h:outputText value="En attent la validation"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="MIS À JOUR"/>
+                                        </f:facet>
+                                        <h:outputText value="#{session.lastAccessedTime}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <h:form id="buttons">
+                                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":datalist :form" ></p:commandButton>
+                                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
+                                                             action="#{compteBanquaireController.removeFromList()}" update=":datalist :form"></p:commandButton>
+                                        </h:form>
+                                    </f:facet>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                        <p:spacer/>
+
+                        <div class="row">
+                            <div class="col-1 ml-auto mr-auto">
+                                <p:commandLink id="backButton" action="Wallo" class="btn btn-light btn-fill" value="ABONDONNER">
+                                    <!--<f:ajax render="form" execute="form"/>-->
+
+                                </p:commandLink>
+                            </div>
+                            <div class="col-md-2 ml-auto mr-auto">
+                                <p:commandLink id="nextButton" action="#{employeController.test()}" class="btn btn-light btn-fill" value="POURSUIVRE">
+                                    <!--<f:ajax render="form" execute="form"/>-->
+
+                                </p:commandLink>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        <p:dataTable id="singleDT" var="car" value="#{dtSelectionView.cars2}" selectionMode="single" 
+                     selection="#{dtSelectionView.selectedCar}" rowKey="#{car.id}">
+            <f:facet name="header">
+                Single with Row Click
+            </f:facet>
+            <p:column headerText="Id">
+                <h:outputText value="#{car.id}" />
+            </p:column>
+            <p:column headerText="Year">
+                <h:outputText value="#{car.year}" />
+            </p:column>
+            <p:column headerText="Brand">
+                <h:outputText value="#{car.brand}" />
+            </p:column>
+            <p:column headerText="Color">
+                <h:outputText value="#{car.color}" />
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton process="singleDT" update=":form:carDetail" icon="ui-icon-search" value="View" oncomplete="PF('carDialog').show()" />
+            </f:facet>
+        </p:dataTable>-->
+<!--        <p:dataTable id="eventsDT" var="car" value="#{dtSelectionView.cars3}" selectionMode="single" 
+                     selection="#{dtSelectionView.selectedCar}" rowKey="#{car.id}">
+        <f:facet name="header">
+            Select Events
+        </f:facet>
+        <p:ajax event="rowSelect" listener="#{dtSelectionView.onRowSelect}" update=":form:msgs" />
+        <p:ajax event="rowUnselect" listener="#{dtSelectionView.onRowUnselect}" update=":form:msgs" />
+        <p:column headerText="Id">
+            <h:outputText value="#{car.id}" />
+        </p:column>
+        <p:column headerText="Year">
+            <h:outputText value="#{car.year}" />
+        </p:column>
+        <p:column headerText="Brand">
+            <h:outputText value="#{car.brand}" />
+        </p:column>
+        <p:column headerText="Color">
+            <h:outputText value="#{car.color}" />
+        </p:column>
+    </p:dataTable>-->
+    </h:body>
+</html>
+
