@@ -15,11 +15,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 @Named("compteBanquaireController")
@@ -177,20 +179,28 @@ public class CompteBanquaireController implements Serializable {
     }
 
     public void addToList() {
-        if (!items.contains(selected)) {
+        if (ejbFacade.existeInList(items, selected)) {
+            showMsg("Cet compte est déja ajouté ");
+        } else {
             items.add(ejbFacade.clone(selected));
-            System.out.println("cet elem n existe pas ds liste");
         }
-        System.out.println("elem existe ds liste");
         selected = null;
     }
 
+    public void modifyFromList(){
+        items.remove(selected);
+    }
+    
     public void removeFromList() {
         System.out.println("ha row : " + selected);
         items.remove(selected);
         selected = null;
     }
 
+    public void showMsg(String msg) {
+        RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur", "" + msg + ""));
+    }
+    
     public void editElementFromlist() {
 
     }

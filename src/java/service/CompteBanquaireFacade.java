@@ -71,13 +71,18 @@ public class CompteBanquaireFacade extends AbstractFacade<CompteBanquaire> {
             return 1;
         }
     }
-    
-    public CompteBanquaire clone(CompteBanquaire compteBanquaire){
+
+    public CompteBanquaire clone(CompteBanquaire compteBanquaire) {
         CompteBanquaire clone = new CompteBanquaire(compteBanquaire.getId(), compteBanquaire.getSolde(), compteBanquaire.getRib());
         clone.setBanque(compteBanquaire.getBanque());
         clone.setSociete(compteBanquaire.getSociete());
         return clone;
     }
-    
-    
+
+    public boolean existeInList(List<CompteBanquaire> compteBanquaires, CompteBanquaire compteBanquaire) {
+        for (CompteBanquaire item : compteBanquaires) {
+            return (item.getRib().equals(compteBanquaire.getRib()));
+        }
+        return false;
+    }
 }

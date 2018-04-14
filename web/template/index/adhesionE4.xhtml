@@ -114,7 +114,8 @@
                                     </p:column>
                                     <f:facet name="footer">
                                         <h:form id="buttons">
-                                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":datalist :form" ></p:commandButton>
+                                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":form" 
+                                                             actionListener="#{compteBanquaireController.modifyFromList()}"></p:commandButton>
                                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
                                                              action="#{compteBanquaireController.removeFromList()}" update=":datalist :form"></p:commandButton>
                                         </h:form>
