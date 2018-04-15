@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="icon" type="image/png" href="../assets/img/favicon.ico"></link>
+        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <title>S'Adhérer</title>
+
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <meta name="viewport" content="width=device-width" />
+
+        <!-- Bootstrap core CSS     -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../assets/css/paper-kit.css?v=2.1.0" rel="stylesheet"/>
+
+        <!--  CSS for Demo Purpose, don't include it in your project     -->
+        <link href="../assets/css/demo.css" rel="stylesheet" />
+
+        <!--     Fonts and icons     -->
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
+        <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
+    </h:head>
+    <h:body onload="#{employeController.userData()}">
+        <div class="section landing-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 ml-auto mr-auto">
+                        <div class="card-header col-md-12 ml-auto mr-auto" >
+                            <p:outputLabel><h6 class="text-center note">ADHÉSION EN LIGNE AUX SERVICES SIMPL</h6></p:outputLabel>
+                        </div>
+                        <p:spacer></p:spacer>
+                        <div class="card-just-text">
+                            <h5><span class="note">ETAPE 6 : CRÉATION DES UTILISATEURS</span></h5>
+                        </div>
+
+                        <p >NOTE : Créer les utilisateurs qui utiliseront les applications SIMPL, en définissant
+                            pour chacun les droits d'accés aux applications .</p>
+                        <p:spacer/>
+                        <h:form id="options">
+                            <div class="row">
+                                <div class="col-md-1 ml-auto mr-auto">
+                                    <p:commandLink update=":form :datalist options" actionListener="#{employeController.showDetailForm()}" id="save" value="AJOUTER UN UTILISATEUR" class="btn btn-outline-danger btn-sm">
+                                        <f:ajax render=":form " execute=":form "/>
+                                        <!--<f:ajax render=":annuler" execute="annuler"/>-->
+                                    </p:commandLink>
+                                </div>
+                                <div class="col-md-2 ml-auto mr-auto">
+                                    <p:commandLink update=":form options :datalist" rendered="#{employeController.showForm}" actionListener="#{employeController.hideForm()}" 
+                                                   id="annuler"   value="ANNULER" class="btn btn-outline-warning btn-sm">
+                                    </p:commandLink>
+
+                                </div>
+
+                            </div>
+                        </h:form>
+                        <p:spacer/>
+                        <h:form  id="form"  class="contact-form">
+                            <h:panelGroup rendered="#{employeController.showForm}">
+                                <p:separator/>
+                                <strong><h5 class="text-center">UTILISATEUR</h5></strong>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="nom"><label class="note">NOM</label></p:outputLabel>
+                                        <div  class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-badge"></i>
+                                            </span>
+                                            <p:inputText id="nom"  required="true" value="#{employeController.selected.nom}" 
+                                                         a:type="text" class="form-control" placeholder="votre Nom"></p:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="preNom"><label class="note">PRÉNOM</label></p:outputLabel>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-badge"></i>
+                                            </span>
+                                            <p:inputText id="preNom" required="true" value="#{employeController.selected.preNom}" 
+                                                         a:type="text" class="form-control" placeholder="Votre Prénom"></p:inputText>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="cin" ><label class="note">N° CIN</label></p:outputLabel>
+                                        <div  class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-badge"></i>
+                                            </span>
+                                            <p:inputText id="cin"  required="true" value="#{employeController.selected.CIN}" 
+                                                         a:type="text" class="form-control" placeholder="Votre N° CIN"></p:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"><p:outputLabel for="tel" ><label class="note">N° DE TÉLÉPHONE</label></p:outputLabel>
+                                        <div  class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-mobile"></i>
+                                            </span>
+                                            <p:inputText id="tel"  required="true" value="#{employeController.selected.numTele}" 
+                                                         a:type="tel" class="form-control" placeholder="Votre N° Télé"></p:inputText>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="tel" ><label class="note">DROITS FISCALE</label></p:outputLabel>
+                                        <h:selectManyCheckbox id="checkbox" value="#{employeController.droits}">
+                                            <f:selectItem itemValue="1" itemLabel="DROITS DE SAISIE" />
+                                            <f:selectItem itemValue="2" itemLabel="DROITS DE VALIDATION" />
+                                            <f:selectItem itemValue="3" itemLabel="DROITS DE DEPOT DE PAIEMNET"/>
+                                        </h:selectManyCheckbox>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="por"><label class="note">N° PORTABLE</label></p:outputLabel>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-mobile"></i>
+                                            </span>
+                                            <p:inputText id="por" required="true" value="#{employeController.selected.numPortable}" 
+                                                         a:type="tel" class="form-control" placeholder="Votre N° Portable"></p:inputText>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="emailCon" ><label class="note">ADRESSE EMAIL</label></p:outputLabel>
+                                        <div  class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-email-85"></i>
+                                            </span>
+                                            <p:inputText id="emailCon"  required="true" value="#{employeController.selected.email}" 
+                                                         a:type="email" class="form-control" placeholder="Votre adresse email"></p:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p:outputLabel for="email"><label class="note">CONFIRMER L'ADRESSE EMAIL</label></p:outputLabel>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="nc-icon nc-email-85"></i>
+                                            </span>
+                                            <p:inputText id="email" required="false" value="#{employeController.confirmer}" 
+                                                         a:type="email" class="form-control" placeholder="Confirmer votre adresse email"
+                                                         ></p:inputText>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p:commandLink update="form :datalist :options" action="#{employeController.addToList()}" id="save" value="ENREGISTRER" class="btn btn-info btn-sm">
+                                    <f:actionListener binding="#{employeController.hideForm()}"/>
+                                    <f:actionListener binding="#{employeController.showDetailTable()}"/>
+                                                                        <!--<f:ajax render=":form:checkbox" execute=":form:checkbox"/>-->
+                                                                        <!--<f:ajax render=":datalist" execute=":datalist"/>-->
+                                </p:commandLink>
+                                <p:separator />
+                            </h:panelGroup>
+                        </h:form>
+
+                        <p:spacer/>
+                        <div class="row" >
+                            <h:form id="datalist">
+                                <h:panelGroup rendered="#{employeController.showTable}">
+                                    <!--hna rah zayda list b element
+                                    //////////////////////////////////////-->
+                                    <p:dataTable  value="#{employeController.items}" var="item"
+                                                  class="table table-sm table-dark table-hover table-bordered"
+                                                  selectionMode="single" rowKey="#{item.CIN}"
+                                                  selection="#{employeController.selected}"
+                                                  >
+
+                                        <p:ajax event="rowSelect" listener="#{employeController.selected}" update="buttons :form"/>
+                                        <p:ajax event="rowUnselect" update="buttons"/>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="NOM ET PRÉNOM"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.nom} #{item.preNom}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="CIN"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.CIN}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="EMAIL"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.email}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="DROIT FISCALE"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.droitFiscale}"/>
+                                        </p:column>
+
+                                        <f:facet name="footer">
+                                            <h:form id="buttons">
+                                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":form buttons :form:checkbox :options"
+                                                                 actionListener="#{employeController.modifyFromList()}">
+                                                </p:commandButton>
+                                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
+                                                                 action="#{employeController.removeFromList()}" update=":datalist :form buttons :options"></p:commandButton>
+                                            </h:form>
+                                        </f:facet>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </h:form>
+                        </div>
+                        <p:spacer/>
+
+                        <div class="row">
+                            <div class="col-1 ml-auto mr-auto">
+                                <p:commandLink id="backButton" action="Wallo" class="btn btn-light btn-fill" value="ABONDONNER">
+                                    <!--<f:ajax render="form" execute="form"/>-->
+
+                                </p:commandLink>
+                            </div>
+                            <div class="col-md-2 ml-auto mr-auto">
+                                <p:commandLink id="nextButton" action="#{employeController.saveUsersAdedByContribuable()}" class="btn btn-light btn-fill" value="POURSUIVRE">
+                                    <!--<f:ajax render="form" execute="form"/>-->
+
+                                </p:commandLink>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

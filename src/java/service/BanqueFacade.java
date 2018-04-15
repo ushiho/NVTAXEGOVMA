@@ -28,5 +28,9 @@ public class BanqueFacade extends AbstractFacade<Banque> {
     public BanqueFacade() {
         super(Banque.class);
     }
-    
+
+    public Banque findByNom(String nom) {
+        return getUniqueResult("SELECT b FROM Banque b WHERE b.nom like '" + nom + "'");
+    }
+
 }

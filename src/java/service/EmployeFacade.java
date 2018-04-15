@@ -9,6 +9,8 @@ import bean.Email;
 import util.EmailUtil;
 import bean.Societe;
 import bean.Employe;
+import java.util.Arrays;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -51,7 +53,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         return -3;
     }
 
-    private int testIDFiscalEtPass(Employe contribuable) {
+    public int testIDFiscalEtPass(Employe contribuable) {
         Societe societe = societeFacade.find(contribuable.getLogin());
         if (societe == null) {
             return -1;
@@ -75,12 +77,14 @@ public class EmployeFacade extends AbstractFacade<Employe> {
             return -2;
         } else {
             System.out.println("1");
-            SessionUtil.registerUser(clone(existe));
+            Employe clone = clone(existe);
+            clone.setMotDePasse(null);
+            SessionUtil.registerUser(clone);
             return 1;
         }
     }
 
-    private boolean testUtilisateur(Employe utilisateur) {
+    public boolean testUtilisateur(Employe utilisateur) {
         return utilisateur == null;
     }
 
@@ -119,7 +123,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     private boolean testParams(Employe utilisateur, Employe contribuable) {
-        return utilisateur == null || contribuable == null || contribuable.getDroitFiscale() != 0;
+        return utilisateur == null || contribuable == null || !contribuable.getDroitFiscale().equals("123");
     }
 
     public int modify(Employe nvUtilisateur, Employe anUtilisateur) {
@@ -181,23 +185,58 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         return 1;
     }
 
-    public String droit(int num) {
-        String droit;
-        switch (num) {
-            case 0:
-                droit = "Redacteur";
-                break;
-            case 1:
-                droit = "Responsable de Validation";
-                break;
-            case 2:
-                droit = "Responsable de Paiement";
-                break;
-            default:
-                droit = null;
-                break;
+    public String numberTodroit(String num) {
+        if (num.length() == 3) {
+            return "Rédaction, Validation, Paiment";
         }
-        return droit;
+        if (num.length() == 2) {
+            return deuxNumToDroit(num);
+        }
+        if (num.length() == 1) {
+            return unNumToDroit(num);
+        }
+        return null;
+    }
+
+    private String deuxNumToDroit(String num) {
+        switch (num) {
+            case "12":
+                return "Rédaction, Validation";
+            case "13":
+                return "Rédaction, Paiement";
+            case "23":
+                return "Validation, Paiement";
+            default:
+                return null;
+        }
+    }
+
+    private String unNumToDroit(String num) {
+        switch (num) {
+            case "1":
+                return "Rédaction";
+            case "2":
+                return "Validation";
+            case "3":
+                return "Paiment";
+            default:
+                return null;
+        }
+    }
+
+    public String droitToNumberToSave(String droit) {
+        switch (droit) {
+            case "Rédaction, Validation, Paiment":
+                return "123";
+            case "Rédaction, Validation":
+                return "12";
+            case "Rédaction, Paiment":
+                return "13";
+            case "Validation, Paiment":
+                return "23";
+            default:
+                return null;
+        }
     }
 
     public Employe findByLogin(String login) {
@@ -214,7 +253,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     //clone the user
     public Employe clone(Employe user) {
         Employe clone = new Employe(user.getId(), user.getNom(), user.getPreNom(), user.getCIN(),
-                user.getNumTele(), user.getEmail(), user.getProfession(), user.getLogin(), null, user.getDroitFiscale());
+                user.getNumTele(), user.getEmail(), user.getProfession(), user.getLogin(), user.getMotDePasse(), user.getDroitFiscale());
         clone.setSociete(user.getSociete());
         return clone;
     }
@@ -229,16 +268,36 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         session.invalidate();
     }
 
-    public int sendCodeToVirefyEmail(Employe employeToAdd){
+    public int sendCodeToVirefyEmail(Employe employeToAdd) {
         String pass = PassUtil.generatePass(6, 1);
         employeToAdd.setMotDePasse(pass);
-        if(EmailUtil.sendEmail(emailFacade.verifyEmail(pass, 4), employeToAdd)<0){
+        if (EmailUtil.sendEmail(emailFacade.verifyEmail(pass, 4), employeToAdd) < 0) {
             System.out.println("-1");
             return -1;
         }
         SessionUtil.setAttribute("data", employeToAdd);
         return 1;
     }
-    
-    
+
+    public boolean existeInList(List<Employe> employes, Employe employe) {
+        for (Employe item : employes) {
+            return (item.getCIN().equals(employe.getCIN()));
+        }
+        return false;
+    }
+
+    public String checkboxDroitsToNum(int[] droits) {
+        char[] caracs = Arrays.toString(droits).toCharArray();
+        if (caracs.length == 9) {
+            //tous les droits; res exple : 123
+            return caracs[1] + "" + caracs[4] + "" + caracs[7];
+        }
+        if (caracs.length == 6) {
+            return caracs[1] + "" + caracs[4];
+        }
+        if (caracs.length == 3) {
+            return caracs[1] + "";
+        }
+        return null;
+    }
 }

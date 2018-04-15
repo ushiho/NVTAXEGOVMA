@@ -1,6 +1,7 @@
 package controller;
 
 import bean.CompteBanquaire;
+import bean.Employe;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import service.CompteBanquaireFacade;
@@ -20,9 +21,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
+import util.SessionUtil;
 
 @Named("compteBanquaireController")
 @SessionScoped
@@ -178,31 +178,62 @@ public class CompteBanquaireController implements Serializable {
 
     }
 
-    public void addToList() {
-        if (ejbFacade.existeInList(items, selected)) {
-            showMsg("Cet compte est déja ajouté ");
-        } else {
-            items.add(ejbFacade.clone(selected));
-        }
-        selected = null;
+    public void saveListInSession() {
+        SessionUtil.setAttribute("listCompte", items);
     }
 
-    public void modifyFromList(){
-        items.remove(selected);
+    public void listData() {
+        items = (List<CompteBanquaire>) SessionUtil.getAttribute("listCompte");
     }
-    
+
+    public void addToList() {
+        if (ejbFacade.existeInList(items, selected)) {
+            showMsg("CET COMPTE EST DÉJA AJOUTÉ");
+        } else {
+            items.add(ejbFacade.clone(selected));
+            selected = null;
+        }
+    }
+
+    public void modifyFromList() {
+        if (selected != null) {
+            items.remove(selected);
+        } else {
+            showMsg("SÉLÉCTIONNER UNE COMPTE POUR MODIFIER !");
+        }
+    }
+
     public void removeFromList() {
-        System.out.println("ha row : " + selected);
-        items.remove(selected);
-        selected = null;
+        if (selected != null) {
+            if (items.size() == 1 || selected == items.get(0)) {
+                items.remove(0);
+                selected = null;
+                return;
+            }
+            items.remove(items.indexOf(selected) + 1);
+            selected = null;
+        } else {
+            showMsg("SÉLÉCTIONNER UNE COMPTE !");
+        }
     }
 
     public void showMsg(String msg) {
         RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur", "" + msg + ""));
     }
-    
-    public void editElementFromlist() {
 
+    public void associateSocieteToCompteBancaire() {
+        System.out.println("dans E4 : ");
+        Employe data = (Employe) SessionUtil.getAttribute("data");
+        System.out.println("ha user "+data);
+        if (data != null) {
+            items.forEach((item) -> {
+                ejbFacade.associatToUser(item, data);
+            });
+            data.getSociete().setCompteBanquaires(items);
+            saveListInSession();//en cas de retour !!!
+            SessionUtil.redirectToPage("adhesionE5");
+            items = new ArrayList();
+        }
     }
 
 }

@@ -6,9 +6,10 @@
 package service;
 
 import bean.CompteBanquaire;
+import bean.Employe;
 import bean.Societe;
-import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,11 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CompteBanquaireFacade extends AbstractFacade<CompteBanquaire> {
+
+    @EJB
+    EmployeFacade employeFacade;
+    @EJB
+    BanqueFacade banqueFacade;
 
     @PersistenceContext(unitName = "TaxeGOVMAPU")
     private EntityManager em;
@@ -43,11 +49,15 @@ public class CompteBanquaireFacade extends AbstractFacade<CompteBanquaire> {
     }
 
     public int save(CompteBanquaire compteBanquaire) {
-        if (compteBanquaire == null) {
+        if (testCompte(compteBanquaire)) {
             return -1;
         }
         create(compteBanquaire);
         return 1;
+    }
+
+    private boolean testCompte(CompteBanquaire compteBanquaire) {
+        return compteBanquaire == null;
     }
 
     public int crediter(CompteBanquaire compteBanquaire, Float montant) {
@@ -84,5 +94,13 @@ public class CompteBanquaireFacade extends AbstractFacade<CompteBanquaire> {
             return (item.getRib().equals(compteBanquaire.getRib()));
         }
         return false;
+    }
+
+    public int associatToUser(CompteBanquaire compteBanquaire, Employe employe) {
+        if (testCompte(compteBanquaire) || employeFacade.testUtilisateur(employe)) {
+            return -1;
+        }
+        compteBanquaire.setSociete(employe.getSociete());
+        return 1;
     }
 }

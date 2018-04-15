@@ -7,6 +7,8 @@ import java.io.IOException;
 import service.EmployeFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,11 +33,13 @@ public class EmployeController implements Serializable {
 
     @EJB
     private EmployeFacade ejbFacade;
-    private List<Employe> items = null;
+    private List<Employe> items;
     private Employe selected;
-    private boolean show;
+    private boolean showForm;
     private String codeSent;
     private String confirmer;
+    private boolean showTable;
+    private int[] droits;
 
     public EmployeController() {
     }
@@ -48,12 +52,15 @@ public class EmployeController implements Serializable {
         this.ejbFacade = ejbFacade;
     }
 
-    public boolean isShow() {
-        return show;
+    public List<Employe> getItems() {
+        if (items == null) {
+            items = new ArrayList();
+        }
+        return items;
     }
 
-    public void setShow(boolean show) {
-        this.show = show;
+    public void setItems(List<Employe> items) {
+        this.items = items;
     }
 
     public Employe getSelected() {
@@ -81,6 +88,30 @@ public class EmployeController implements Serializable {
 
     public void setConfirmer(String confirmer) {
         this.confirmer = confirmer;
+    }
+
+    public boolean isShowForm() {
+        return showForm;
+    }
+
+    public void setShowForm(boolean showForm) {
+        this.showForm = showForm;
+    }
+
+    public boolean isShowTable() {
+        return showTable;
+    }
+
+    public void setShowTable(boolean showTable) {
+        this.showTable = showTable;
+    }
+
+    public int[] getDroits() {
+        return droits;
+    }
+
+    public void setDroits(int[] droits) {
+        this.droits = droits;
     }
 
     protected void setEmbeddableKeys() {
@@ -116,13 +147,6 @@ public class EmployeController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
-    }
-
-    public List<Employe> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -215,22 +239,34 @@ public class EmployeController implements Serializable {
         }
     }
 
-    public void hideDetail() {
-        setShow(false);
+    public void hideForm() {
+        setShowForm(false);
     }
 
-    public void showDetail() {
-        setShow(true);
+    public void showDetailForm() {
+        setShowForm(true);
+    }
+
+    public void hideTable() {
+        setShowTable(false);
+    }
+
+    public void showDetailTable() {
+        setShowTable(true);
     }
 
     public Employe connectedUser() {
         return ejbFacade.getConnectedUser("user");
     }
-    
+
     public void userData() {
         selected = ejbFacade.getConnectedUser("data");
     }
-    
+
+    public void addedUsersData() {
+        selected = ejbFacade.getConnectedUser("usersAdded");
+    }
+
     public void deconnecter() {
         ejbFacade.logout();
         SessionUtil.redirectToPage("login.xhtml");
@@ -256,30 +292,89 @@ public class EmployeController implements Serializable {
     }
 
     public void sendCodeToVirefyEmail() {
-        if(ejbFacade.sendCodeToVirefyEmail(selected)<0){
+        if (ejbFacade.sendCodeToVirefyEmail(selected) < 0) {
             showMsg("email est incorrect !");
-        }else{
+        } else {
             SessionUtil.redirectToPage("adhesionE2");
         }
     }
-    
-    public void verifyCodeSent(){
-        if(!selected.getMotDePasse().equals(codeSent)){
+
+    public void verifyCodeSent() {
+        if (!selected.getMotDePasse().equals(codeSent)) {
             showMsg("Code est incorrect !");
-        }else{
+        } else {
             SessionUtil.redirectToPage("adhesionE3");
         }
     }
-    
-    public void testTwoPassword(){
-        if(!selected.getMotDePasse().equals(confirmer)){
+
+    public void testTwoPassword() {
+        if (!selected.getMotDePasse().equals(confirmer)) {
             showMsg("les deux mots de passe sont pas egaux !");
-        }else{
+        } else {
             SessionUtil.redirectToPage("adhesionE4");
         }
     }
-    
-    public void test(){
-        
+
+    public void saveListInSession() {
+        SessionUtil.setAttribute("listEmploye", items);
+    }
+
+    public void listData() {
+        items = (List<Employe>) SessionUtil.getAttribute("listEmploye");
+    }
+
+    public void addToList() {
+        if (ejbFacade.existeInList(getItems(), selected)) {
+            showMsg("CET UILISATEUR EST DÉJA AJOUTÉ ");
+        } else {
+            selected.setDroitFiscale(ejbFacade.numberTodroit(ejbFacade.checkboxDroitsToNum(droits)));
+            items.add(ejbFacade.clone(selected));
+        }
+        selected = null;
+        confirmer = "";
+    }
+
+    public void modifyFromList() {
+        if (selected != null) {
+            items.remove(selected);
+            showDetailForm();
+        } else {
+            showMsg("SÉLÉCTIONNER UN UTILISATEUR POUR MODIFIER !");
+        }
+    }
+
+    public void removeFromList() {
+        if (selected != null) {
+            if (items.size() == 1 || selected == items.get(0)) {
+                items.remove(0);
+                selected = null;
+                return;
+            }
+            items.remove(items.indexOf(selected) + 1);
+            selected = null;
+        } else {
+            showMsg("SÉLÉCTIONNER UN UTILISATEUR !");
+        }
+    }
+
+    public void saveUsersAdedByContribuable() {
+        Employe data = (Employe) SessionUtil.getAttribute("data");
+        if (data != null && items != null) {
+            for (Employe employe : getItems()) {
+                employe.setDroitFiscale(ejbFacade.droitToNumberToSave(employe.getDroitFiscale()));
+                employe.setSociete(data.getSociete());
+                int res = ejbFacade.addUtilisateur(employe, data);
+                if (res < 0) {
+                    System.out.println(res);
+                    return;
+                }
+                SessionUtil.setAttribute("usersAdded", items);
+            }
+        }
+    }
+
+    public void test() {
+        System.out.println("in the method :");
+        System.out.println("ha checknox" + Arrays.toString(droits));
     }
 }

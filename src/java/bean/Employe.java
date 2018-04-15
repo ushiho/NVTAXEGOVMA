@@ -39,7 +39,8 @@ public class Employe implements Serializable {
     //pour un utili
     private String login;
     private String motDePasse;
-    private int droitFiscale;//1 , 2 , 3 , 0= tt les droits
+    private String droitFiscale;//"[1, 2]" = redac + valid ; "[2, 3]" = valida + paiem
+//    "[1, 2, 3]" = tt les droits
     private String reponse;
     private int questionChoisi;
     @OneToMany(mappedBy = "emeteur")
@@ -52,7 +53,7 @@ public class Employe implements Serializable {
         this.id = id;
     }
 
-    public Employe(Long id, String nom, String preNom, String CIN, String numTele, String email, String profession, String login, String motDePasse, int droitFiscale) {
+    public Employe(Long id, String nom, String preNom, String CIN, String numTele, String email, String profession, String login, String motDePasse, String droitFiscale) {
         this.id = id;
         this.nom = nom;
         this.preNom = preNom;
@@ -148,11 +149,11 @@ public class Employe implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    public int getDroitFiscale() {
+    public String getDroitFiscale() {
         return droitFiscale;
     }
 
-    public void setDroitFiscale(int droitFiscale) {
+    public void setDroitFiscale(String droitFiscale) {
         this.droitFiscale = droitFiscale;
     }
 
