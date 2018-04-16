@@ -375,6 +375,5 @@ public class EmployeController implements Serializable {
 
     public void test() {
         System.out.println("in the method :");
-        System.out.println("ha checknox" + Arrays.toString(droits));
     }
 }

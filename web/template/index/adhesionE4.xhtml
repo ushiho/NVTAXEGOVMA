@@ -123,23 +123,24 @@
                             </h:form>
                         </div>
                         <p:spacer/>
+                        <h:form>
+                            <div class="row">
+                                <div class="col-1 ml-auto mr-auto">
+                                    <p:commandLink id="backButton" action="Wallo" class="btn btn-light btn-fill" value="ABONDONNER">
+                                        <!--<f:ajax render="form" execute="form"/>-->
 
-                        <div class="row">
-                            <div class="col-1 ml-auto mr-auto">
-                                <p:commandLink id="backButton" action="Wallo" class="btn btn-light btn-fill" value="ABONDONNER">
-                                    <!--<f:ajax render="form" execute="form"/>-->
+                                    </p:commandLink>
+                                </div>
+                                <div class="col-md-2 ml-auto mr-auto">
+                                    <p:commandLink id="nextButton" action="#{compteBanquaireController.associateSocieteToCompteBancaire()}" 
+                                                   class="btn btn-light btn-fill" value="POURSUIVRE">
+                                        <!--<f:ajax render="form" execute="form"/>-->
 
-                                </p:commandLink>
+                                    </p:commandLink>
+                                </div>
+
                             </div>
-                            <div class="col-md-2 ml-auto mr-auto">
-                                <p:commandLink id="nextButton" action="#{compteBanquaireController.associateSocieteToCompteBancaire()}" class="btn btn-light btn-fill" value="POURSUIVRE">
-                                    <!--<f:ajax render="form" execute="form"/>-->
-
-                                </p:commandLink>
-                            </div>
-
-                        </div>
-
+                        </h:form>
                     </div>
                 </div>
             </div>

@@ -235,5 +235,9 @@ public class CompteBanquaireController implements Serializable {
             items = new ArrayList();
         }
     }
+    
+    public void test(){
+        System.out.println("b1 :");
+    }
 
 }
