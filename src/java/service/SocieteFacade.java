@@ -44,4 +44,11 @@ public class SocieteFacade extends AbstractFacade<Societe> {
     public Societe findByIdFiscal(long idFiscal) {
         return getUniqueResult("SELECT s FROM Societe s WHERE s.idFiscal = '" + idFiscal + "'");
     }
+
+    public Societe clone(Societe societe) {
+        Societe clone = new Societe(societe.getId(), societe.getIdFiscal(), societe.getPassword(),
+                societe.getRaisonSociale(), societe.getNumTele(), societe.getNumFix(), societe.getEmail(),
+                societe.getDeficitIS(), societe.getDeficitTVA(), societe.getRegimeTVA(), societe.getDateCreation());
+        return clone;
+    }
 }

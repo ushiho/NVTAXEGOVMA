@@ -8,7 +8,6 @@ import service.EmployeFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,6 +22,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.primefaces.context.RequestContext;
+import service.CompteBanquaireFacade;
+import service.SocieteFacade;
 import util.FieldValidatorUtil;
 import util.SessionUtil;
 import util.VerifyRecaptchaUtil;
@@ -33,10 +34,13 @@ public class EmployeController implements Serializable {
 
     @EJB
     private EmployeFacade ejbFacade;
+    @EJB
+    private CompteBanquaireFacade compteBanquaireFacade;
+    @EJB
+    private SocieteFacade societeFacade;
     private List<Employe> items;
     private Employe selected;
     private boolean showForm;
-    private String codeSent;
     private String confirmer;
     private boolean showTable;
     private int[] droits;
@@ -74,15 +78,10 @@ public class EmployeController implements Serializable {
         this.selected = selected;
     }
 
-    public String getCodeSent() {
-        return codeSent;
-    }
-
-    public void setCodeSent(String codeSent) {
-        this.codeSent = codeSent;
-    }
-
     public String getConfirmer() {
+        if (confirmer == null) {
+            confirmer = "";
+        }
         return confirmer;
     }
 
@@ -112,6 +111,14 @@ public class EmployeController implements Serializable {
 
     public void setDroits(int[] droits) {
         this.droits = droits;
+    }
+
+    public CompteBanquaireFacade getCompteBanquaireFacade() {
+        return compteBanquaireFacade;
+    }
+
+    public void setCompteBanquaireFacade(CompteBanquaireFacade compteBanquaireFacade) {
+        this.compteBanquaireFacade = compteBanquaireFacade;
     }
 
     protected void setEmbeddableKeys() {
@@ -259,12 +266,8 @@ public class EmployeController implements Serializable {
         return ejbFacade.getConnectedUser("user");
     }
 
-    public void userData() {
-        selected = ejbFacade.getConnectedUser("data");
-    }
-
-    public void addedUsersData() {
-        selected = ejbFacade.getConnectedUser("usersAdded");
+    public Employe userData() {
+        return ejbFacade.getConnectedUser("data");
     }
 
     public void deconnecter() {
@@ -292,46 +295,73 @@ public class EmployeController implements Serializable {
     }
 
     public void sendCodeToVirefyEmail() {
-        if (ejbFacade.sendCodeToVirefyEmail(selected) < 0) {
-            showMsg("email est incorrect !");
+        if (!userData().getEmail().equals(confirmer)) {
+            showMsg("LES DEUX ADRESSES EMAIL NE SONT PAS EGAUX !");
+        } else if (ejbFacade.sendCodeToVirefyEmail(userData()) < 0) {
+            showMsg("ADRESSE EMAIL EST INCORRECT !");
         } else {
+            initParams();
             SessionUtil.redirectToPage("adhesionE2");
         }
     }
 
     public void verifyCodeSent() {
-        if (!selected.getMotDePasse().equals(codeSent)) {
-            showMsg("Code est incorrect !");
+        System.out.println("dans l' E2");
+        if (!userData().getMotDePasse().equals(confirmer)) {
+            showMsg("CODE EST INCORRECT !");
         } else {
+            System.out.println((Employe) SessionUtil.getAttribute("data"));
+            System.out.println("ha  selected : " + selected);
+            initParams();
             SessionUtil.redirectToPage("adhesionE3");
         }
     }
 
+    private void initParams() {
+        confirmer = "";
+        selected = null;
+    }
+
     public void testTwoPassword() {
-        if (!selected.getMotDePasse().equals(confirmer)) {
-            showMsg("les deux mots de passe sont pas egaux !");
+        System.out.println("dans E3 : data est " + userData());
+        System.out.println("avant selected est : " + selected);
+        if (!userData().getMotDePasse().equals(confirmer)) {
+            showMsg("LES DEUX MOTS DE PASSE NE SONT PAS EGAUX !");
+        } else if (userData().getMotDePasse().length() < 6) {
+            showMsg("LE MOT DE PASSE DOIT CONTENIR AU MOINS 6 CARACTÈRES !");
         } else {
             SessionUtil.redirectToPage("adhesionE4");
+            initParams();
         }
+        System.out.println("apres selected : " + userData());
     }
 
     public void saveListInSession() {
+        System.out.println("ha list : employe.droit " + items.get(0).getDroitFiscale());
         SessionUtil.setAttribute("listEmploye", items);
+        SessionUtil.redirectToPage("validerAdhesion");
+        items = new ArrayList();
     }
 
-    public void listData() {
-        items = (List<Employe>) SessionUtil.getAttribute("listEmploye");
+    public List<Employe> listData() {
+        return (List<Employe>) SessionUtil.getAttribute("listEmploye");
     }
 
     public void addToList() {
+        System.out.println("dans E5 : l employe ajoute : " + selected);
         if (ejbFacade.existeInList(getItems(), selected)) {
             showMsg("CET UILISATEUR EST DÉJA AJOUTÉ ");
+        } else if (!selected.getEmail().equals(confirmer)) {
+            showMsg("LES DEUX ADRESSES NE SONT PAS EGAUX !");
         } else {
             selected.setDroitFiscale(ejbFacade.numberTodroit(ejbFacade.checkboxDroitsToNum(droits)));
             items.add(ejbFacade.clone(selected));
+            showDetailTable();
+            hideForm();
+            System.out.println("droit employe est :" + selected.getDroitFiscale());
+            selected = null;
+            confirmer = "";
         }
-        selected = null;
-        confirmer = "";
     }
 
     public void modifyFromList() {
@@ -357,23 +387,39 @@ public class EmployeController implements Serializable {
         }
     }
 
-    public void saveUsersAdedByContribuable() {
-        Employe data = (Employe) SessionUtil.getAttribute("data");
-        if (data != null && items != null) {
-            for (Employe employe : getItems()) {
+    public void validerAdhesion() {
+        System.out.println("ha l cntribuable :" + userData());
+        System.out.println("f valider adhesion : droit = " + listData().get(0).getDroitFiscale());
+        if (userData() != null && listData() != null) {
+            for (Employe employe : listData()) {
                 employe.setDroitFiscale(ejbFacade.droitToNumberToSave(employe.getDroitFiscale()));
-                employe.setSociete(data.getSociete());
-                int res = ejbFacade.addUtilisateur(employe, data);
-                if (res < 0) {
-                    System.out.println(res);
+                employe.setSociete(userData().getSociete());
+                System.out.println("ha user ajoute  : " + employe);
+                System.out.println("ha droit d user ajoute  : " + employe.getDroitFiscale());
+                if (ejbFacade.addUtilisateur(employe, userData()) < 0) {
+                    System.out.println(ejbFacade.addUtilisateur(employe, userData()));
                     return;
                 }
-                SessionUtil.setAttribute("usersAdded", items);
             }
+            ejbFacade.save(userData());
+            compteBanquaireFacade.saveListComptes(userData().getSociete().getCompteBanquaires());
+            societeFacade.edit(userData().getSociete());
+            ejbFacade.logout();
+            initParams();
+            SessionUtil.redirectToPage("login");
         }
     }
 
-    public void test() {
-        System.out.println("in the method :");
+    public void sAdherer() throws IOException {
+        int res = ejbFacade.sAdherer(selected);
+        boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
+        System.out.println(res + "ha recaptcha : " + recaptcha);
+        System.out.println("ha user : " + userData());
+        if (res > 0) {
+            SessionUtil.redirectToPage("verifyIF");
+            System.out.println("ha l raison sociale d soc : " + selected.getSociete().getRaisonSociale());
+            initParams();
+        }
+        System.out.println("apres : " + selected);
     }
 }

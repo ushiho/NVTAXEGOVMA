@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.primefaces.context.RequestContext;
+import service.EmployeFacade;
 import util.SessionUtil;
 
 @Named("compteBanquaireController")
@@ -30,6 +31,8 @@ public class CompteBanquaireController implements Serializable {
 
     @EJB
     private service.CompteBanquaireFacade ejbFacade;
+    @EJB
+    private EmployeFacade employeFacade;
     private List<CompteBanquaire> items;
     private CompteBanquaire selected;
 
@@ -178,14 +181,6 @@ public class CompteBanquaireController implements Serializable {
 
     }
 
-    public void saveListInSession() {
-        SessionUtil.setAttribute("listCompte", items);
-    }
-
-    public void listData() {
-        items = (List<CompteBanquaire>) SessionUtil.getAttribute("listCompte");
-    }
-
     public void addToList() {
         if (ejbFacade.existeInList(items, selected)) {
             showMsg("CET COMPTE EST DÉJA AJOUTÉ");
@@ -222,21 +217,19 @@ public class CompteBanquaireController implements Serializable {
     }
 
     public void associateSocieteToCompteBancaire() {
-        System.out.println("dans E4 : ");
-        Employe data = (Employe) SessionUtil.getAttribute("data");
-        System.out.println("ha user "+data);
+        Employe data = employeFacade.getConnectedUser("data");
+        System.out.println("ha user " + data);
         if (data != null) {
             items.forEach((item) -> {
                 ejbFacade.associatToUser(item, data);
             });
             data.getSociete().setCompteBanquaires(items);
-            saveListInSession();//en cas de retour !!!
             SessionUtil.redirectToPage("adhesionE5");
             items = new ArrayList();
         }
     }
-    
-    public void test(){
+
+    public void test() {
         System.out.println("b1 :");
     }
 

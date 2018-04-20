@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta charset="utf-8" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -12,7 +12,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <script src='https://www.google.com/recaptcha/api.js'></script>
-        <title>S'Adhérer</title>
+        <title>Direction Général des Impots</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -39,29 +39,26 @@
                         </div>
                         <h:form id="form" class="contact-form">
                             <div class="card-just-text">
-                                <h5><span class="note">ETAPE 3 : VÉRIFICATION DE BOITE EMAIL</span></h5>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p:outputLabel for="nom"><label class="note">Entrez le code de vérification :</label></p:outputLabel>
-                                    <div  class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="nc-icon nc-key-25"></i>
-                                        </span>
-                                        <p:inputText id="nom"  required="true" value="#{employeController.confirmer}" 
-                                                     a:type="text" class="form-control" placeholder="code de vérification"></p:inputText>
-                                    </div>
-                                </div>
+                                <p><span>Si vous avez saisi l'ensemble des informations nécessaires pour l'adhésion,
+                                        veuillez cliquer sur "VALIDER" pour soumettre votre demande. Dans le cas contraire,
+                                        vous pouvez retourner sur les écrans de saisie en cliquant sur "PRÉCEDENT" .</span></p>
                             </div>
                             <div class="row">
                                 <div class="col-1 ml-auto mr-auto">
-                                    <p:commandLink id="backButton" action="waloo" class="btn btn-link btn-info" value="Renvoyer le code ?">
+                                    <p:commandLink id="annuler" action="#{employeController.deconnecter()}" class="btn btn-light btn-sm" value="PRÉCEDENT">
                                         <f:ajax render="form" execute="form"/>
 
                                     </p:commandLink>
                                 </div>
-                                <div class="col-md-2 ml-auto mr-auto">
-                                    <p:commandLink id="nextButton" action="#{employeController.verifyCodeSent()}" class="btn btn-light btn-sm" value="POURSUIVRE">
+
+                                <div class="col-md-6 ml-auto mr-auto">
+                                    <p:commandLink id="nextButton" action="#{employeController.validerAdhesion()}" class="btn btn-light btn-sm" value="VALIDER">
+                                        <f:ajax render="form" execute="form"/>
+
+                                    </p:commandLink>
+                                </div>
+                                <div class="col-1 ml-auto mr-auto">
+                                    <p:commandLink id="imprimer" action="imrimer" class="btn btn-light btn-sm" value="IMPRIMER">
                                         <f:ajax render="form" execute="form"/>
 
                                     </p:commandLink>
@@ -73,7 +70,6 @@
                 </div>
             </div>
         </div>
-
     </h:body>
 </html>
 

@@ -18,106 +18,164 @@
     </h:head>
 
     <h:body>
-        <div >
-            <p:ajaxStatus style="display:block;  margin-top:.5em;">
-                <f:facet name="default">
-                    <h:outputText value="Please enter your credentials." />
-                </f:facet>
-                <f:facet name="start">
-                    <h:outputText value="Please wait #{employeController.selected.login}, Connecting database..." />
-                </f:facet>
-                <f:facet name="complete">
-                    <h:outputText value="Please try again #{employeController.selected.login}, Database/Login error!!" />
-                </f:facet>
-            </p:ajaxStatus>
-        </div>	
-
-        <h:form id="loginForm">
-            <p:growl id="msg" showDetail="true" life="4000" />
-            <p:panel id="loginPnl" header="Login"
-                     style="width: 350px; margin: 0 auto;">
-
-                <h:panelGrid id="loginPanel" columns="2" cellpadding="5">
-                    <h:outputText value="Username" />
-                    <p:inputText id="username" value="#{employeController.selected.login}"></p:inputText>
-                    <p:spacer /><p:spacer />	
-                    <h:outputText value="Password" />
-                    <p:password id="password" value="#{employeController.selected.motDePasse}"
-                                feedback="false"></p:password>
-                    <p:message for="password"></p:message>
-                </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="100" width="100%">
-                    <p:commandButton id="loginButton" action="#{employeController.seConnecter()}"
-                                     value="Login" update="loginForm" ajax="true" style="float: right;">
-                    </p:commandButton>
-                </h:panelGrid>
-            </p:panel>
-
-            <p:blockUI block="loginPnl" trigger="loginButton" >
-                <br />LOADING ...
-                <p:graphicImage value="../images/rolling.gif" />
-            </p:blockUI>
-
-        </h:form>
-        <!--        <h:form>
-                    <h:inputText value="#{employeController.msg}">
-                        <p:ajax update="out" event="keyup" />
-                    </h:inputText>
-                    <h:outputText id="out" value="#{employeController.msg}" />
+        <!--        <div >
+                    <p:ajaxStatus style="display:block;  margin-top:.5em;">
+                        <f:facet name="default">
+                            <h:outputText value="Please enter your credentials." />
+                        </f:facet>
+                        <f:facet name="start">
+                            <h:outputText value="Please wait #{employeController.selected.login}, Connecting database..." />
+                        </f:facet>
+                        <f:facet name="complete">
+                        </f:facet>
+                    </p:ajaxStatus>
+                </div>	
+        
+                <h:form id="loginForm">
+                    <p:growl id="msg" showDetail="true" life="4000" />
+                    <p:panel id="loginPnl" header="Login"
+                             style="width: 350px; margin: 0 auto;">
+        
+                        <h:panelGrid id="loginPanel" columns="2" cellpadding="5">
+                            <h:outputText value="Username" />
+                            <p:inputText id="username" value="#{employeController.selected.login}"></p:inputText>
+                            <p:spacer /><p:spacer />	
+                            <h:outputText value="Password" />
+                            <p:password id="password" value="#{employeController.selected.motDePasse}"
+                                        feedback="false"></p:password>
+                            <p:message for="password"></p:message>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="100" width="100%">
+                            <p:commandButton id="loginButton" action="#{employeController.seConnecter()}"
+                                             value="Login" update="loginForm" ajax="true" style="float: right;">
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+        
+                    <p:blockUI block="loginPnl" trigger="loginButton" >
+                        <br />LOADING ...
+                        <p:graphicImage value="../images/rolling.gif" />
+                    </p:blockUI>
+        
                 </h:form>-->
-        <p:panel>
-<!--            <p:ajaxStatus>
-                <f:facet name="start">
-                    <p:graphicImage value="../images/rolling.gif" />
-                </f:facet>
-                <f:facet name="complete">
-                    <h:outputText value="Done!" />
-                </f:facet>
-            </p:ajaxStatus>-->
-            <!--<p:ajaxStatus onstart="PF('status').show()" oncomplete="PF('status').hide()"/>-->
-            <p:dialog widgetVar="status" modal="true" closable="false">
-                Please Wait
-            </p:dialog>
-            <!--            <p:ajaxStatus>
-                            <f:facet name="error">
-                                <h:outputText value="Error" />
-                            </f:facet>
-                            <f:facet name="success">
-                                <h:outputText value="Success" />
-                            </f:facet>
-                            <f:facet name="default">
-                                <h:outputText value="hamaza" />
-                            </f:facet>
-                            <f:facet name="start">
-                                <h:outputText value="Sending" />
-                            </f:facet>
-                            <f:facet name="complete">
-                                <h:outputText value="Done" />
-                            </f:facet>
-                        </p:ajaxStatus>-->
-            <h:form>
-                <h:panelGrid id="grid" columns="3" cellpadding="5">
-                    <p:outputLabel for="default" value="Default:" />
-                    <p:inputText id="default" required="true" />
-                    <p:message for="default" />
-
-                    <p:outputLabel for="txt" value="Text:" />
-                    <p:inputText id="txt" required="true" />
-                    <p:message for="txt" display="text" />
-
-                    <p:outputLabel for="icon" value="Icon:" />
-                    <p:inputText id="icon" required="true" />
-                    <p:message for="icon" display="icon" />
-
-                    <p:outputLabel for="tt" value="Tooltip:" />
-                    <p:inputText id="tt" required="true" />
-                    <p:message for="tt" display="tooltip" />
-                </h:panelGrid>
-
-                <p:commandButton id="submitButton" value="Submit" update="grid" />
-            </h:form>
-            <!--<p:ajaxStatus onstart="alert('Start')" oncomplete="alert('End')"/>-->
-            <p:messages  >id="hello"</p:messages>
-        </p:panel>
+        <!--        <p:panel>
+                                <p:ajaxStatus>
+                                    <f:facet name="start">
+                                        <p:graphicImage value="../images/rolling.gif" />
+                                    </f:facet>
+                                    <f:facet name="complete">
+                                        <h:outputText value="Done!" />
+                                    </f:facet>
+                                </p:ajaxStatus>
+                    <p:ajaxStatus onstart="PF('status').show()" oncomplete="PF('status').hide()"/>
+                    <p:dialog widgetVar="status" modal="true" closable="false">
+                        Please Wait
+                    </p:dialog>
+                                <p:ajaxStatus>
+                                    <f:facet name="error">
+                                        <h:outputText value="Error" />
+                                    </f:facet>
+                                    <f:facet name="success">
+                                        <h:outputText value="Success" />
+                                    </f:facet>
+                                    <f:facet name="default">
+                                        <h:outputText value="hamaza" />
+                                    </f:facet>
+                                    <f:facet name="start">
+                                        <h:outputText value="Sending" />
+                                    </f:facet>
+                                    <f:facet name="complete">
+                                        <h:outputText value="Done" />
+                                    </f:facet>
+                                </p:ajaxStatus>
+                    <h:form>
+                        <h:panelGrid id="grid" columns="3" cellpadding="5">
+                            <p:outputLabel for="default" value="Default:" />
+                            <p:inputText id="default" required="true" />
+                            <p:message for="default" />
+        
+                            <p:outputLabel for="txt" value="Text:" />
+                            <p:inputText id="txt" required="true" />
+                            <p:message for="txt" display="text" />
+        
+                            <p:outputLabel for="icon" value="Icon:" />
+                            <p:inputText id="icon" required="true" />
+                            <p:message for="icon" display="icon" />
+        
+                            <p:outputLabel for="tt" value="Tooltip:" />
+                            <p:inputText id="tt" required="true" />
+                            <p:message for="tt" display="tooltip" />
+                        </h:panelGrid>
+        
+                        <p:commandButton id="submitButton" value="Submit" update="grid" />
+                    </h:form>
+                    <p:ajaxStatus onstart="alert('Start')" oncomplete="alert('End')"/>
+                    <p:messages  >id="hello"</p:messages>
+                </p:panel>-->
+        <!--        <h:form id="form">  
+                    <p:panel header="Match Mode">  
+                        <p:messages id="messages" showDetail="true" autoUpdate="true"/>  
+        
+                        <h:panelGrid columns="2" id="matchGrid">                     
+                            <h:outputLabel for="pwd1" value="Password 1: *" />  
+                            <p:password id="pwd1" value="#{employeController.selected.motDePasse}" match="pwd2" label="Password 1" required="true"/>  
+        
+                            <h:outputLabel for="pwd2" value="Password 2: *" />  
+                            <p:password id="pwd2" value="#{employeController.selected.motDePasse}" label="Password 2" required="true"/>  
+                        </h:panelGrid>  
+        
+                        <p:commandButton id="saveButton" update="matchGrid" value="Save" />  
+                    </p:panel>  
+                </h:form> -->
+        <!--        <h:form id="form2">roller.selected.motDePasse}" label="Password 2" required="true"/>  
+                        </h:panelGrid>  
+        
+                        <p:commandButton id="saveButton" update="matchGrid" value="Save" />  
+                    </p:panel>  
+                </h:form> 
+        <!--        <h:form id="form2">
+                    <p:panel>
+                        <h:outputLabel for="pwd1" value="Password 1: *" />
+                        <p:password id="pwd1" value="#{employeController.selected.motDePasse}"
+                                    feedback="false" match="pwd2" label="Password 1" required="true" 
+                                    />
+        
+        
+        
+                        <h:outputLabel for="pwd2" value="Password 2: *" />
+                        <p:password id="pwd2" value="#{employeController.selected.motDePasse}"
+                                    feedback="false" label="Password 2" required="true" 
+                                    validatorMessage="password 1 should match password 2"/>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true"/> 
+        
+                        <p:commandButton id="saveButton" update="form2" value="Save" />  
+        
+                    </p:panel>
+                </h:form>-->
+        <h:form>
+            Password: <h:inputSecret
+                validator="#{passwordValidationBean.validateField}"
+                required="true" />
+            Confirm: <h:inputSecret
+                validator="#{passwordValidationBean.validateField}"
+                required="true" />
+            <h:commandButton value="submit to validate" />
+            <!-- other bindings omitted -->
+            <h:messages />
+        </h:form>
+        public void validateField(FacesContext context, UIComponent component,
+        Object value) {
+        if (input1Set) {
+        input2 = (String) value;
+        if (input1 == null || input1.length() < 6 || (!input1.equals(input2))) {
+        ((EditableValueHolder) component).setValid(false);
+        context.addMessage(component.getClientId(context), new FacesMessage(
+        "Password must be 6 chars+ & both fields identical"));
+        }
+        } else {
+        input1Set = true;
+        input1 = (String) value;
+        }
+        }
     </h:body>
 </html>

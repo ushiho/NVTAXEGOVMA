@@ -45,11 +45,19 @@ public class Societe implements Serializable {
     @OneToMany(mappedBy = "societe")
     private List<Employe> employes;
 
-    public Societe(String raisonSociale, String numTele, String numFax, String email) {
+    public Societe(long id, long idFiscal, String password, String raisonSociale, 
+            String numTele, String numFix, String email, Float deficitIS, Float deficitTVA, int regimeTVA, Date dateCreation) {
+        this.id = id;
+        this.idFiscal = idFiscal;
+        this.password = password;
         this.raisonSociale = raisonSociale;
         this.numTele = numTele;
-        this.numFix = numFax;
+        this.numFix = numFix;
         this.email = email;
+        this.deficitIS = deficitIS;
+        this.deficitTVA = deficitTVA;
+        this.regimeTVA = regimeTVA;
+        this.dateCreation = dateCreation;
     }
 
     public Societe(long idFiscal, String password) {

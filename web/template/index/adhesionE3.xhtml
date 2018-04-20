@@ -11,7 +11,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <script src='https://www.google.com/recaptcha/api.js'></script>
-        <title>S'Adhérer</title>
+        <title>Direction Général des Impots</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -28,7 +28,7 @@
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
         <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
     </h:head>
-    <h:body onload="#{employeController.userData()}">
+    <h:body >
         <div class="section landing-section">
             <div class="container">
                 <div class="row">
@@ -43,22 +43,22 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p:outputLabel for="login"><label class="note">MOT DE PASSE</label></p:outputLabel>
+                                    <p:outputLabel for="pass"><label class="note">MOT DE PASSE</label></p:outputLabel>
                                     <div  class="input-group">
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-key-25"></i>
                                         </span>
-                                        <p:password id="login"  required="true" value="#{employeController.confirmer}" 
+                                        <p:password id="pass"  required="true" value="#{employeController.confirmer}" 
                                                     class="form-control" placeholder="mot de passe choisi"></p:password>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <p:outputLabel for="email"><label class="note">CONFIRMER LE MOT DE PASSE</label></p:outputLabel>
+                                    <p:outputLabel for="repatPass"><label class="note">CONFIRMER LE MOT DE PASSE</label></p:outputLabel>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-key-25"></i>
                                         </span>
-                                        <p:password id="email" required="true" value="#{employeController.selected.motDePasse}" class="form-control" 
+                                        <p:password id="repatPass" required="true" value="#{employeController.userData().motDePasse}" class="form-control" 
                                                     placeholder="retapez le mot de passe"></p:password>
                                     </div>
                                 </div>
@@ -66,13 +66,13 @@
                             <div class="text-center">
                                 <blockquote class="blockquote">
                                     <p class="mb-0"><strong>NOTE :</strong> La question choisie et la réponse vont vouz aidez en cas 
-                                        d'oublie votre mot de passe ,bien choisi la question et <strong style="background-color: #99a302">enregistrer</strong> la réponse.</p>
+                                        d'oublie votre mot de passe ,bien choisi la question et <strong >enregistrer</strong> la réponse.</p>
                                 </blockquote>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <p:outputLabel for="ques"><label class="note">CHOISIR UNE QUESTION</label></p:outputLabel>
-                                    <h:selectOneMenu style="width: 100%;" id="ques" required="true" value="#{employeController.selected.questionChoisi}">
+                                    <h:selectOneMenu style="width: 100%;" id="ques" required="true" value="#{employeController.userData().questionChoisi}">
                                         <f:selectItem itemLabel="Choisir votre question" itemValue="" noSelectionOption="true" />
                                         <f:selectItem itemValue="1" itemLabel="Quel était le prénom de votre chef ?" />
                                         <f:selectItem itemValue="2" itemLabel="Quel est votre premier numéro de téléphone ?" />
@@ -84,7 +84,7 @@
 
                                     <p:outputLabel for="reponse"><label>RÉPONSE</label></p:outputLabel>
 
-                                    <p:inputTextarea id="reponse" required="true" class="form-control" rows="4" value="#{employeController.selected.reponse}"></p:inputTextarea>
+                                    <p:inputTextarea id="reponse" required="true" class="form-control" rows="4" value="#{employeController.userData().reponse}"></p:inputTextarea>
                                 </div>
                             </div>
                             <p:separator />

@@ -214,7 +214,8 @@ public class Employe implements Serializable {
 
     @Override
     public String toString() {
-        return "Employe{" + "id=" + id + ", nom=" + nom + ", preNom=" + preNom + ", CIN=" + CIN + ", numTele=" + numTele + ", email=" + email + ", profession=" + profession + '}';
+        return "Employe{" + "id=" + id + ", nom=" + nom + ", preNom=" + preNom + ", CIN=" + CIN + ", numTele=" + numTele + ", numPortable=" + numPortable + ", email=" + email + ", profession=" + profession + ", login=" + login + ", motDePasse=" + motDePasse + ", droitFiscale=" + droitFiscale + ", reponse=" + reponse + ", questionChoisi=" + questionChoisi + '}';
     }
+    
 
 }

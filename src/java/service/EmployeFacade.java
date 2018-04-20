@@ -54,13 +54,23 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     public int testIDFiscalEtPass(Employe contribuable) {
-        Societe societe = societeFacade.find(contribuable.getLogin());
+        Societe societe = societeFacade.findByIdFiscal(new Long(contribuable.getLogin()));
         if (societe == null) {
             return -1;
-        } else if (!PassUtil.testTwoPasswords(contribuable.getMotDePasse(), societe.getPassword())) {
+        } else if (!contribuable.getMotDePasse().equals(societe.getPassword())) {
+            //faire hash !!!
             return -2;
         }
+        cloneSocieteSaveContriInSession(societe, contribuable);
         return 1;
+    }
+
+    private void cloneSocieteSaveContriInSession(Societe societe, Employe contribuable) {
+        Societe clone = societeFacade.clone(societe);
+        clone.setPassword(null);
+        contribuable.setSociete(clone);
+        contribuable.setDroitFiscale("123");
+        SessionUtil.setAttribute("data", contribuable);
     }
 
     public int seConnecter(Employe utilisateur) {
@@ -77,11 +87,15 @@ public class EmployeFacade extends AbstractFacade<Employe> {
             return -2;
         } else {
             System.out.println("1");
-            Employe clone = clone(existe);
-            clone.setMotDePasse(null);
-            SessionUtil.registerUser(clone);
+            cloneUserAndSaveInSession(existe);
             return 1;
         }
+    }
+
+    private void cloneUserAndSaveInSession(Employe existe) {
+        Employe clone = clone(existe);
+        clone.setMotDePasse(null);
+        SessionUtil.registerUser(clone);
     }
 
     public boolean testUtilisateur(Employe utilisateur) {
@@ -102,6 +116,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         if (testParams(utilisateur, contribuable)) {
             return -1;
         }
+        System.out.println("ha droit d contribuable : "+contribuable.getDroitFiscale());
         setPassAndLogin(utilisateur);
         Email email = emailFacade.generatePassword(utilisateur.getLogin(), utilisateur.getMotDePasse(), 1);
         if (EmailUtil.sendEmail(email, utilisateur) < 0) {
@@ -113,17 +128,17 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     private void setPassAndLogin(Employe utilisateur) {
-        String login = PassUtil.generate(12, 1);
+        String login = utilisateur.getNom()+PassUtil.generate(2, 4);
         String pass = PassUtil.generatePass(6, 4);
         while (findByLogin(login) != null) {
-            login = PassUtil.generatePass(12, 1);
+            login = utilisateur.getNom()+PassUtil.generatePass(2, 4);
         }
         utilisateur.setMotDePasse(pass);
         utilisateur.setLogin(login);
     }
 
     private boolean testParams(Employe utilisateur, Employe contribuable) {
-        return utilisateur == null || contribuable == null || !contribuable.getDroitFiscale().equals("123");
+        return utilisateur == null || contribuable == null ;
     }
 
     public int modify(Employe nvUtilisateur, Employe anUtilisateur) {
@@ -268,9 +283,10 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         session.invalidate();
     }
 
+    //envoyer un code de verification à email de contribuable 
     public int sendCodeToVirefyEmail(Employe employeToAdd) {
         String pass = PassUtil.generatePass(6, 1);
-        employeToAdd.setMotDePasse(pass);
+        employeToAdd.setMotDePasse(pass);//le code de verification != mot de passe
         if (EmailUtil.sendEmail(emailFacade.verifyEmail(pass, 4), employeToAdd) < 0) {
             System.out.println("-1");
             return -1;

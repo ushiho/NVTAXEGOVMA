@@ -30,7 +30,7 @@
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
         <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
     </h:head>
-    <h:body onload="#{employeController.userData()}">
+    <h:body >
 
         <div class="section landing-section">
             <div class="container">
@@ -47,7 +47,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-badge"></i>
                                         </span>
-                                        <p:inputText id="nom"  required="true" value="#{employeController.selected.nom}" 
+                                        <p:inputText id="nom"  required="true" value="#{employeController.userData().nom}" 
                                                      a:type="text" class="form-control" placeholder="votre Nom"></p:inputText>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-badge"></i>
                                         </span>
-                                        <p:inputText id="preNom" required="true" value="#{employeController.selected.preNom}" 
+                                        <p:inputText id="preNom" required="true" value="#{employeController.userData().preNom}" 
                                                      a:type="text" class="form-control" placeholder="Votre Prénom"></p:inputText>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-badge"></i>
                                         </span>
-                                        <p:inputText id="cin"  required="true" value="#{employeController.selected.CIN}" 
+                                        <p:inputText id="cin"  required="true" value="#{employeController.userData().CIN}" 
                                                      a:type="text" class="form-control" placeholder="Votre N° CIN"></p:inputText>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-briefcase-24"></i>
                                         </span>
-                                        <p:inputText id="profession" required="true" value="#{employeController.selected.profession}" 
+                                        <p:inputText id="profession" required="true" value="#{employeController.userData().profession}" 
                                                      a:type="text" class="form-control" placeholder="Profession au sein de l'entreprise"></p:inputText>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-mobile"></i>
                                         </span>
-                                        <p:inputText id="tel"  required="true" value="#{employeController.selected.numTele}" 
+                                        <p:inputText id="tel"  required="true" value="#{employeController.userData().numTele}" 
                                                      a:type="tel" class="form-control" placeholder="Votre N° Télé"></p:inputText>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-mobile"></i>
                                         </span>
-                                        <p:inputText id="por" required="true" value="#{employeController.selected.numPortable}" 
+                                        <p:inputText id="por" required="true" value="#{employeController.userData().numPortable}" 
                                                      a:type="tel" class="form-control" placeholder="Votre N° Portable"></p:inputText>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-email-85"></i>
                                         </span>
-                                        <p:inputText id="emailCon"  required="true" value="#{employeController.selected.email}" 
+                                        <p:inputText id="emailCon"  required="true" value="#{employeController.userData().email}" 
                                                      a:type="email" class="form-control" placeholder="Votre adresse email"></p:inputText>
                                     </div>
                                 </div>

@@ -29,7 +29,7 @@
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
         <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
     </h:head>
-    <h:body onload="#{employeController.userData()}">
+    <h:body >
         <div class="section landing-section">
             <div class="container">
                 <div class="row">
@@ -112,8 +112,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p:outputLabel for="tel" ><label class="note">DROITS FISCALE</label></p:outputLabel>
-                                        <h:selectManyCheckbox id="checkbox" value="#{employeController.droits}">
+                                        <p:outputLabel for="droit" ><label class="note">DROITS FISCALE</label></p:outputLabel>
+                                        <h:selectManyCheckbox id="droit" required="true" value="#{employeController.droits}">
                                             <f:selectItem itemValue="1" itemLabel="DROITS DE SAISIE" />
                                             <f:selectItem itemValue="2" itemLabel="DROITS DE VALIDATION" />
                                             <f:selectItem itemValue="3" itemLabel="DROITS DE DEPOT DE PAIEMNET"/>
@@ -133,30 +133,28 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p:outputLabel for="emailCon" ><label class="note">ADRESSE EMAIL</label></p:outputLabel>
+                                        <p:outputLabel for="email" ><label class="note">ADRESSE EMAIL</label></p:outputLabel>
                                         <div  class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="nc-icon nc-email-85"></i>
                                             </span>
-                                            <p:inputText id="emailCon"  required="true" value="#{employeController.selected.email}" 
-                                                         a:type="email" class="form-control" placeholder="Votre adresse email"></p:inputText>
+                                            <p:inputText id="email"  required="true" value="#{employeController.selected.email}" 
+                                                         a:type="email" class="form-control" placeholder="Adresse Email d'Utilisateur" ></p:inputText>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <p:outputLabel for="email"><label class="note">CONFIRMER L'ADRESSE EMAIL</label></p:outputLabel>
+                                        <p:outputLabel for="emailCon"><label class="note">CONFIRMER L'ADRESSE EMAIL</label></p:outputLabel>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="nc-icon nc-email-85"></i>
                                             </span>
-                                            <p:inputText id="email" required="false" value="#{employeController.confirmer}" 
-                                                         a:type="email" class="form-control" placeholder="Confirmer votre adresse email"
+                                            <p:inputText id="emailCon" required="false" value="#{employeController.confirmer}" 
+                                                         a:type="email" class="form-control" placeholder="Confirmer L'adresse Email"
                                                          ></p:inputText>
                                         </div>
                                     </div>
                                 </div>
                                 <p:commandLink update="form :datalist :options" action="#{employeController.addToList()}" id="save" value="ENREGISTRER" class="btn btn-info btn-sm">
-                                    <f:actionListener binding="#{employeController.hideForm()}"/>
-                                    <f:actionListener binding="#{employeController.showDetailTable()}"/>
                                     <!--<f:ajax render=":form:checkbox" execute=":form:checkbox"/>-->
                                     <!--<f:ajax render=":datalist" execute=":datalist"/>-->
                                 </p:commandLink>
@@ -227,7 +225,7 @@
                                     </p:commandLink>
                                 </div>
                                 <div class="col-md-2 ml-auto mr-auto">
-                                    <p:commandLink id="nextButton" action="#{compteBanquaireController.test()}" class="btn btn-light btn-fill" value="POURSUIVRE">
+                                    <p:commandLink id="nextButton" action="#{employeController.saveListInSession()}" class="btn btn-light btn-fill" value="POURSUIVRE">
                                         <!--<f:ajax render="form" execute="form"/>-->
 
                                     </p:commandLink>

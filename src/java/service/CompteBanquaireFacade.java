@@ -103,4 +103,18 @@ public class CompteBanquaireFacade extends AbstractFacade<CompteBanquaire> {
         compteBanquaire.setSociete(employe.getSociete());
         return 1;
     }
+
+    public int saveListComptes(List<CompteBanquaire> compteBanquaires) {
+        if (testList(compteBanquaires)) {
+            return -1;
+        }
+        compteBanquaires.forEach((compteBanquaire) -> {
+            save(compteBanquaire);
+        });
+        return 1;
+    }
+
+    private boolean testList(List<CompteBanquaire> compteBanquaires) {
+        return compteBanquaires == null || compteBanquaires.isEmpty() || compteBanquaires.get(0) == null;
+    }
 }

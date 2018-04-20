@@ -37,6 +37,7 @@ public class EmailFacade extends AbstractFacade<Email> {
     }
 
     public Email verifyEmail(String pass, int type) {
+        //le clone est pq email ne soit pas modifie ds ls bd
         Email email = clone(findByType(type));
         email.setContenu(email.getContenu() + "'" + pass + "'");
         return email;
