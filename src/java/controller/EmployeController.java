@@ -359,8 +359,7 @@ public class EmployeController implements Serializable {
             showDetailTable();
             hideForm();
             System.out.println("droit employe est :" + selected.getDroitFiscale());
-            selected = null;
-            confirmer = "";
+            initParams();
         }
     }
 
@@ -415,11 +414,15 @@ public class EmployeController implements Serializable {
         boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
         System.out.println(res + "ha recaptcha : " + recaptcha);
         System.out.println("ha user : " + userData());
-        if (res > 0) {
+        if (res > 0 && recaptcha) {
             SessionUtil.redirectToPage("verifyIF");
             System.out.println("ha l raison sociale d soc : " + selected.getSociete().getRaisonSociale());
             initParams();
         }
         System.out.println("apres : " + selected);
+    }
+
+    public void test() {
+        System.out.println("noon");
     }
 }

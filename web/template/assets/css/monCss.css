@@ -1,0 +1,204 @@
+.myCustomStyle {
+                border-width:1px;
+                border-color: #000000;
+                border-style: solid;
+                text-align: center;
+                font-weight: bold;
+                background: #FF8000;
+                color: #FFFFFF;
+                width: 40%;
+            }
+
+            #noti_Container {
+                position:relative;
+            }
+
+            /* A CIRCLE LIKE BUTTON IN THE TOP MENU. */
+            #noti_Button {
+                margin: 6px 0 0 -1px;
+                cursor:pointer;
+            }
+
+            /* THE POPULAR RED NOTIFICATIONS COUNTER. */
+            #noti_Counter {
+                display:block;
+                position:absolute;
+                background:#E1141E;
+                color:#FFF;
+                font-size:12px;
+                font-weight:normal;
+                padding:1px 3px;
+                margin:12px 0 0 24px;
+                border-radius:2px;
+                -moz-border-radius:2px; 
+                -webkit-border-radius:2px;
+                z-index:1;
+            }
+
+            /* THE NOTIFICAIONS WINDOW. THIS REMAINS HIDDEN WHEN THE PAGE LOADS. */
+            #notifications {
+                display:none;
+                width:430px;
+                height: 250px;
+                position:absolute;
+                top:55px;
+                left: 0px;
+                background:#FFF;
+                border:solid 1px rgba(100, 100, 100, .20);
+                -webkit-box-shadow:0 3px 8px rgba(0, 0, 0, .20);
+                z-index: 0;
+            }
+            /* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
+            #notifications:before {       
+                content: '';
+                display:block;
+                width:0;
+                height:0;
+                color:transparent;
+                border:10px solid #CCC;
+                border-color:transparent transparent #FFF;
+                margin-top:-20px;
+                margin-left:10px;
+            }
+
+            h3 {
+                display:block;
+                color:#333; 
+                background:#FFF;
+                font-weight:bold;
+                font-size:13px;    
+                padding:8px;
+                margin:0;
+                border-bottom:solid 1px rgba(100, 100, 100, .30);
+            }
+
+            .seeAll {
+                background:#F6F7F8;
+                padding:8px;
+                font-size:12px;
+                font-weight:bold;
+                border-top:solid 1px rgba(100, 100, 100, .30);
+                text-align:center;
+            }
+            .seeAll a {
+                color:#3b5998;
+            }
+            .seeAll a:hover {
+                background:#F6F7F8;
+                color:#3b5998;
+                text-decoration:underline;
+            }
+
+            #notificationContainer 
+            {
+                background-color: #fff;
+                border: 1px solid rgba(100, 100, 100, .5);
+                -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+                overflow: visible;
+                position: absolute;
+                top: 55px;
+                margin-left: -170px;
+                width: 400px;
+                z-index: -1;
+                display: none; 
+            }
+            #notificationContainer:before {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 0;
+                height: 0;
+                color: transparent;
+                border: 10px solid black;
+                border-color: transparent transparent white;
+                margin-top: -20px;
+                margin-left: 178px;
+            }
+            #notificationTitle
+            {
+                font-weight: bold;
+                padding: 8px;
+                font-size: 13px;
+                background-color: #ffffff;
+                position: fixed;
+                z-index: 1000;
+                width: 384px;
+                border-bottom: 1px solid #dddddd;
+                color: #a3d501;
+            }
+            #notificationsBody
+            {
+                padding: 33px 0px 0px 0px !important;
+                min-height:280px;
+            }
+            #notificationFooter
+            {
+                background-color: #e9eaed;
+                text-align: left;
+                font-weight: bold;
+                padding: 8px;
+                font-size: 13px;
+                border-top: 1px solid #dddddd;
+            }
+            #notification_count 
+            {
+                display:block;
+                position:absolute;
+                background:#E1141E;
+                color:#FFF;
+                font-size:12px;
+                font-weight:normal;
+                padding:1px 3px;
+                margin:2px 0 0 24px;
+                border-radius:2px;
+                -moz-border-radius:2px; 
+                -webkit-border-radius:2px;
+                z-index:1;
+            }
+            #notificationLink{
+                margin: 6px 0 0 -1px;
+                cursor:pointer;
+            }
+
+            .nav-box{
+                position: fixed;
+                height:50%;
+                zoom: 1;
+                -webkit-transition: all .2s ease;
+                -moz-transition: all .2s ease;
+                -ms-transition: all .2s ease;
+                -o-transition: all .2s ease;
+                transition: all .2s ease;
+
+            }
+            .inner-box{
+                width: 398px;
+                height: 90%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tabs{
+                border: 1px solid #dddddd;
+                color:darkred;
+            }
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+            ::-webkit-scrollbar-track {
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
+            .xnav-wrapper::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background: rgba(128, 128, 128, 0.7);
+            }
+
+            ::-webkit-scrollbar-thumb:window-inactive {
+                background: rgba(32, 32, 32, 0.05);
+            }
+

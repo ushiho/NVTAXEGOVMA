@@ -84,4 +84,16 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
         remove(exerciceIS);
         return 1;
     }
+
+    public ExerciceIS clone(ExerciceIS exerciceIS) {
+        if (exerciceIS != null) {
+            ExerciceIS clone = new ExerciceIS(exerciceIS.getId(), exerciceIS.getDateDebut(), exerciceIS.getDateFin(),
+                    exerciceIS.getNumFacture(), exerciceIS.getCharges(), exerciceIS.getProduits(),
+                    exerciceIS.getDeductibles(), exerciceIS.getNonDeductibles());
+            clone.setSociete(exerciceIS.getSociete());
+            clone.setDeclarationIs(exerciceIS.getDeclarationIs());
+            return clone;
+        }
+        return null;
+    }
 }

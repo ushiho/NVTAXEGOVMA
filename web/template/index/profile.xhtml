@@ -6,20 +6,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
-        <style>
-            .myCustomStyle {
-                border-width:1px;
-                border-color: #000000;
-                border-style: solid;
-                text-align: center;
-                font-weight: bold;
-                background: #FF8000;
-                color: #FFFFFF;
-                width: 40%;
-            }
-
-        </style>
-
         <meta charset="utf-8" />
         <link rel="icon" type="image/png" href="../assets/img/favicon.ico"></link>
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
@@ -38,14 +24,284 @@
         <link href="../assets/css/demo.css" rel="stylesheet" />                                                                         
 
         <!--     Fonts and icons     -->
-        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>
-        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
+        <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>-->
+        <!--<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>-->
         <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
-        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        <!--<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>-->
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->
+
+        <style>
+            .myCustomStyle {
+                border-width:1px;
+                border-color: #000000;
+                border-style: solid;
+                text-align: center;
+                font-weight: bold;
+                background: #FF8000;
+                color: #FFFFFF;
+                width: 40%;
+            }
+
+            /*            ul {
+                            display:block;
+                            background:#45619D;
+                            list-style:none;
+                            margin:0;
+                            padding:12px 10px;
+                            height:21px;
+                        }
+                        ul li {
+                            float:left;
+                            font:13px helvetica;
+                            font-weight:bold;
+                            margin:3px 0;
+                        }
+                        ul li a {
+                            color:#FFF;
+                            text-decoration:none;
+                            padding:6px 15px;
+                            cursor:pointer;
+                        }
+                        ul li a:hover {
+                            background:#425B90;
+                            text-decoration:none;
+                            cursor:pointer;
+                        }*/
+
+            #noti_Container {
+                position:relative;
+            }
+
+            /* A CIRCLE LIKE BUTTON IN THE TOP MENU. */
+            #noti_Button {
+                /*                width:22px;
+                                height:22px;*/
+                /*line-height:22px;*/
+                /*border-radius:50%;*/
+                /*                -moz-border-radius:50%; 
+                                -webkit-border-radius:50%;*/
+                /*background:#FFF;*/
+                /*margin:-10px 10px 0 -1px;*/
+                margin: 6px 0 0 -1px;
+                cursor:pointer;
+            }
+
+            /* THE POPULAR RED NOTIFICATIONS COUNTER. */
+            #noti_Counter {
+                display:block;
+                position:absolute;
+                background:#E1141E;
+                color:#FFF;
+                font-size:12px;
+                font-weight:normal;
+                padding:1px 3px;
+                margin:12px 0 0 24px;
+                border-radius:2px;
+                -moz-border-radius:2px; 
+                -webkit-border-radius:2px;
+                z-index:1;
+            }
+
+            /* THE NOTIFICAIONS WINDOW. THIS REMAINS HIDDEN WHEN THE PAGE LOADS. */
+            #notifications {
+                display:none;
+                width:430px;
+                height: 250px;
+                position:absolute;
+                top:55px;
+                left: 0px;
+                background:#FFF;
+                border:solid 1px rgba(100, 100, 100, .20);
+                -webkit-box-shadow:0 3px 8px rgba(0, 0, 0, .20);
+                z-index: 0;
+            }
+            /* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
+            #notifications:before {       
+                content: '';
+                display:block;
+                width:0;
+                height:0;
+                color:transparent;
+                border:10px solid #CCC;
+                border-color:transparent transparent #FFF;
+                margin-top:-20px;
+                margin-left:10px;
+            }
+
+            h3 {
+                display:block;
+                color:#333; 
+                background:#FFF;
+                font-weight:bold;
+                font-size:13px;    
+                padding:8px;
+                margin:0;
+                border-bottom:solid 1px rgba(100, 100, 100, .30);
+            }
+
+            .seeAll {
+                background:#F6F7F8;
+                padding:8px;
+                font-size:12px;
+                font-weight:bold;
+                border-top:solid 1px rgba(100, 100, 100, .30);
+                text-align:center;
+            }
+            .seeAll a {
+                color:#3b5998;
+            }
+            .seeAll a:hover {
+                background:#F6F7F8;
+                color:#3b5998;
+                text-decoration:underline;
+            }
+
+            #notificationContainer 
+            {
+                background-color: #fff;
+                border: 1px solid rgba(100, 100, 100, .5);
+                -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+                overflow: visible;
+                position: absolute;
+                top: 55px;
+                margin-left: -170px;
+                width: 400px;
+                z-index: -1;
+                display: none; 
+            }
+            #notificationContainer:before {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 0;
+                height: 0;
+                color: transparent;
+                border: 10px solid black;
+                border-color: transparent transparent white;
+                margin-top: -20px;
+                margin-left: 178px;
+            }
+            #notificationTitle
+            {
+                font-weight: bold;
+                padding: 8px;
+                font-size: 13px;
+                background-color: #ffffff;
+                position: fixed;
+                z-index: 1000;
+                width: 384px;
+                border-bottom: 1px solid #dddddd;
+                color: #a3d501;
+            }
+            #notificationsBody
+            {
+                padding: 33px 0px 0px 0px !important;
+                min-height:280px;
+            }
+            #notificationFooter
+            {
+                background-color: #e9eaed;
+                text-align: left;
+                font-weight: bold;
+                padding: 8px;
+                font-size: 13px;
+                border-top: 1px solid #dddddd;
+            }
+            #notification_count 
+            {
+                display:block;
+                position:absolute;
+                background:#E1141E;
+                color:#FFF;
+                font-size:12px;
+                font-weight:normal;
+                padding:1px 3px;
+                margin:2px 0 0 24px;
+                border-radius:2px;
+                -moz-border-radius:2px; 
+                -webkit-border-radius:2px;
+                z-index:1;
+            }
+            #notificationLink{
+                margin: 6px 0 0 -1px;
+                cursor:pointer;
+            }
+
+            .nav-box{
+                position: fixed;
+                height:50%;
+                zoom: 1;
+                -webkit-transition: all .2s ease;
+                -moz-transition: all .2s ease;
+                -ms-transition: all .2s ease;
+                -o-transition: all .2s ease;
+                transition: all .2s ease;
+
+            }
+            .inner-box{
+                width: 398px;
+                height: 90%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tabs{
+                border: 1px solid #dddddd;
+                color:darkred;
+            }
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+            ::-webkit-scrollbar-track {
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
+            .xnav-wrapper::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background: rgba(128, 128, 128, 0.7);
+            }
+
+            ::-webkit-scrollbar-thumb:window-inactive {
+                background: rgba(32, 32, 32, 0.05);
+            }
+
+
+        </style>
+        <script>
+            $(document).ready(function () {
+
+
+                $('#notifications').click(function () {
+                    return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
+                });
+                $("#notificationLink").click(function ()
+                {
+                    $("#notificationContainer").fadeToggle(300);
+                    $("#notification_count").fadeOut("slow");
+                    return false;
+                });
+
+                //Document Click hiding the popup 
+                $(document).click(function ()
+                {
+                    $("#notificationContainer").hide();
+                });
+
+                //Popup on click
+                $("#notificationContainer").click(function ()
+                {
+                    return false;
+                });
+            });
+        </script>
 
     </h:head>
 
-    <h:body>
+    <h:body >
 
         <nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="50">
             <div class="container">
@@ -55,7 +311,7 @@
                         <span class="navbar-toggler-bar"></span>
                         <span class="navbar-toggler-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="https://www.creative-tim.com">Direction Géneral des Impots</a>
+                    <a class="navbar-brand " href="https://www.creative-tim.com">Direction Géneral des Impots</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarToggler">
                     <ul class="navbar-nav ml-auto">
@@ -65,9 +321,53 @@
                         <li class="nav-item">
                             <a href="../documentation/tutorial-components.html" target="_blank" class="nav-link"><i class="nc-icon nc-support-17"></i>Aide ?</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="../documentation/tutorial-components.html" target="_blank" class="nav-link"><i class="nc-icon nc-bell-55"></i>  Notification</a>
+                        <li class="nav-item nav-link" id="noti_Container">
+                            <!--                            <a 
+                                                           class="nav-link " data-toggle="dropdown"></a>-->
+                            <span id="notification_count">3</span>
+                            <a class="nav-link" id="notificationLink"><i class="nc-icon nc-bell-55 "></i></a>
+
+                            <!--                                <span class="badge badge-light num" style="font-size: x-small;">+9</span>-->
+                            <div id="notificationContainer">
+                                <div id="notificationTitle">Notifications</div>
+                                <div id="notificationsBody" >
+                                    <div class="nav-box">
+                                        <div class="inner-box">
+                                            <div class="tabs"><p style="margin-left: 10px;">Navbar content Start <span style="margin-left: 150px">date</span></p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content</p></div>
+                                            <div class="tabs"><p>Navbar content End</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="notificationFooter"><a href="#">Tout voir</a></div>
+                            </div>
                         </li>
+<!--                        <li class="nav-link" id="notification_li">
+                            <span id="notification_count">3</span>
+                            <a href="#" id="notificationLink">Notifications</a>
+
+                            <div id="notificationContainer">
+                                <div id="notificationTitle">Notifications</div>
+                                <div id="notificationsBody" class="notifications">
+                                    <ul>
+                                        <li>test</li>
+                                        <li>test</li>
+                                        <li>test</li>
+                                    </ul>
+                                </div>
+                                <div id="notificationFooter"><a href="#">Tout voir</a></div>
+                            </div>
+
+                        </li>-->
                         <li class="nav-item">
                             <p:commandLink action="#{employeController.deconnecter()}" target="_blank" class="nav-link"><i class="nc-icon nc-lock-circle-open"></i>Déconnexion</p:commandLink>
                         </li>
@@ -91,10 +391,10 @@
                             <div class="avatar"></div>
                             <div class="name">
                                 <h4 class="title">
-                                    <p:outputLabel value="#{employeController.connectedUser.preNom} #{employeController.connectedUser.nom}"/>
+                                    <p:outputLabel value="#{employeController.connectedUser().preNom} #{employeController.connectedUser().nom}"/>
                                     <br /></h4>
                                 <h6 class="description">
-                                    <p:outputLabel value="#{employeController.connectedUser.profession}"/>
+                                    <p:outputLabel value="#{employeController.connectedUser().profession}"/>
                                 </h6>
                             </div>
                         </div>
@@ -200,7 +500,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <p:outputLabel value="#{employeController.connectedUser.societe.idFiscal}" class="form-control" />
+                                                <p:outputLabel value="#{employeController.connectedUser().societe.idFiscal}" class="form-control" />
 
                                             </div>
 
@@ -212,7 +512,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group has-success">
-                                                <p:outputLabel value="#{employeController.connectedUser.preNom} #{employeController.connectedUser.nom}" class="form-control form-control-success"/>
+                                                <p:outputLabel value="#{employeController.connectedUser().preNom} #{employeController.connectedUser().nom}" class="form-control form-control-success"/>
                                             </div>
                                         </div>
                                     </div>
@@ -249,14 +549,14 @@
                                             </div>
                                         </h:panelGroup>
                                     </h:form>
-                                    
+
 
 
                                 </div>
                                 <br />
 
                                 <div class="tab-pane text-center" id="following" role="tabpanel">
-                                    <p:commandButton update="form" styleClass="myCustomStyle" value="DÉTAIL" action="#{employeController.showForm()}">
+                                    <p:commandButton update="form" styleClass="myCustomStyle" value="DÉTAIL" action="#{employeController.showDetailForm()}">
                                         <f:ajax render="form" execute="form" />
                                     </p:commandButton>
 
@@ -333,4 +633,3 @@
 
 
 </html>
-

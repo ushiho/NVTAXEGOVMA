@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.ExerciceISFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import util.DateUtil;
 
 @Named("exerciceISController")
 @SessionScoped
@@ -25,18 +27,62 @@ public class ExerciceISController implements Serializable {
 
     @EJB
     private service.ExerciceISFacade ejbFacade;
-    private List<ExerciceIS> items = null;
+    EmployeController employeController = new EmployeController();
+    private List<ExerciceIS> items;
     private ExerciceIS selected;
+    private String dateDebut;
+    private String dateFin;
 
+    /**
+     *
+     */
     public ExerciceISController() {
     }
 
     public ExerciceIS getSelected() {
+        if (selected == null) {
+            selected = new ExerciceIS();
+        }
         return selected;
     }
 
     public void setSelected(ExerciceIS selected) {
         this.selected = selected;
+    }
+
+    public ExerciceISFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(ExerciceISFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public List<ExerciceIS> getItems() {
+        if (items == null) {
+            items = new ArrayList();
+        }
+        return items;
+    }
+
+    public void setItems(List<ExerciceIS> items) {
+        this.items = items;
+    }
+
+    public String getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(String dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public String getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(String dateFin) {
+        this.dateFin = dateFin;
     }
 
     protected void setEmbeddableKeys() {
@@ -72,13 +118,6 @@ public class ExerciceISController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
-    }
-
-    public List<ExerciceIS> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -160,6 +199,16 @@ public class ExerciceISController implements Serializable {
             }
         }
 
+    }
+
+    public void addToList() {
+        System.out.println("cc ha exe :" + selected);
+        selected.setDateDebut(DateUtil.parse(dateDebut));
+        selected.setDateFin(DateUtil.parse(dateFin));
+        items.add(ejbFacade.clone(selected));
+        employeController.showDetailTable();
+        employeController.hideForm();
+        System.out.println(selected);
     }
 
 }

@@ -229,8 +229,4 @@ public class CompteBanquaireController implements Serializable {
         }
     }
 
-    public void test() {
-        System.out.println("b1 :");
-    }
-
 }

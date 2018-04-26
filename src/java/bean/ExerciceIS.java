@@ -33,7 +33,7 @@ public class ExerciceIS implements Serializable {
     private Societe societe;
     @ManyToOne
     private DeclarationIs declarationIs;
-    private String nFacture;
+    private String numFacture;
     private Float produits;
     private Float charges;
     private Float deductibles;
@@ -43,7 +43,7 @@ public class ExerciceIS implements Serializable {
         this.id = id;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.nFacture = nFacture;
+        this.numFacture = nFacture;
         this.produits = produits;
         this.charges = charges;
         this.deductibles = deductibles;
@@ -103,12 +103,12 @@ public class ExerciceIS implements Serializable {
         this.declarationIs = declarationIs;
     }
 
-    public String getnFacture() {
-        return nFacture;
+    public String getNumFacture() {
+        return numFacture;
     }
 
-    public void setnFacture(String nFacture) {
-        this.nFacture = nFacture;
+    public void setNumFacture(String numFacture) {
+        this.numFacture = numFacture;
     }
 
     public Float getProduits() {
@@ -165,7 +165,7 @@ public class ExerciceIS implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.ExerciceIS[ id=" + id + " ]";
+        return "ExerciceIS{" + "id=" + id + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", societe=" + societe + ", numFacture=" + numFacture + ", produits=" + produits + ", charges=" + charges + ", deductibles=" + deductibles + ", nonDeductibles=" + nonDeductibles + '}';
     }
 
 }

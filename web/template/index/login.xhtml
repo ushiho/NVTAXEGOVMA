@@ -102,10 +102,10 @@
 
                                         <p:message for="motDePasse" display="tooltip"/>
                                         <p:spacer></p:spacer>
-                                        <!--<div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>-->
+                                        <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
                                         <p:spacer></p:spacer>
                                     </h:form>
-                                    <p:commandLink id="loginButton" action="#{employeController.sAdherer()}" value="Connecter" class="btn btn-block " update="panel"  ajax="true">
+                                    <p:commandLink id="loginButton" action="#{employeController.seConnecter()}" value="Connecter" class="btn btn-block " update="panel"  ajax="true">
                                     </p:commandLink>
                                     <div>
                                         <p:ajaxStatus style="display:block;  margin-top:.5em;">
