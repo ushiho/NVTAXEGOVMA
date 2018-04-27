@@ -1,28 +1,31 @@
 $(document).ready(function () {
 
 
-                $('#notifications').click(function () {
-                    return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
-                });
-                $("#notificationLink").click(function ()
-                {
-                    $("#notificationContainer").fadeToggle(300);
-                    $("#notification_count").fadeOut("slow");
-                    return false;
-                });
+    $('#notifications').click(function () {
+        return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
+    });
+    $("#notificationLink").click(function ()
+    {
+        $("#notificationContainer").fadeToggle(300);
+        $("#notification_count").fadeOut("slow");
+        return false;
+    });
 
-                //Document Click hiding the popup 
-                $(document).click(function ()
-                {
-                    $("#notificationContainer").hide();
-                });
+    //Document Click hiding the popup 
+    $(document).click(function ()
+    {
+        $("#notificationContainer").hide();
+    });
 
-                //Popup on click
-                $("#notificationContainer").click(function ()
-                {
-                    return false;
-                });
-                $(".datetimepicker").datetimepicker();
+    //Popup on click
+    $("#notificationContainer").click(function ()
+    {
+        return false;
+    });
+//    $(".datetimepicker").datetimepicker();
+    
+
+
 //                $('#datetimepicker').datetimepicker({
 //	icons: {
 //		time: "fa fa-clock-o",
@@ -35,4 +38,4 @@ $(document).ready(function () {
 //		clear: 'fa fa-trash',
 //		close: 'fa fa-remove'
 //	}
-            });
+});

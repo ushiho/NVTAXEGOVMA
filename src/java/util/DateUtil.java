@@ -100,5 +100,9 @@ public class DateUtil {
         }
         return 1;
     }
+    
+    public static Date getSqlDateToSaveInDB(String date){
+        return getSqlDate(parse(date));
+    } 
 
 }

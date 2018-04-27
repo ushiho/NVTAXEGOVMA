@@ -60,7 +60,7 @@ public class PaiementISFacade extends AbstractFacade<PaiementIS> {
             PaiementIS paiementIS = paiementISs.get(i);
             DernierDelaiIS dateDernierDelai = dateDernierDelaiFacade.findDatePaiementByAccompte(i,2);
             String date = dateDernierDelai.getJour() + "/" + dateDernierDelai.getMois() + "/" + DateUtil.addYearToDate(1, declarationIs.getDateDeclaration());
-            rempliParams(paiementIS, declarationIs, i, DateUtil.parse(date));
+            rempliParams(paiementIS, declarationIs, i, DateUtil.getSqlDate(new Date(date)));
         }
         return paiementISs;
     }

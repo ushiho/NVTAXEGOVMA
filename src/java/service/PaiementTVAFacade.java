@@ -45,7 +45,7 @@ public class PaiementTVAFacade extends AbstractFacade<PaiementTVA> {
         DernierDelaiTVA dernierDelaiTVA = dernierDelaiTVAFacade.findDatePaiementByTypeAndRegime(2, regime);
         String date = dernierDelaiTVA.getJour() + "/" + DateUtil.addMonthToDate(regime, declarationTva.getDateDeclaration())
                 + "/" + declarationTva.getDateDeclaration().getYear();
-        PaiementTVA paiementTVA = rempliParams(declarationTva, DateUtil.parse(date));
+        PaiementTVA paiementTVA = rempliParams(declarationTva, DateUtil.getSqlDate(new Date(date)));
         create(paiementTVA);
         return paiementTVA;
     }

@@ -31,6 +31,9 @@
         <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>
+
+        </script>
     </h:head>
 
     <h:body >
@@ -208,15 +211,14 @@
                                 </div>
                                 <p:spacer/>
                                 <p class="card-just-text text-center">Avec ce formulaire vous pouvez enregistrer tous les exercices
-                                que vous avez fait dans cette année .</p>
+                                    que vous avez fait dans cette année .</p>
                                 <p:spacer/><br/><p:spacer/><p:spacer/>
                                 <h:form id="options">
                                     <div class="row">
                                         <div class="col-md-1 ml-auto mr-auto">
-                                            <p:commandLink update=":form :datalist options" action="#{exerciceISController.addToList()}"
-                                                           actionListener="#{employeController.showDetailForm()}" id="save" value="AJOUTER UN EXERCICE"
-                                                           class="btn btn-outline-danger btn-sm">
-                                                <!--<f:ajax render=":form " execute=":form "/>-->
+                                            <p:commandLink update=":form :datalist options" actionListener="#{employeController.showDetailForm()}"
+                                                           id="save" value="AJOUTER UN EXERCICE" class="btn btn-outline-danger btn-sm">
+                                                <f:ajax render=":form " execute=":form "/>
                                                 <!--<f:ajax render=":annuler" execute="annuler"/>-->
                                             </p:commandLink>
                                         </div>
@@ -298,11 +300,12 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <p:outputLabel for="dateDebut"><label class="note">DATE DÉBUT</label></p:outputLabel>
-                                                        <div class='input-group date datetimepicker' >
+                                                        <div class="input-group date datetimepicker" >
                                                             <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"><i class="nc-icon nc-calendar-60" aria-hidden="true"></i></span>
+                                                                <span class="glyphicon glyphicon-time"><i class="nc-icon nc-calendar-60" aria-hidden="true"></i></span>
                                                             </span>
-                                                            <p:inputText id="dateDebut" value="#{exerciceISController.dateDebut}" required="true" a:type='text' class="form-control" placeholder="05/08/2017" />
+                                                            <p:inputText id="dateDebut" value="#{exerciceISController.dateDebut}" required="true" a:type='text'
+                                                                         class="form-control " placeholder="21/12/2012" title="Date début de l'exercice"> </p:inputText>
 
                                                         </div>
                                                     </div>
@@ -310,21 +313,32 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <p:outputLabel for="dateFin"><label class="note">DATE FIN</label></p:outputLabel>
-                                                        <div class='input-group date datetimepicker'>
+                                                        <p:spacer/>
+                                                        <div class="input-group date datetimepicker" >
                                                             <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"><i class="nc-icon nc-calendar-60" aria-hidden="true"></i></span>
+                                                                <span class="glyphicon glyphicon-time"></span>
+                                                                <i class="nc-icon nc-calendar-60" aria-hidden="true"></i>
                                                             </span>
-                                                            <p:inputText id="dateFin" value="#{exerciceISController.dateFin}" required="true" a:type='text' class="form-control " placeholder="05/08/2017" />
-
+                                                            <p:inputText id="dateFin" value="#{exerciceISController.dateFin}" required="true" a:type='text'
+                                                                         class="form-control " placeholder="05/08/2017" title="Date début de l'exercice" />
                                                         </div>
+
                                                     </div>
+
                                                 </div>
+                                                <script type="text/javascript">
+                                                    $(function () {
+                                                        $('.datetimepicker').datetimepicker({
+                                                            format: 'DD/MM/YYYY'
+                                                        });
+                                                    });
+                                                </script>
                                             </div>
                                             <p:spacer/><br/><p:spacer/>
                                             <div class="row text-center">
                                                 <div class="col-lg-12 col-md-12 ">
-                                                    <p:commandLink update="form"  action="#{exerciceISController.addToList()}" 
-                                                                    id="save" value="ENREGISTRER" class="btn btn-sm"></p:commandLink>
+                                                    <p:commandLink update=":form :options :datalist"  action="#{exerciceISController.addToList()}" 
+                                                                   id="save" value="ENREGISTRER" class="btn btn-sm"></p:commandLink>
                                                 </div>
                                             </div>
                                         </h:panelGroup>
@@ -335,38 +349,56 @@
                                             <h:panelGroup rendered="#{employeController.showTable}">
                                                 <!--hna rah zayda list b element
                                                 //////////////////////////////////////-->
-                                                <p:dataTable  value="#{employeController.items}" var="item"
+                                                <p:dataTable  value="#{exerciceISController.items}" var="item"
                                                               class="table table-sm table-dark table-hover table-bordered"
-                                                              selectionMode="single" rowKey="#{item.CIN}"
+                                                              selectionMode="single" rowKey="#{item.numFacture}"
                                                               selection="#{employeController.selected}"
                                                               >
 
-                                                    <p:ajax event="rowSelect" listener="#{employeController.selected}" update="buttons :form"/>
+                                                    <p:ajax event="rowSelect" listener="#{exerciceISController.selected}" update="buttons :form"/>
                                                     <p:ajax event="rowUnselect" update="buttons"/>
 
                                                     <p:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="NOM ET PRÉNOM"/>
+                                                            <h:outputText value="N° FACTURE"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.nom} #{item.preNom}"/>
+                                                        <h:outputText value="#{item.numFacture}"/>
                                                     </p:column>
                                                     <p:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="CIN"/>
+                                                            <h:outputText value="DATE DÉBUT"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.CIN}"/>
+                                                        <h:outputText value="#{item.dateDebut}"/>
                                                     </p:column>
                                                     <p:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="EMAIL"/>
+                                                            <h:outputText value="DATE FIN"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.email}"/>
+                                                        <h:outputText value="#{item.dateFin}"/>
                                                     </p:column>
                                                     <p:column>
                                                         <f:facet name="header">
-                                                            <h:outputText value="DROIT FISCALE"/>
+                                                            <h:outputText value="CHARGES"/>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.droitFiscale}"/>
+                                                        <h:outputText value="#{item.charges}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="PRODUITS"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.produits}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="DÉDUCTIBLES"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.deductibles}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="NON DÉDUCTIBLES"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.nonDeductibles}"/>
                                                     </p:column>
 
                                                     <f:facet name="footer">
@@ -452,10 +484,10 @@
     <!--  Plugins for Slider -->
     <script src="../assets/js/nouislider.js"></script>
 
+    <script src="../assets/js/mon_JS.js"></script>
     <!--  Plugins for DateTimePicker -->
     <script src="../assets/js/moment.min.js"></script>
     <script src="../assets/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="../assets/js/mon_JS.js"></script>
 
 
 

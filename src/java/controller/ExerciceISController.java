@@ -7,6 +7,7 @@ import service.ExerciceISFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -203,9 +204,9 @@ public class ExerciceISController implements Serializable {
 
     public void addToList() {
         System.out.println("cc ha exe :" + selected);
-        selected.setDateDebut(DateUtil.parse(dateDebut));
-        selected.setDateFin(DateUtil.parse(dateFin));
-        items.add(ejbFacade.clone(selected));
+        selected.setDateDebut(DateUtil.getSqlDateToSaveInDB(dateDebut));
+        selected.setDateFin(DateUtil.getSqlDateToSaveInDB(dateFin));
+        getItems().add(ejbFacade.clone(selected));
         employeController.showDetailTable();
         employeController.hideForm();
         System.out.println(selected);

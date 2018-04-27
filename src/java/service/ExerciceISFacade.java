@@ -86,14 +86,18 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
     }
 
     public ExerciceIS clone(ExerciceIS exerciceIS) {
+        System.out.println("ha service : "+exerciceIS);
         if (exerciceIS != null) {
+            System.out.println("bda f clonage ");
             ExerciceIS clone = new ExerciceIS(exerciceIS.getId(), exerciceIS.getDateDebut(), exerciceIS.getDateFin(),
                     exerciceIS.getNumFacture(), exerciceIS.getCharges(), exerciceIS.getProduits(),
                     exerciceIS.getDeductibles(), exerciceIS.getNonDeductibles());
             clone.setSociete(exerciceIS.getSociete());
             clone.setDeclarationIs(exerciceIS.getDeclarationIs());
+            System.out.println("ha clone : "+clone);
             return clone;
         }
+        System.out.println("rah null !");
         return null;
     }
 }
