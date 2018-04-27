@@ -7,7 +7,6 @@ import service.ExerciceISFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import util.DateUtil;
+import util.MessageUtil;
 
 @Named("exerciceISController")
 @SessionScoped
@@ -33,6 +33,12 @@ public class ExerciceISController implements Serializable {
     private ExerciceIS selected;
     private String dateDebut;
     private String dateFin;
+    private boolean showForm;
+    private boolean showTable;
+    private float totalCharges = 0;
+    private float totalProduits = 0;
+    private float totalDeductibles = 0;
+    private float totalNonDeductibles = 0;
 
     /**
      *
@@ -84,6 +90,55 @@ public class ExerciceISController implements Serializable {
 
     public void setDateFin(String dateFin) {
         this.dateFin = dateFin;
+    }
+
+    public boolean isShowForm() {
+        return showForm;
+    }
+
+    public void setShowForm(boolean showForm) {
+        System.out.println("rah dkhal l setter !! ");
+        this.showForm = showForm;
+    }
+
+    public boolean isShowTable() {
+        return showTable;
+    }
+
+    public void setShowTable(boolean showTable) {
+        this.showTable = showTable;
+    }
+
+    public float getTotalCharges() {
+        return totalCharges;
+    }
+
+    public void setTotalCharges(float totalCharges) {
+        this.totalCharges = totalCharges;
+    }
+
+    public float getTotalProduits() {
+        return totalProduits;
+    }
+
+    public void setTotalProduits(float totalProduits) {
+        this.totalProduits = totalProduits;
+    }
+
+    public float getTotalDeductibles() {
+        return totalDeductibles;
+    }
+
+    public void setTotalDeductibles(float totalDeductibles) {
+        this.totalDeductibles = totalDeductibles;
+    }
+
+    public float getTotalNonDeductibles() {
+        return totalNonDeductibles;
+    }
+
+    public void setTotalNonDeductibles(float totalNonDeductibles) {
+        this.totalNonDeductibles = totalNonDeductibles;
     }
 
     protected void setEmbeddableKeys() {
@@ -203,13 +258,63 @@ public class ExerciceISController implements Serializable {
     }
 
     public void addToList() {
-        System.out.println("cc ha exe :" + selected);
         selected.setDateDebut(DateUtil.getSqlDateToSaveInDB(dateDebut));
         selected.setDateFin(DateUtil.getSqlDateToSaveInDB(dateFin));
         getItems().add(ejbFacade.clone(selected));
-        employeController.showDetailTable();
-        employeController.hideForm();
-        System.out.println(selected);
+        setShowForm(false);
+        setShowTable(true);
+        calculTotalMontants(1, selected);
+        selected = null;
+        setDates("", "");
     }
 
+    public void modifyFromList() {
+        System.out.println("dkhl l modify : ");
+        if (selected == null) {
+            MessageUtil.showMsgSelectToModify();
+        } else {
+            getItems().remove(selected);
+            setDates(DateUtil.formateDate("dd/MM/YYYY", selected.getDateDebut()),
+                    DateUtil.formateDate("dd/MM/YYYY", selected.getDateFin()));
+            setShowForm(true);
+        }
+    }
+
+    public void removeFromList() {
+        if (selected == null) {
+            MessageUtil.showMsgSelectToRemove();
+        } else {
+            ejbFacade.removeSelectedFromList(getItems(), selected);
+            setShowForm(false);
+            System.out.println("ha size : "+getItems().size());
+            System.out.println("ha liste => : "+items);
+            calculTotalMontants(2, selected);
+            selected = null;
+        }
+    }
+
+    private void calculTotalMontants(int operator, ExerciceIS selected) {
+        switch (operator) {
+            case 1:
+                setTotalCharges(getTotalCharges() + selected.getCharges());
+                setTotalProduits(getTotalProduits() + selected.getProduits());
+                setTotalDeductibles(getTotalDeductibles() + selected.getDeductibles());
+                setTotalNonDeductibles(getTotalNonDeductibles() + selected.getNonDeductibles());
+                break;
+            case 2:
+                setTotalCharges(getTotalCharges() - selected.getCharges());
+                setTotalProduits(getTotalProduits() - selected.getProduits());
+                setTotalDeductibles(getTotalDeductibles() - selected.getDeductibles());
+                setTotalNonDeductibles(getTotalNonDeductibles() - selected.getNonDeductibles());
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void setDates(String dateDebut, String dateFin) {
+        setDateDebut(dateDebut);
+        setDateFin(dateFin);
+    }
 }

@@ -12,7 +12,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <script src='https://www.google.com/recaptcha/api.js'></script>
-        <title>S'Adhérer</title>
+        <title>Direction Géneral des Impots</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -48,7 +48,8 @@
                         <h:form id="options">
                             <div class="row">
                                 <div class="col-md-1 ml-auto mr-auto">
-                                    <p:commandLink update=":form :datalist options" actionListener="#{employeController.showDetailForm()}" id="save" value="AJOUTER UN UTILISATEUR" class="btn btn-outline-danger btn-sm">
+                                    <p:commandLink update=":form :datalist options" actionListener="#{employeController.showDetailForm()}"
+                                                   id="save" value="AJOUTER UN UTILISATEUR" class="btn btn-outline-danger btn-sm">
                                         <f:ajax render=":form " execute=":form "/>
                                         <!--<f:ajax render=":annuler" execute="annuler"/>-->
                                     </p:commandLink>
@@ -154,7 +155,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p:commandLink update="form :datalist :options" action="#{employeController.addToList()}" id="save" value="ENREGISTRER" class="btn btn-info btn-sm">
+                                <p:commandLink update="form :datalist :options" action="#{employeController.addToList()}"
+                                               id="save" value="ENREGISTRER" class="btn btn-info btn-sm">
                                     <!--<f:ajax render=":form:checkbox" execute=":form:checkbox"/>-->
                                     <!--<f:ajax render=":datalist" execute=":datalist"/>-->
                                 </p:commandLink>
@@ -204,7 +206,7 @@
 
                                         <f:facet name="footer">
                                             <h:form id="buttons">
-                                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":form buttons :form:checkbox :options"
+                                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":form buttons  :options"
                                                                  actionListener="#{employeController.modifyFromList()}">
                                                 </p:commandButton>
                                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 

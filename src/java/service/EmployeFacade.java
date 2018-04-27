@@ -116,7 +116,7 @@ public class EmployeFacade extends AbstractFacade<Employe> {
         if (testParams(utilisateur, contribuable)) {
             return -1;
         }
-        System.out.println("ha droit d contribuable : "+contribuable.getDroitFiscale());
+        System.out.println("ha droit d contribuable : " + contribuable.getDroitFiscale());
         setPassAndLogin(utilisateur);
         Email email = emailFacade.generatePassword(utilisateur.getLogin(), utilisateur.getMotDePasse(), 1);
         if (EmailUtil.sendEmail(email, utilisateur) < 0) {
@@ -128,17 +128,17 @@ public class EmployeFacade extends AbstractFacade<Employe> {
     }
 
     private void setPassAndLogin(Employe utilisateur) {
-        String login = utilisateur.getNom()+PassUtil.generate(2, 4);
+        String login = utilisateur.getNom() + PassUtil.generate(2, 4);
         String pass = PassUtil.generatePass(6, 4);
         while (findByLogin(login) != null) {
-            login = utilisateur.getNom()+PassUtil.generatePass(2, 4);
+            login = utilisateur.getNom() + PassUtil.generatePass(2, 4);
         }
         utilisateur.setMotDePasse(pass);
         utilisateur.setLogin(login);
     }
 
     private boolean testParams(Employe utilisateur, Employe contribuable) {
-        return utilisateur == null || contribuable == null ;
+        return utilisateur == null || contribuable == null;
     }
 
     public int modify(Employe nvUtilisateur, Employe anUtilisateur) {
@@ -315,5 +315,13 @@ public class EmployeFacade extends AbstractFacade<Employe> {
             return caracs[1] + "";
         }
         return null;
+    }
+
+    public void removeSelectedFromList(List<Employe> items, Employe selected) {
+        if (items.size() == 1 || selected == items.get(0)) {
+            items.remove(0);
+            return;
+        }
+        items.remove(items.indexOf(selected) + 1);
     }
 }

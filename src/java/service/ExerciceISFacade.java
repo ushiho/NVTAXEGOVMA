@@ -86,18 +86,22 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
     }
 
     public ExerciceIS clone(ExerciceIS exerciceIS) {
-        System.out.println("ha service : "+exerciceIS);
         if (exerciceIS != null) {
-            System.out.println("bda f clonage ");
             ExerciceIS clone = new ExerciceIS(exerciceIS.getId(), exerciceIS.getDateDebut(), exerciceIS.getDateFin(),
-                    exerciceIS.getNumFacture(), exerciceIS.getCharges(), exerciceIS.getProduits(),
+                    exerciceIS.getNumFacture(), exerciceIS.getProduits(), exerciceIS.getCharges(),
                     exerciceIS.getDeductibles(), exerciceIS.getNonDeductibles());
             clone.setSociete(exerciceIS.getSociete());
             clone.setDeclarationIs(exerciceIS.getDeclarationIs());
-            System.out.println("ha clone : "+clone);
             return clone;
         }
-        System.out.println("rah null !");
         return null;
+    }
+
+    public void removeSelectedFromList(List<ExerciceIS> items, ExerciceIS selected) {
+        if (items.size() == 1 || selected == items.get(0)) {
+            items.remove(0);
+            return;
+        }
+        items.remove(items.indexOf(selected) + 1);
     }
 }

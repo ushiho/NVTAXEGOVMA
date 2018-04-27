@@ -21,10 +21,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.mail.Message;
 import org.primefaces.context.RequestContext;
 import service.CompteBanquaireFacade;
 import service.SocieteFacade;
 import util.FieldValidatorUtil;
+import util.MessageUtil;
 import util.SessionUtil;
 import util.VerifyRecaptchaUtil;
 
@@ -98,6 +100,7 @@ public class EmployeController implements Serializable {
     }
 
     public boolean isShowTable() {
+        System.out.println("ha l val table !!! hna f employe controller :" + showTable);
         return showTable;
     }
 
@@ -285,20 +288,18 @@ public class EmployeController implements Serializable {
         System.out.println(confirmer);
         System.out.println(selected.getNom());
         if (!FieldValidatorUtil.isEmail("mmmm")) {
-            showMsg("Entrer un email valid");
+            MessageUtil.showMsg("Entrer un email valid");
         }
 
     }
 
-    public void showMsg(String msg) {
-        RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur", "" + msg + ""));
-    }
+    
 
     public void sendCodeToVirefyEmail() {
         if (!userData().getEmail().equals(confirmer)) {
-            showMsg("LES DEUX ADRESSES EMAIL NE SONT PAS EGAUX !");
+            MessageUtil.showMsg("LES DEUX ADRESSES EMAIL NE SONT PAS EGAUX !");
         } else if (ejbFacade.sendCodeToVirefyEmail(userData()) < 0) {
-            showMsg("ADRESSE EMAIL EST INCORRECT !");
+            MessageUtil.showMsg("ADRESSE EMAIL EST INCORRECT !");
         } else {
             initParams();
             SessionUtil.redirectToPage("adhesionE2");
@@ -308,7 +309,7 @@ public class EmployeController implements Serializable {
     public void verifyCodeSent() {
         System.out.println("dans l' E2");
         if (!userData().getMotDePasse().equals(confirmer)) {
-            showMsg("CODE EST INCORRECT !");
+            MessageUtil.showMsg("CODE EST INCORRECT !");
         } else {
             System.out.println((Employe) SessionUtil.getAttribute("data"));
             System.out.println("ha  selected : " + selected);
@@ -326,9 +327,9 @@ public class EmployeController implements Serializable {
         System.out.println("dans E3 : data est " + userData());
         System.out.println("avant selected est : " + selected);
         if (!userData().getMotDePasse().equals(confirmer)) {
-            showMsg("LES DEUX MOTS DE PASSE NE SONT PAS EGAUX !");
+            MessageUtil.showMsg("LES DEUX MOTS DE PASSE NE SONT PAS EGAUX !");
         } else if (userData().getMotDePasse().length() < 6) {
-            showMsg("LE MOT DE PASSE DOIT CONTENIR AU MOINS 6 CARACTÈRES !");
+            MessageUtil.showMsg("LE MOT DE PASSE DOIT CONTENIR AU MOINS 6 CARACTÈRES !");
         } else {
             SessionUtil.redirectToPage("adhesionE4");
             initParams();
@@ -350,9 +351,9 @@ public class EmployeController implements Serializable {
     public void addToList() {
         System.out.println("dans E5 : l employe ajoute : " + selected);
         if (ejbFacade.existeInList(getItems(), selected)) {
-            showMsg("CET UILISATEUR EST DÉJA AJOUTÉ ");
+            MessageUtil.showMsg("CET UILISATEUR EST DÉJA AJOUTÉ ");
         } else if (!selected.getEmail().equals(confirmer)) {
-            showMsg("LES DEUX ADRESSES NE SONT PAS EGAUX !");
+            MessageUtil.showMsg("LES DEUX ADRESSES NE SONT PAS EGAUX !");
         } else {
             selected.setDroitFiscale(ejbFacade.numberTodroit(ejbFacade.checkboxDroitsToNum(droits)));
             items.add(ejbFacade.clone(selected));
@@ -368,21 +369,16 @@ public class EmployeController implements Serializable {
             items.remove(selected);
             showDetailForm();
         } else {
-            showMsg("SÉLÉCTIONNER UN UTILISATEUR POUR MODIFIER !");
+            MessageUtil.showMsgSelectToModify();
         }
     }
 
     public void removeFromList() {
         if (selected != null) {
-            if (items.size() == 1 || selected == items.get(0)) {
-                items.remove(0);
-                selected = null;
-                return;
-            }
-            items.remove(items.indexOf(selected) + 1);
+            ejbFacade.removeSelectedFromList(items, selected);
             selected = null;
         } else {
-            showMsg("SÉLÉCTIONNER UN UTILISATEUR !");
+            MessageUtil.showMsgSelectToRemove();
         }
     }
 
