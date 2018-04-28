@@ -45,7 +45,7 @@
                                 <div class="col-md-6 ml-auto mr-auto">
                                     <p:outputLabel for="if"><label class="note" style="margin-right: 100px;margin-left: 100px;">
                                             IDENTIFIANT :</label></p:outputLabel>
-                                    <p:outputLabel for="rs"><label class="note" style="margin-right: 100px;margin-left: 100px;">
+                                    <p:outputLabel for="password"><label class="note" style="margin-right: 100px;margin-left: 100px;">
                                             MOT DE PASSE :</label></p:outputLabel>
                                 </div>
                                 <div class="col-md-6 ml-auto mr-auto">
@@ -62,17 +62,25 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-key-25"></i>
                                         </span>
-                                        <p:password id="rs" value="#{employeController.selected.motDePasse}" 
+                                        <p:password id="password" value="#{employeController.selected.motDePasse}" 
                                                     class="form-control"></p:password>
+                                        <p:messages for="password" showDetail="true" closable="true"/>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="row">
-                                <div class="text-center">
+                                <div class="text-center" style="margin-left: 200px;">
                                     <p:spacer></p:spacer>
-                                    <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
-                                    <p:spacer></p:spacer>
+                                    <div class="g-recaptcha" id="reCaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy">
+                                        <!--<p:message  showDetail="true"  ></p:message>-->
+                                    </div>
+                                    <p:spacer/>
+                                    <p:spacer/>
+
+                                    <p:outputLabel id="testLogin" class="notification-text" style="color: red;font-size: 13px;">
+                                        Désolé mot de passe ou identifiant est incorrect !
+                                    </p:outputLabel>
                                 </div>
                             </div>
                             <div class="row">
@@ -85,8 +93,6 @@
                                 </div>
                                 <div class="col-md-2 ml-auto mr-auto">
                                     <p:commandLink id="nextButton" action="#{employeController.seConnecter()}" class="btn btn-light btn-sm" value="VALIDER">
-                                        <f:ajax render="form" execute="form"/>
-
                                     </p:commandLink>
                                 </div>
 

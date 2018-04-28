@@ -49,7 +49,9 @@
                                             <i class="nc-icon nc-key-25"></i>
                                         </span>
                                         <p:password id="pass"  required="true" value="#{employeController.confirmer}" 
-                                                    class="form-control" placeholder="mot de passe choisi"></p:password>
+                                                    class="form-control" placeholder="mot de passe choisi">
+                                            <p:ajax event="keyup" update="out" listener="#{employeController.testForcePassword()}" />
+                                        </p:password>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -61,6 +63,14 @@
                                         <p:password id="repatPass" required="true" value="#{employeController.userData().motDePasse}" class="form-control" 
                                                     placeholder="retapez le mot de passe"></p:password>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h:outputText id="out" value="#{employeController.text}" />
+                                </div>
+                                <div class="col-md-6">
+                                    <p:outputLabel for="repatPass"><label class="note">CONFIRMER LE MOT DE PASSE</label></p:outputLabel>
                                 </div>
                             </div>
                             <div class="text-center">

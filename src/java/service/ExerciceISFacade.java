@@ -7,6 +7,7 @@ package service;
 
 import bean.ExerciceIS;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +22,9 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
 
     @PersistenceContext(unitName = "TaxeGOVMAPU")
     private EntityManager em;
+    
+    @EJB
+    private EmployeFacade employeFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -104,5 +108,12 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
             return;
         }
         items.remove(items.indexOf(selected) + 1);
+    }
+    
+    public void setSocieteToList(List<ExerciceIS> items){
+        items.forEach((item) -> {
+                item.setSociete(employeFacade.getConnectedUser("user").getSociete());
+                item.setDeclarationIs(null);
+            });
     }
 }

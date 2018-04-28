@@ -32,7 +32,7 @@ public class PenaliteIS implements Serializable {
     private BigDecimal mtPenalite = new BigDecimal(0);
     private BigDecimal mtBase = new BigDecimal(0);
     @OneToOne
-    private ConditionPenaliteIS conditionPenalite;
+    private ConditionPenaliteIS conditionPenaliteIS;
     @OneToOne
     private DeclarationIs declarationIs;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -80,15 +80,15 @@ public class PenaliteIS implements Serializable {
         this.mtBase = mtBase;
     }
 
-    public ConditionPenaliteIS getConditionPenalite() {
-        if (conditionPenalite == null) {
-            conditionPenalite = new ConditionPenaliteIS();
+    public ConditionPenaliteIS getConditionPenaliteIS() {
+        if (conditionPenaliteIS == null) {
+            conditionPenaliteIS = new ConditionPenaliteIS();
         }
-        return conditionPenalite;
+        return conditionPenaliteIS;
     }
 
-    public void setConditionPenalite(ConditionPenaliteIS conditionPenalite) {
-        this.conditionPenalite = conditionPenalite;
+    public void setConditionPenaliteIS(ConditionPenaliteIS conditionPenaliteIS) {
+        this.conditionPenaliteIS = conditionPenaliteIS;
     }
 
     public DeclarationIs getDeclarationIs() {

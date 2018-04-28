@@ -51,39 +51,39 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
 
     public int save(List<ExerciceIS> exerciceISs) {
         System.out.println("bda f service :");
-        if (testParamForSave(exerciceISs)) {
+        if (exerciceISFacade.testExercices(exerciceISs) < 0) {
             return -1;
         }
-        System.out.println("le test de service est b1 passer !!!!!");
-        DeclarationIs declarationIs = calcResultatFiscalAndComptable(exerciceISs);
-        System.out.println("lprob 1 ");
+        DeclarationIs declarationIs = initDecalarationIsParam();
+        calcResultatFiscalAndComptable(declarationIs, exerciceISs);
         declarationIs.setExerciceISs(exerciceISs);
         System.out.println("l prb 2 ");
-        initDecalarationIsParam(declarationIs);
+
         System.out.println("lprb 3");
-//        if (!testExoneration(declarationIs)) {
-//            //creation de penalite sur retard de declaration 
-//            //afficher la penalite ds le view
-//            penaliteISFacade.saveForDeclarationIS(declarationIs);// a faire !!
-//
-//        }
+        if (!testExoneration(declarationIs)) {
+            //creation de penalite sur retard de declaration 
+            //afficher la penalite ds le view
+            penaliteISFacade.saveForDeclarationIS(declarationIs);// a faire !!
+
+        }
+        declarationIs.setPenaliteIS(null);
         System.out.println("try to save decleration ");
-        System.out.println("ha declartion : "+declarationIs);
+        System.out.println("ha declartion : " + declarationIs);
+        System.out.println("ha les exercies d declara : " + declarationIs.getExerciceISs());
         create(declarationIs);
-        
+
         exerciceISFacade.save(exerciceISs);
         return 1;
     }
 
-    private boolean testParamForSave(List<ExerciceIS> exerciceISs) {
-        System.out.println("ha res de test :" + exerciceISFacade.testExercices(exerciceISs));
-        return exerciceISFacade.testExercices(exerciceISs) < 0;
-    }
 
-    private void initDecalarationIsParam(DeclarationIs declarationIs) {
+    private DeclarationIs  initDecalarationIsParam() {
+        DeclarationIs declarationIs = new DeclarationIs();
+        declarationIs.setId(generate("DeclarationIs", "id"));
         declarationIs.setEtat(0);
         declarationIs.setDateDeclaration(DateUtil.getSqlDate(new Date()));
         declarationIs.setPaiementISs(null);
+        return declarationIs;
     }
 
     //test de l exoneration
@@ -92,6 +92,7 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
         if (societeFacade.exonerer(declarationIs.getSociete())) {
             declarationIs.setMontantIs(0f);
             declarationIs.getSociete().setDeficitIS(0f);
+            societeFacade.edit(declarationIs.getSociete());
             return true;
         } else if (calculerDeficit(declarationIs) > 0) {
             calcMontantIS(declarationIs);
@@ -132,16 +133,14 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
 
     }
 
-    private DeclarationIs calcResultatFiscalAndComptable(List<ExerciceIS> exerciceISs) {
-        DeclarationIs declarationIs = new DeclarationIs();
+    private void calcResultatFiscalAndComptable(DeclarationIs declarationIs, List<ExerciceIS> exerciceISs) {
         declarationIs.setSociete(exerciceISs.get(0).getSociete());//societe ghatjibha mn utili mn session !!!
         for (ExerciceIS exerciceIS : exerciceISs) {
-             declarationIs.setResultatComptable(declarationIs.getResultatComptable() + exerciceIS.getProduits() - exerciceIS.getCharges());
+            declarationIs.setResultatComptable(declarationIs.getResultatComptable() + exerciceIS.getProduits() - exerciceIS.getCharges());
             declarationIs.setResultatFiscal(declarationIs.getResultatFiscal() + declarationIs.getResultatComptable()
                     - exerciceIS.getDeductibles() + exerciceIS.getNonDeductibles());
             declarationIs.setChiffreAffaire(exerciceIS.getProduits() + declarationIs.getChiffreAffaire());
         }
-        return declarationIs;
     }
 
     ///validation de la declarartion

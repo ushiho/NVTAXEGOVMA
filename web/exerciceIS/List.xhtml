@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="ExerciceISListForm">
                 <p:panel header="#{bundle.ListExerciceISTitle}">
-                    <p:dataTable id="datalist" value="#{exerciceISController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{exerciceISController.getItemsAvailableSelectMany()}" var="item"
                                  selectionMode="single" selection="#{exerciceISController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"

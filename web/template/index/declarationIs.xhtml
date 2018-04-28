@@ -205,6 +205,11 @@
                             </div>
 
                             <div class="col-lg-9 col-md-12">
+                                <form id="notif">
+                                    <p:notificationBar rendered="#{exerciceISController.resTraitement}" position="top" effect="slide" styleClass="top" widgetVar="bar">
+                                        <h:outputText value="Declaration est bien créer" style="font-size:36px;" />
+                                    </p:notificationBar>
+                                </form>
                                 <div class="card-header col-md-12 ml-auto mr-auto" >
                                     <p:outputLabel><h6 class="text-center note">VOS EXERCICES COMPTABLES : </h6></p:outputLabel>
                                 </div>
@@ -217,15 +222,25 @@
                                         <div class="col-md-1 ml-auto mr-auto">
                                             <p:commandLink update=":form :datalist ops" actionListener="#{exerciceISController.setShowForm(true)}"
                                                            id="ajouter" value="AJOUTER UN EXERCICE" class="btn btn-outline-danger btn-sm">
+                                                <f:actionListener binding="#{exerciceISController.setResTraitement(false)}"/>
                                                 <!--                                                <f:ajax render=":form " execute=":form "/>-->
                                                 <!--<f:ajax render=":annuler" execute="annuler"/>-->
                                             </p:commandLink>
                                         </div>
                                         <p:spacer/>
-                                        <div class="col-md-2 ml-auto mr-auto">
+                                        <div class="col-md-2 col-lg-1 ml-auto mr-auto">
                                             <p:commandLink update=":form ops :datalist" rendered="#{exerciceISController.showForm}" 
                                                            actionListener="#{exerciceISController.setShowForm(false)}" 
                                                            id="annuler"   value="ANNULER" class="btn btn-outline-warning btn-sm">
+                                                <f:actionListener 
+                                                    binding="#{exerciceISController.setResTraitement(exerciceISController.items.size()>0)}"/>
+                                            </p:commandLink>
+
+                                        </div>
+                                        <div class="col-md-1 ml-auto mr-auto">
+                                            <p:commandLink update=":form ops :datalist" rendered="#{exerciceISController.resTraitement}" 
+                                                           actionListener="jasper ......." 
+                                                           id="imprimer"   value="IMPRIMER" class="btn btn-outline-success btn-sm">
                                             </p:commandLink>
 
                                         </div>
@@ -350,7 +365,7 @@
                                     <p:spacer/>
                                     <div class="row" >
                                         <h:form id="datalist">
-                                            <h:panelGroup rendered="#{exerciceISController.showTable}">
+                                            <h:panelGroup rendered="#{exerciceISController.items.size()>0}">
                                                 <!--hna rah zayda list b element
                                                 //////////////////////////////////////-->
                                                 <p:dataTable  value="#{exerciceISController.items}" var="item"
@@ -422,18 +437,18 @@
 
                                                     <f:facet name="footer">
                                                         <h:form id="buttons">
-                                                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="MODIFIER" update=":form buttons  :ops"
+                                                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="MODIFIER" update=":form buttons :options  :ops"
                                                                              actionListener="#{exerciceISController.modifyFromList()}">
                                                             </p:commandButton>
                                                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="SUPPRIMER" 
-                                                                             action="#{exerciceISController.removeFromList()}" update=":datalist :form buttons :ops"></p:commandButton>
+                                                                             action="#{exerciceISController.removeFromList()}" update=":datalist :options :form buttons :ops"></p:commandButton>
                                                         </h:form>
                                                     </f:facet>
                                                 </p:dataTable>
                                             </h:panelGroup>
                                         </h:form>
                                         <h:form id="options">
-                                            <h:panelGroup rendered="#{exerciceISController.showTable}">
+                                            <h:panelGroup rendered="#{exerciceISController.items.size()>0}">
 
                                                 <div class="row" id="options">
                                                     <div class="col-md-1 " style="margin-left: 100px;">
@@ -443,17 +458,18 @@
                                                     </div>
                                                     <p:spacer/>
                                                     <div class="col-md-5  " style="margin-left: 160px;">
-                                                        <p:commandLink  
+                                                        <p:commandLink  update=":form :datalist :ops :options"
                                                             actionListener="#{exerciceISController.validerDeclarationIS()}" 
                                                             id="valider"   value="SOUMETTRE A VALIDATION" class="btn btn-outline-warning btn-sm">
+
                                                         </p:commandLink>
 
                                                     </div>
                                                     <p:spacer/>
                                                     <div class="col-md-1  " style="margin-left: 30px;">
-                                                        <p:commandLink  
-
+                                                        <p:commandLink  action="profile.xhtml"
                                                             id="exit"   value="ANNULER" class="btn btn-outline-danger btn-sm">
+                                                            <f:actionListener binding="#{exerciceISController.items.clear()}"/>
                                                         </p:commandLink>
                                                     </div>
                                                 </div>

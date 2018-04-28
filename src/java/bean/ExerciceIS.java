@@ -95,6 +95,7 @@ public class ExerciceIS implements Serializable {
     public DeclarationIs getDeclarationIs() {
         if (declarationIs == null) {
             declarationIs = new DeclarationIs();
+            System.out.println("cc cv elik ??");
         }
         return declarationIs;
     }

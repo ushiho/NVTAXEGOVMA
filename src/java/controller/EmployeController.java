@@ -16,17 +16,15 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.mail.Message;
-import org.primefaces.context.RequestContext;
 import service.CompteBanquaireFacade;
 import service.SocieteFacade;
 import util.FieldValidatorUtil;
 import util.MessageUtil;
+import util.PassUtil;
 import util.SessionUtil;
 import util.VerifyRecaptchaUtil;
 
@@ -46,6 +44,8 @@ public class EmployeController implements Serializable {
     private String confirmer;
     private boolean showTable;
     private int[] droits;
+    private boolean resConnect;//resultat dyal se connecter !
+    private String text;
 
     public EmployeController() {
     }
@@ -115,6 +115,24 @@ public class EmployeController implements Serializable {
     public void setDroits(int[] droits) {
         this.droits = droits;
     }
+
+    public boolean isResConnect() {
+        return resConnect;
+    }
+
+    public void setResConnect(boolean resConnect) {
+        this.resConnect = resConnect;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+    
+    
 
     public CompteBanquaireFacade getCompteBanquaireFacade() {
         return compteBanquaireFacade;
@@ -244,8 +262,10 @@ public class EmployeController implements Serializable {
         int res = getFacade().seConnecter(selected);
         boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
         System.out.println(res + "ha recaptcha : " + recaptcha);
-        if (res > 0) {
+        if (res > 0 ) {
             SessionUtil.redirectToPage("profile.xhtml");
+        }else{
+//            MessageUtil.showMsg("Désolé mot de passe ou identifiant est incorrect !");
         }
     }
 
@@ -419,7 +439,13 @@ public class EmployeController implements Serializable {
         System.out.println("apres : " + selected);
     }
 
-    public void test() {
-        System.out.println("noon");
+    //molat null pointer exception
+    public void testForcePassword() {
+        System.out.println(userData());
+        if(userData().getMotDePasse().length()<6){
+            setText("le mot de passe doit contenir au moins 6 caractères");
+        } if(FieldValidatorUtil.isPassword(selected.getMotDePasse())){
+            setText("Bien ,");
+        }
     }
 }

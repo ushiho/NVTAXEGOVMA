@@ -45,6 +45,7 @@ public class ExerciceISController implements Serializable {
     private float totalProduits = 0;
     private float totalDeductibles = 0;
     private float totalNonDeductibles = 0;
+    private boolean resTraitement;
 
     /**
      *
@@ -147,6 +148,14 @@ public class ExerciceISController implements Serializable {
         this.totalNonDeductibles = totalNonDeductibles;
     }
 
+    public boolean isResTraitement() {
+        return resTraitement;
+    }
+
+    public void setResTraitement(boolean resTraitement) {
+        this.resTraitement = resTraitement;
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -186,7 +195,9 @@ public class ExerciceISController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.CREATE) {
+                    ejbFacade.create(selected);
+                } else if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -327,11 +338,14 @@ public class ExerciceISController implements Serializable {
 
     public void validerDeclarationIS() {
         if (!items.isEmpty()) {
-            System.out.println("ha user mn session : " + employeFacade.getConnectedUser("user"));
-            getItems().get(0).setSociete(employeFacade.getConnectedUser("user").getSociete());
-            System.out.println("bda traitement :");
-            int res = declarationIsFacade.save(getItems());
-            System.out.println("res");
+            ejbFacade.setSocieteToList(items);
+            if (declarationIsFacade.save(getItems()) > 0) {
+                setResTraitement(true);
+                setShowForm(false);
+                setShowTable(false);
+            }
+        } else {
+            MessageUtil.showMsg("Rien à sauvegarder !");
         }
     }
 }

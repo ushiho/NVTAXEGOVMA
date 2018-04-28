@@ -44,8 +44,10 @@ public class Societe implements Serializable {
     private List<CompteBanquaire> compteBanquaires;
     @OneToMany(mappedBy = "societe")
     private List<Employe> employes;
+    @OneToMany(mappedBy = "societe")
+    private List<DeclarationIs> declarationIss;
 
-    public Societe(long id, long idFiscal, String password, String raisonSociale, 
+    public Societe(long id, long idFiscal, String password, String raisonSociale,
             String numTele, String numFix, String email, Float deficitIS, Float deficitTVA, int regimeTVA, Date dateCreation) {
         this.id = id;
         this.idFiscal = idFiscal;
@@ -183,6 +185,17 @@ public class Societe implements Serializable {
 
     public void setRegimeTVA(int regimeTVA) {
         this.regimeTVA = regimeTVA;
+    }
+
+    public List<DeclarationIs> getDeclarationIss() {
+        if (declarationIss == null) {
+            declarationIss = new ArrayList();
+        }
+        return declarationIss;
+    }
+
+    public void setDeclarationIss(List<DeclarationIs> declarationIss) {
+        this.declarationIss = declarationIss;
     }
 
     @Override
