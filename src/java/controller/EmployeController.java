@@ -396,12 +396,13 @@ public class EmployeController implements Serializable {
                     return;
                 }
             }
+            userData().setLogin(""+userData().getSociete().getIdFiscal());
             ejbFacade.save(userData());
             compteBanquaireFacade.saveListComptes(userData().getSociete().getCompteBanquaires());
             societeFacade.edit(userData().getSociete());
             ejbFacade.logout();
             initParams();
-            SessionUtil.redirectToPage("login");
+            SessionUtil.redirectToPage("seConnecter");
         }
     }
 

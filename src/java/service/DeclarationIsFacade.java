@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.DateUtil;
 
 /**
  *
@@ -49,35 +50,45 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
     }
 
     public int save(List<ExerciceIS> exerciceISs) {
+        System.out.println("bda f service :");
         if (testParamForSave(exerciceISs)) {
             return -1;
         }
+        System.out.println("le test de service est b1 passer !!!!!");
         DeclarationIs declarationIs = calcResultatFiscalAndComptable(exerciceISs);
+        System.out.println("lprob 1 ");
         declarationIs.setExerciceISs(exerciceISs);
+        System.out.println("l prb 2 ");
         initDecalarationIsParam(declarationIs);
-        if (!testExoneration(declarationIs)) {
-            //creation de penalite sur retard de declaration 
-            //afficher la penalite ds le view
-            penaliteISFacade.saveForDeclarationIS(declarationIs);// a faire !!
-
-        }
+        System.out.println("lprb 3");
+//        if (!testExoneration(declarationIs)) {
+//            //creation de penalite sur retard de declaration 
+//            //afficher la penalite ds le view
+//            penaliteISFacade.saveForDeclarationIS(declarationIs);// a faire !!
+//
+//        }
+        System.out.println("try to save decleration ");
+        System.out.println("ha declartion : "+declarationIs);
         create(declarationIs);
+        
         exerciceISFacade.save(exerciceISs);
         return 1;
     }
 
     private boolean testParamForSave(List<ExerciceIS> exerciceISs) {
-        return exerciceISs == null || exerciceISs.get(0) == null || exerciceISs.isEmpty() || exerciceISFacade.testExercices(exerciceISs) < 0;
+        System.out.println("ha res de test :" + exerciceISFacade.testExercices(exerciceISs));
+        return exerciceISFacade.testExercices(exerciceISs) < 0;
     }
 
     private void initDecalarationIsParam(DeclarationIs declarationIs) {
         declarationIs.setEtat(0);
-        declarationIs.setDateDeclaration(new Date());
+        declarationIs.setDateDeclaration(DateUtil.getSqlDate(new Date()));
         declarationIs.setPaiementISs(null);
     }
 
     //test de l exoneration
     private boolean testExoneration(DeclarationIs declarationIs) {
+        System.out.println("hahooooowqa lmochkillll !!!!");
         if (societeFacade.exonerer(declarationIs.getSociete())) {
             declarationIs.setMontantIs(0f);
             declarationIs.getSociete().setDeficitIS(0f);
@@ -124,9 +135,8 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
     private DeclarationIs calcResultatFiscalAndComptable(List<ExerciceIS> exerciceISs) {
         DeclarationIs declarationIs = new DeclarationIs();
         declarationIs.setSociete(exerciceISs.get(0).getSociete());//societe ghatjibha mn utili mn session !!!
-        for (int i = 0; i < exerciceISs.size(); i++) {
-            ExerciceIS exerciceIS = exerciceISs.get(i);
-            declarationIs.setResultatComptable(declarationIs.getResultatComptable() + exerciceIS.getProduits() - exerciceIS.getCharges());
+        for (ExerciceIS exerciceIS : exerciceISs) {
+             declarationIs.setResultatComptable(declarationIs.getResultatComptable() + exerciceIS.getProduits() - exerciceIS.getCharges());
             declarationIs.setResultatFiscal(declarationIs.getResultatFiscal() + declarationIs.getResultatComptable()
                     - exerciceIS.getDeductibles() + exerciceIS.getNonDeductibles());
             declarationIs.setChiffreAffaire(exerciceIS.getProduits() + declarationIs.getChiffreAffaire());

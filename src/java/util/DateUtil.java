@@ -93,7 +93,7 @@ public class DateUtil {
     public static int compareTwoDates(Date dateDebut, Date dateFin) {
         if (dateDebut == null || dateFin == null) {
             return -1;
-        } else if (dateDebut.compareTo(dateFin) < 0) {
+        } else if (dateDebut.compareTo(dateFin) > 0) {
             return -2;
         }else if(dateDebut.getYear()!=dateFin.getYear()){
             return -3;

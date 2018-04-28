@@ -209,7 +209,8 @@ public class DeclarationIs implements Serializable {
 
     @Override
     public String toString() {
-        return "DeclarationIs{" + "id=" + id + ", dateDeclaration=" + dateDeclaration + ", type=" + etat + ", montantIs=" + montantIs + '}';
+        return "DeclarationIs{" + "id=" + id + ", dateDeclaration=" + dateDeclaration + ", etat=" + etat + ", nbAccomptePaye=" + nbAccomptePaye + ", montantIs=" + montantIs + ", tauxIs=" + tauxIs + ", resultatComptable=" + resultatComptable + ", chiffreAffaire=" + chiffreAffaire + ", resultatFiscal=" + resultatFiscal + ", deficit=" + deficit + '}';
     }
+
 
 }

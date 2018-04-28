@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="icon" type="image/png" href="../assets/img/favicon.ico"></link>
+        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"></link>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <title>Direction Générale des Impots</title>
+
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <meta name="viewport" content="width=device-width" />
+
+        <!-- Bootstrap core CSS     -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../assets/css/paper-kit.css?v=2.1.0" rel="stylesheet"/>
+
+        <!--  CSS for Demo Purpose, don't include it in your project     -->
+        <link href="../assets/css/demo.css" rel="stylesheet" />
+
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+
+        <!--     Fonts and icons     -->
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
+        <link href="../assets/css/nucleo-icons.css" rel="stylesheet"></link>
+    </h:head>
+    <h:body >
+        <div class="section landing-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 ml-auto mr-auto">
+
+                        <div class="card-header col-md-12 ml-auto mr-auto" >
+                            <p:outputLabel class="text-center"><h6 class="text-center note">BIENVENUE SUR VOTRE ESPACE ADHÉRENT</h6></p:outputLabel>
+                        </div>
+                        <h:form id="form" class="contact-form">
+                            <div class="row">
+                                <div class="col-md-6 ml-auto mr-auto">
+                                    <p:outputLabel for="if"><label class="note" style="margin-right: 100px;margin-left: 100px;">
+                                            IDENTIFIANT :</label></p:outputLabel>
+                                    <p:outputLabel for="rs"><label class="note" style="margin-right: 100px;margin-left: 100px;">
+                                            MOT DE PASSE :</label></p:outputLabel>
+                                </div>
+                                <div class="col-md-6 ml-auto mr-auto">
+                                    <p:outputLabel value=""/>
+                                    <div  class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="nc-icon nc-user-run"></i>
+                                        </span>
+                                        <p:inputText id="if" value="#{employeController.selected.login}" 
+                                                     a:type="text" class="form-control"></p:inputText>
+                                    </div>
+                                    <p:outputLabel value=""/>
+                                    <div  class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="nc-icon nc-key-25"></i>
+                                        </span>
+                                        <p:password id="rs" value="#{employeController.selected.motDePasse}" 
+                                                    class="form-control"></p:password>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="text-center">
+                                    <p:spacer></p:spacer>
+                                    <div class="g-recaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy"></div>
+                                    <p:spacer></p:spacer>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 ml-auto mr-auto">
+                                    <div class="forgot nav-link" style="margin-top: 20px;">
+                                        <a id="annuler" href="resetPassword.xhtml" >
+                                            <strong style="font-size: 15px;"> MOT DE PASSE OUBLIÉE ?</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 ml-auto mr-auto">
+                                    <p:commandLink id="nextButton" action="#{employeController.seConnecter()}" class="btn btn-light btn-sm" value="VALIDER">
+                                        <f:ajax render="form" execute="form"/>
+
+                                    </p:commandLink>
+                                </div>
+
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="col-md-4  ml-auto mr-auto" style="margin-top:  100px;">
+                        <h6>Non Adhérent ?</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

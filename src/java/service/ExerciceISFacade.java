@@ -35,15 +35,16 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
         if (testExercices(exerciceISs) < 0) {
             return -1;
         }
-        for (int i = 0; i < exerciceISs.size(); i++) {
-            ExerciceIS exerciceIS = exerciceISs.get(i);
+        exerciceISs.forEach((exerciceIS) -> {
             create(exerciceIS);
-        }
+        });
+        System.out.println("exercice saved in db");
         return 1;
     }
 
     public int testExercices(List<ExerciceIS> exerciceISs) {
-        if (exerciceISs == null || exerciceISs.isEmpty()) {
+        System.out.println("hna f exercis is :");
+        if (exerciceISs == null || exerciceISs.get(0) == null || exerciceISs.isEmpty()) {
             return -1;
         }
         for (int i = 0; i < exerciceISs.size(); i++) {
@@ -62,7 +63,7 @@ public class ExerciceISFacade extends AbstractFacade<ExerciceIS> {
 
     public int testParams(ExerciceIS exerciceIS) {
         if (exerciceIS.getCharges() < 0 || exerciceIS.getNonDeductibles() < 0 || exerciceIS.getDeductibles() < 0
-                || exerciceIS.getProduits() < 0 || exerciceIS.getDateDebut().compareTo(exerciceIS.getDateFin()) > 0
+                || exerciceIS.getProduits() < 0 
                 || DateUtil.compareTwoDates(exerciceIS.getDateDebut(), exerciceIS.getDateFin()) < 0
                 || exerciceIS.getSociete() == null) {
             return -1;

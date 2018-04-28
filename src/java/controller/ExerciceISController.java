@@ -19,6 +19,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import service.DeclarationIsFacade;
+import service.EmployeFacade;
 import util.DateUtil;
 import util.MessageUtil;
 
@@ -28,6 +30,10 @@ public class ExerciceISController implements Serializable {
 
     @EJB
     private service.ExerciceISFacade ejbFacade;
+    @EJB
+    private DeclarationIsFacade declarationIsFacade;
+    @EJB
+    private EmployeFacade employeFacade;
     EmployeController employeController = new EmployeController();
     private List<ExerciceIS> items;
     private ExerciceIS selected;
@@ -260,6 +266,7 @@ public class ExerciceISController implements Serializable {
     public void addToList() {
         selected.setDateDebut(DateUtil.getSqlDateToSaveInDB(dateDebut));
         selected.setDateFin(DateUtil.getSqlDateToSaveInDB(dateFin));
+        selected.setSociete(null);//societe d'apres societe !!!
         getItems().add(ejbFacade.clone(selected));
         setShowForm(false);
         setShowTable(true);
@@ -286,8 +293,8 @@ public class ExerciceISController implements Serializable {
         } else {
             ejbFacade.removeSelectedFromList(getItems(), selected);
             setShowForm(false);
-            System.out.println("ha size : "+getItems().size());
-            System.out.println("ha liste => : "+items);
+            System.out.println("ha size : " + getItems().size());
+            System.out.println("ha liste => : " + items);
             calculTotalMontants(2, selected);
             selected = null;
         }
@@ -316,5 +323,15 @@ public class ExerciceISController implements Serializable {
     private void setDates(String dateDebut, String dateFin) {
         setDateDebut(dateDebut);
         setDateFin(dateFin);
+    }
+
+    public void validerDeclarationIS() {
+        if (!items.isEmpty()) {
+            System.out.println("ha user mn session : " + employeFacade.getConnectedUser("user"));
+            getItems().get(0).setSociete(employeFacade.getConnectedUser("user").getSociete());
+            System.out.println("bda traitement :");
+            int res = declarationIsFacade.save(getItems());
+            System.out.println("res");
+        }
     }
 }
