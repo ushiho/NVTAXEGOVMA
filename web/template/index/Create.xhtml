@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="DeclarationIsCreateDlg" widgetVar="DeclarationIsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDeclarationIsTitle}">
+        <p:dialog id="DeclarationIsCreateDlg" widgetVar="DeclarationIsCreateDialog" modal="true" resizable="false"  header="#{bundle.CreateDeclarationIsTitle}">
             <h:form id="DeclarationIsCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{declarationIsController.selected != null}">
@@ -37,11 +37,10 @@
                         <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_nbAccomptePaye}" for="nbAccomptePaye" />
                         <p:inputText id="nbAccomptePaye" value="#{declarationIsController.selected.nbAccomptePaye}" title="#{bundle.CreateDeclarationIsTitle_nbAccomptePaye}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{declarationIsController.create}" value="#{bundle.Save}" update="display,:DeclarationIsListForm:datalist,:growl" oncomplete="handleSubmit(args,'DeclarationIsCreateDialog');"/>
+                    <p:commandButton actionListener="#{declarationIsController.create}" value="#{bundle.Save}" />
                     <p:commandButton value="#{bundle.Cancel}" onclick="DeclarationIsCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
-            
         </p:dialog>
 
     </ui:composition>

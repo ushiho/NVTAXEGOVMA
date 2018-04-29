@@ -11,6 +11,7 @@ import bean.ExerciceTVA;
 import bean.PaiementTVA;
 import bean.Societe;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -124,5 +125,16 @@ public class DeclarationTvaFacade extends AbstractFacade<DeclarationTva> {
             // tva
             paiementTVA.setMtRetartd(Float.NaN);
         }
+    }
+    
+    public List<DeclarationTva> findByCriteria(Integer etat,Date dateCreation){
+        String req = "SELECT d FROM DeclarationTva d WHERE 1=1 ";
+        if(etat!=null){
+            req += " AND d.etat = '"+etat+"' " ;
+        }
+        if(dateCreation !=null){
+            req += " AND d.dateDeclaration = '"+dateCreation+"' ";
+        }
+        return getMultipleResult(req);
     }
 }

@@ -76,8 +76,7 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
         return 1;
     }
 
-
-    private DeclarationIs  initDecalarationIsParam() {
+    private DeclarationIs initDecalarationIsParam() {
         DeclarationIs declarationIs = new DeclarationIs();
         declarationIs.setId(generate("DeclarationIs", "id"));
         declarationIs.setEtat(0);
@@ -228,5 +227,19 @@ public class DeclarationIsFacade extends AbstractFacade<DeclarationIs> {
         }
         paiementISFacade.deleteByDeclarationIS(declarationIs);
         remove(declarationIs);
+    }
+
+    public List<DeclarationIs> findByCriteria(Integer etat, Date dateCreationMin, Date dateCreationMax) {
+        String req = "SELECT d FROM DeclarationIs d WHERE 1=1 ";
+        if (etat != null) {
+            req += " AND d.etat = '" + etat + "' ";
+        }
+        if (dateCreationMin != null) {
+            req += " AND d.dateDeclaration >= '" + dateCreationMin + "' ";
+        }
+        if (dateCreationMax != null) {
+            req += " AND d.dateDeclaration <= '" + dateCreationMax + "' ";
+        }
+        return getMultipleResult(req);
     }
 }

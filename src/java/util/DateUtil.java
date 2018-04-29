@@ -95,14 +95,17 @@ public class DateUtil {
             return -1;
         } else if (dateDebut.compareTo(dateFin) > 0) {
             return -2;
-        }else if(dateDebut.getYear()!=dateFin.getYear()){
+        } else if (dateDebut.getYear() != dateFin.getYear()) {
             return -3;
         }
         return 1;
     }
-    
-    public static Date getSqlDateToSaveInDB(String date){
-        return getSqlDate(parse(date));
-    } 
+
+    public static Date getSqlDateToSaveInDB(String date) {
+        if (date != null && !"".equals(date)) {
+            return getSqlDate(parse(date));
+        }
+        return null;
+    }
 
 }

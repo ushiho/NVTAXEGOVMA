@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+    <p:dialog id="DeclarationIsCreateDlg" widgetVar="DeclarationIsCreateDialog"
+              header="Déclaration Info"  resizable="false" modal="true"
+              style="margin-top: 75px;min-height: 140px;min-width: 640px;">
+        <h:form id="DeclarationIsCreateForm">
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" rendered="#{declarationIsController.selected != null}">
+                    <p:outputLabel value="#{declarationIsController.selected}"  />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_dateDeclaration}"  />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_montantIs}" />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_etat}" />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_societe}"  />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_tauxIs}" />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_resultatComptable}"  />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_resultatFiscal}" />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_chiffreAffaire}"  />
+                    <p:outputLabel value="#{bundle.CreateDeclarationIsLabel_nbAccomptePaye}"  />
+                </p:panelGrid>
+                <p:commandButton actionListener="#{declarationIsController.create}" value="MODIFIER"  oncomplete="handleSubmit(args,'DeclarationIsCreateDialog');"/>
+                <p:commandButton value="ANNULER" onclick="DeclarationIsCreateDialog.hide()"/>
+            </h:panelGroup>
+        </h:form>
+    </p:dialog>
+    </ui:composition>
+
+</html>
+

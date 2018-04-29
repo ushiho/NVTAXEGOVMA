@@ -6,6 +6,8 @@
 package service;
 
 import bean.DeclarationIr;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +30,15 @@ public class DeclarationIrFacade extends AbstractFacade<DeclarationIr> {
     public DeclarationIrFacade() {
         super(DeclarationIr.class);
     }
-    
+
+    public List<DeclarationIr> findByCriteria(Integer etat, Date dateCreation) {
+        String req = "SELECT d FROM DeclarationIr d WHERE 1=1 ";
+        if (etat != null) {
+            req += " AND d.etat = '" + etat + "' ";
+        }
+        if (dateCreation != null) {
+            req += " AND d.dateDeclaration = '" + dateCreation + "' ";
+        }
+        return getMultipleResult(req);
+    }
 }

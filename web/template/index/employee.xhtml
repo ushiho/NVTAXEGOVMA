@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <h2>Primefaces Dialog Dynamic Content Example</h2>
+    <h:outputText value="Page loaded time: #{declarationIsController.time}"/>
+    <br/>
+    <h:form>
+        <p:commandButton value="Show Dialog"
+                         oncomplete="PF('dlg').show();"
+                         update="content"/>
+        <p:dialog header="Dynamic Content Dialog" widgetVar="dlg" modal="true">
+            <h:outputText id="content"
+                          value="Dialog loaded time: #{declarationIsController.time}"/>
+        </p:dialog>
+    </h:form>
+
+</h:body>
+</html>

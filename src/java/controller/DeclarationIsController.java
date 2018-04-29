@@ -6,7 +6,12 @@ import controller.util.JsfUtil.PersistAction;
 import service.DeclarationIsFacade;
 
 import java.io.Serializable;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +23,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.context.RequestContext;
+import util.DateUtil;
 
 @Named("declarationIsController")
 @SessionScoped
@@ -25,18 +32,66 @@ public class DeclarationIsController implements Serializable {
 
     @EJB
     private service.DeclarationIsFacade ejbFacade;
-    private List<DeclarationIs> items = null;
+    private List<DeclarationIs> items;
     private DeclarationIs selected;
+    private Integer etat;
+    private String dateCreationMin;
+    private String dateCreationMax;
+    private String text;
+    private String pageDialod;
 
     public DeclarationIsController() {
     }
 
     public DeclarationIs getSelected() {
+        if (selected == null) {
+            selected = new DeclarationIs();
+        }
         return selected;
     }
 
     public void setSelected(DeclarationIs selected) {
         this.selected = selected;
+    }
+
+    public Integer getEtat() {
+        return etat;
+    }
+
+    public void setEtat(Integer etat) {
+        this.etat = etat;
+    }
+
+    public String getDateCreationMin() {
+        return dateCreationMin;
+    }
+
+    public void setDateCreationMin(String dateCreationMin) {
+        this.dateCreationMin = dateCreationMin;
+    }
+
+    public String getDateCreationMax() {
+        return dateCreationMax;
+    }
+
+    public void setDateCreationMax(String dateCreationMax) {
+        this.dateCreationMax = dateCreationMax;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getPageDialod() {
+        return pageDialod;
+    }
+
+    public void setPageDialod(String pageDialod) {
+        this.pageDialod = pageDialod;
     }
 
     protected void setEmbeddableKeys() {
@@ -76,9 +131,13 @@ public class DeclarationIsController implements Serializable {
 
     public List<DeclarationIs> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = new ArrayList();
         }
         return items;
+    }
+
+    public void setItems(List<DeclarationIs> items) {
+        this.items = items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -162,4 +221,63 @@ public class DeclarationIsController implements Serializable {
 
     }
 
+    public void findByCriteria() {
+        setItems(ejbFacade.findByCriteria(etat, DateUtil.getSqlDateToSaveInDB(dateCreationMin),
+                DateUtil.getSqlDateToSaveInDB(dateCreationMax)));
+        setText("");
+        if (getItems() == null || getItems().isEmpty()) {
+            setText("Pas de déclarations pour votre recherche actuellement !");
+        }
+        initParamsSearch();
+    }
+
+    private void initParamsSearch() {
+        setEtat(null);
+        setDateCreationMax("");
+        setDateCreationMin("");
+    }
+
+    public String etatFromIntToString(int etat) {
+        switch (etat) {
+            case 0:
+                return "Brouillon";
+            case 1:
+                return "Validée";
+            case 2:
+                return "Payée";
+            default:
+                return null;
+        }
+    }
+
+    public String formatDateToString(Date dateToFormat) {
+        System.out.println("ha date to conevrt : " + dateToFormat);
+        return DateUtil.formateDate("dd/MM/yyyy", dateToFormat);
+    }
+
+    public void showDeclarationIs() {
+        System.out.println("ha sele : " + selected);
+}
+
+public Map<String, Object> getDialogOptions() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("resizable", false);
+        options.put("draggable", true);
+        options.put("modal", true);
+        options.put("height", 400);
+        options.put("contentHeight", "100%");
+        return options;
+        
+//        Map<String, Object> options = new HashMap<String, Object>();
+//        options.put("modal", true);
+//        options.put("width", 640);
+//        options.put("height", 340);
+//        options.put("contentWidth", "100%");
+//        options.put("contentHeight", "100%");
+//        options.put("headerElement", "customheader");
+    }
+
+    public String getTime() {
+        return LocalTime.now().toString();
+    }
 }

@@ -220,7 +220,7 @@ public class Societe implements Serializable {
 
     @Override
     public String toString() {
-        return "Societe{" + "id=" + idFiscal + ", raisonSociale=" + ", numTele=" + numTele + ", numFax=" + numFix + ", email=" + email + '}';
+        return "raisonSociale=" + raisonSociale;
     }
 
 }

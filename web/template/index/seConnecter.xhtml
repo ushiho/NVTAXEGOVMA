@@ -24,8 +24,6 @@
         <!--  CSS for Demo Purpose, don't include it in your project     -->
         <link href="../assets/css/demo.css" rel="stylesheet" />
 
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-
         <!--     Fonts and icons     -->
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'></link>
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
@@ -70,18 +68,22 @@
 
                             </div>
                             <div class="row">
-                                <div class="text-center" style="margin-left: 200px;">
-                                    <p:spacer></p:spacer>
-                                    <div class="g-recaptcha" id="reCaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy">
-                                        <!--<p:message  showDetail="true"  ></p:message>-->
-                                    </div>
-                                    <p:spacer/>
-                                    <p:spacer/>
+                                <h:outputLabel id="res">
+                                    <script src='https://www.google.com/recaptcha/api.js'></script>
+                                    <div class="text-center" style="margin-left: 200px;">
+                                        <p:spacer></p:spacer>
+                                        <div class="g-recaptcha" id="reCaptcha" data-sitekey="6LerFVIUAAAAAD7izZ3VCu7PMhRAuypTQabi9qhy">
+                                            <!--<p:message  showDetail="true"  ></p:message>-->
+                                        </div>
 
-                                    <p:outputLabel id="testLogin" class="notification-text" style="color: red;font-size: 13px;">
-                                        Désolé mot de passe ou identifiant est incorrect !
-                                    </p:outputLabel>
-                                </div>
+                                        <p:spacer/>
+                                        <p:spacer/>
+
+                                        <p:outputLabel  rendered="#{employeController.userCaNotConnect}" class="notification-text" style="color: red;font-size: 13px;">
+                                            Désolé mot de passe ou identifiant est incorrect !
+                                        </p:outputLabel>
+                                    </div>
+                                </h:outputLabel>
                             </div>
                             <div class="row">
                                 <div class="col-8 ml-auto mr-auto">
@@ -92,7 +94,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 ml-auto mr-auto">
-                                    <p:commandLink id="nextButton" action="#{employeController.seConnecter()}" class="btn btn-light btn-sm" value="VALIDER">
+                                    <p:commandLink id="nextButton" update="res " ajax="true" action="#{employeController.seConnecter()}" class="btn btn-light btn-sm" value="VALIDER">
                                     </p:commandLink>
                                 </div>
 
@@ -106,5 +108,6 @@
             </div>
         </div>
     </h:body>
+
 </html>
 

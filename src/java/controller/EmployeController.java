@@ -44,8 +44,7 @@ public class EmployeController implements Serializable {
     private String confirmer;
     private boolean showTable;
     private int[] droits;
-    private boolean resConnect;//resultat dyal se connecter !
-    private String text;
+    private boolean userCaNotConnect;//resultat dyal se connecter !
 
     public EmployeController() {
     }
@@ -116,23 +115,14 @@ public class EmployeController implements Serializable {
         this.droits = droits;
     }
 
-    public boolean isResConnect() {
-        return resConnect;
+    public boolean isUserCaNotConnect() {
+        return userCaNotConnect;
     }
 
-    public void setResConnect(boolean resConnect) {
-        this.resConnect = resConnect;
+    public void setUserCaNotConnect(boolean userCaNotConnect) {
+        this.userCaNotConnect = userCaNotConnect;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-    
-    
 
     public CompteBanquaireFacade getCompteBanquaireFacade() {
         return compteBanquaireFacade;
@@ -262,10 +252,12 @@ public class EmployeController implements Serializable {
         int res = getFacade().seConnecter(selected);
         boolean recaptcha = VerifyRecaptchaUtil.getRecaptcha();
         System.out.println(res + "ha recaptcha : " + recaptcha);
-        if (res > 0 ) {
+        if (res > 0 && recaptcha) {
             SessionUtil.redirectToPage("profile.xhtml");
+            setUserCaNotConnect(false);
         }else{
 //            MessageUtil.showMsg("Désolé mot de passe ou identifiant est incorrect !");
+            setUserCaNotConnect(true);
         }
     }
 
@@ -439,13 +431,5 @@ public class EmployeController implements Serializable {
         System.out.println("apres : " + selected);
     }
 
-    //molat null pointer exception
-    public void testForcePassword() {
-        System.out.println(userData());
-        if(userData().getMotDePasse().length()<6){
-            setText("le mot de passe doit contenir au moins 6 caractères");
-        } if(FieldValidatorUtil.isPassword(selected.getMotDePasse())){
-            setText("Bien ,");
-        }
-    }
+    
 }
